@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640621936632",
+    "firebase_url": "https://libraapplication-5c71b.firebaseio.com",
+    "project_id": "libraapplication-5c71b",
+    "storage_bucket": "libraapplication-5c71b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640621936632:android:fe8e55643ec4f062e7200d",
+        "android_client_info": {
+          "package_name": "com.example.libraapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640621936632-tkhldhkusjckr1v4ug09sqlis3pqgnsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUg1rb1D11YVlZMuZgpEqzhVOe5uqsYGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640621936632-tkhldhkusjckr1v4ug09sqlis3pqgnsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
