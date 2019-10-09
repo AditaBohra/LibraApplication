@@ -52,6 +52,7 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/text_forgotpassword"
         app:layout_constraintTop_toBottomOf="@+id/edit_password"
         android:text="Forgot Password"/>
@@ -69,4 +70,14 @@
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/text_forgotpassword"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
+        android:textSize="16dp"
+        android:id="@+id/text_nagation_to_register_activity"
+        android:textColor="@color/white"
+        android:layout_marginTop="40dp"
+        android:gravity="end"
+        android:text="@string/create_an_account_text"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
