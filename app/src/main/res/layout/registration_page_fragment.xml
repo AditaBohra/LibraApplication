@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color_login"
+    android:background="@drawable/purple_background"
     android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
+        android:fontFamily="@font/fredoka_one"
         android:gravity="center"
         android:text="@string/get_started_text"
         android:textColor="@color/white"
@@ -30,6 +31,7 @@
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/user_icon"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/arvo"
             android:hint="User Name"
             android:inputType="textPersonName"
             android:textColor="@color/white"
@@ -38,12 +40,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edit_emailid"
+            android:id="@+id/edit_emailid_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/email_icon"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/arvo"
             android:hint="Email ID"
             android:inputType="textEmailAddress"
             android:textColor="@color/white"
@@ -52,34 +55,37 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_username" />
 
         <EditText
-            android:id="@+id/edit_password"
+            android:id="@+id/edit_password_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/password_icon"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/arvo"
             android:hint="Password"
             android:inputType="textPassword"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/edit_emailid" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_emailid_register" />
 
         <Button
             android:id="@+id/button_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:background="@drawable/rounded_button"
+            android:background="@drawable/rounded_white_background"
+            android:fontFamily="@font/arvo"
             android:text="@string/register_button_text_text"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/edit_password" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_password_register" />
 
         <TextView
             android:id="@+id/text_login_page_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/arvo"
             android:gravity="end"
             android:text="@string/already_have_account_text"
             android:textColor="@color/white"
