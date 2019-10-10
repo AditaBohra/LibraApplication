@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">LibraApplication</string>
+
+    <!--Select role fragmanent-->
+
+    <string name="select_role_text">select your role </string>
+    <string name="select_role_text_desc">Plaese select how you would like \n to join with us!!</string>
+    <string name="advocate_role_text">I am Lawyer/ Advocate</string>
+    <string name="civilian_role_text">I am Civilian</string>
+    <string name="civilian_role_text_desc">I have filed a case or I have a case filed against me</string>
+
+
+    <!--Registration page fragmanent-->
+    <string name="get_started_text">Get Started </string>
+    <string name="register_button_text_text">REGISTER </string>
+    <string name="already_have_account_text">Alraedy have an account? Login</string>
+
+
+    <!--Login Activity-->
+    <string name="create_an_account_text">Create an account? Register</string>
+
+
 </resources>
