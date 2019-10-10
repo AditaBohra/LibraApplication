@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edit_emailid"
+            android:id="@+id/edit_emailid_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_username" />
 
         <EditText
-            android:id="@+id/edit_password"
+            android:id="@+id/edit_password_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -63,7 +63,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/edit_emailid" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_emailid_register" />
 
         <Button
             android:id="@+id/button_register"
@@ -73,7 +73,7 @@
             android:background="@drawable/rounded_button"
             android:text="@string/register_button_text_text"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/edit_password" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_password_register" />
 
         <TextView
             android:id="@+id/text_login_page_navigation"

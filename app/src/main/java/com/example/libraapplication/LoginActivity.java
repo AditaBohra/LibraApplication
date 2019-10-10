@@ -19,9 +19,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView mEmail;
     private TextView mPassword;
-    private Button mBtnLogin;
     private FirebaseAuth mFireBaseAuth;
-    private TextView navigationToRegisterPageText;
 
 
     @Override
@@ -33,9 +31,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmail = findViewById(R.id.edit_emailid);
         mPassword = findViewById(R.id.edit_password);
-        mBtnLogin = findViewById(R.id.buttonLogin);
+        Button mBtnLogin = findViewById(R.id.buttonLogin);
 
-        navigationToRegisterPageText = findViewById(R.id.text_nagation_to_register_activity);
+        TextView navigationToRegisterPageText = findViewById(R.id.text_nagation_to_register_activity);
 
         navigationToRegisterPageText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,33 +54,30 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String emailTxt = mEmail.getText().toString();
-                String passTxt = mPassword.getText().toString();
-                if(emailTxt.isEmpty()){
-                    mEmail.setError("Please Enter Email");
-                    mEmail.requestFocus();
-                }
-                else if(passTxt.isEmpty()){
-                    mPassword.setError("Please Enter Password");
-                    mPassword.requestFocus();
-                }
-                else {
-                    mFireBaseAuth.signInWithEmailAndPassword(emailTxt,passTxt).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this,"Auth Failed",Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
-
-                            }
+        mBtnLogin.setOnClickListener(view -> {
+            String emailTxt = mEmail.getText().toString();
+            String passTxt = mPassword.getText().toString();
+            if(emailTxt.isEmpty()){
+                mEmail.setError("Please Enter Email");
+                mEmail.requestFocus();
+            }
+            else if(passTxt.isEmpty()){
+                mPassword.setError("Please Enter Password");
+                mPassword.requestFocus();
+            }
+            else {
+                mFireBaseAuth.signInWithEmailAndPassword(emailTxt,passTxt).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(!task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this,"Auth Failed",Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
+                        else {
+                            Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
             }
         });
     }
