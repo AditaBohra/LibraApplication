@@ -14,5 +14,20 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="Regular">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:text">sans-serif</item>
+    </style>
+
+    <style name="Bold">
+        <item name="android:fontFamily">Qanelas_soft</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+
 
 </resources>
