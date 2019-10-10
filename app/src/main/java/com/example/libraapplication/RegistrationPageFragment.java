@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
-public class RegistarionPageFragment extends Fragment {
+public class RegistrationPageFragment extends Fragment {
 
     private TextView loginNavigatePageText;
     private TextView mEmailTextView;
@@ -80,6 +80,7 @@ public class RegistarionPageFragment extends Fragment {
     }
 
     private void navigateToLoginActivity() {
+        getActivity().finish();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }
