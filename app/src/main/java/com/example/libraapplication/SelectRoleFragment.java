@@ -31,7 +31,7 @@ public class SelectRoleFragment extends Fragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadregistrationFragment(new RegistarionPageFragment());
+                loadRegistrationFragment(new RegistrationPageFragment());
             }
         });
 
@@ -75,7 +75,7 @@ public class SelectRoleFragment extends Fragment {
         civilianRoleLayout = view.findViewById(R.id.layout_role2);
     }
 
-    private void loadregistrationFragment(Fragment fragment) {
+    private void loadRegistrationFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.registartion_conatiner, fragment);

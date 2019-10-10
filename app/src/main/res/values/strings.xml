@@ -3,7 +3,7 @@
 
     <!--Select role fragmanent-->
 
-    <string name="select_role_text">select your role </string>
+    <string name="select_role_text">Select your role </string>
     <string name="select_role_text_desc">Plaese select how you would like \n to join with us!!</string>
     <string name="advocate_role_text">I am Lawyer/ Advocate</string>
     <string name="civilian_role_text">I am Civilian</string>
