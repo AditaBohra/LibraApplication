@@ -20,7 +20,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView mEmail;
     private TextView mPassword;
+    private Button mBtnLogin;
     private FirebaseAuth mFireBaseAuth;
+    private TextView navigationToRegisterPageText;
+    private TextView mForgotpasswordText;
 
 
     @Override
@@ -32,62 +35,74 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmail = findViewById(R.id.edit_emailid);
         mPassword = findViewById(R.id.edit_password);
-        Button mBtnLogin = findViewById(R.id.buttonLogin);
-
-        TextView navigationToRegisterPageText = findViewById(R.id.text_nagation_to_register_activity);
+        mBtnLogin = findViewById(R.id.buttonLogin);
+        mForgotpasswordText = findViewById(R.id.text_forgotpassword);
+        navigationToRegisterPageText = findViewById(R.id.text_nagation_to_register_activity);
 
         navigationToRegisterPageText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
             }
         });
 
+
+        /** @Aditya
+         *  Add comment...
+         */
         mFireBaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = mFireBaseAuth.getCurrentUser();
-                if(firebaseUser != null){
-                    Toast.makeText(LoginActivity.this,"User Authorized",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+                if (firebaseUser != null) {
+                    Toast.makeText(LoginActivity.this, "User Authorized", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        mBtnLogin.setOnClickListener(view -> {
-            String emailTxt = mEmail.getText().toString();
-            String passTxt = mPassword.getText().toString();
-            if(emailTxt.isEmpty()){
-                mEmail.setError("Please Enter Email");
-                mEmail.requestFocus();
-            }
-            else if(passTxt.isEmpty()){
-                mPassword.setError("Please Enter Password");
-                mPassword.requestFocus();
-            }
-            else {
-                mFireBaseAuth.signInWithEmailAndPassword(emailTxt,passTxt).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this,"Auth Failed",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
 
+        /**
+         *  Handle login functionality using firebase..
+         */
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginModel login = new LoginModel();
+                login.setEmail(mEmail.getText().toString());
+                login.setPassword(mPassword.getText().toString());
+                if (login.getEmail().isEmpty()) {
+                    mEmail.setError("Please Enter Email");
+                    mEmail.requestFocus();
+                } else if (login.getPassword().isEmpty()) {
+                    mPassword.setError("Please Enter Password");
+                    mPassword.requestFocus();
+                } else {
+                    mFireBaseAuth.signInWithEmailAndPassword(login.getEmail(), login.getPassword()).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Auth Failed", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
+        /**
+         *  navigate to Forgot Password activity..
+         */
+        mForgotpasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
