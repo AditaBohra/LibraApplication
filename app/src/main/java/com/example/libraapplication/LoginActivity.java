@@ -86,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Auth Failed", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                Intent dashBoardIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
+                                startActivity(dashBoardIntent);
 
                             }
                         }
