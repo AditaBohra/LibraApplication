@@ -47,6 +47,7 @@ public class SelectRoleFragment extends Fragment {
                 advocateRoleLayout.setBackground(getActivity().getResources().getDrawable
                         (R.drawable.rounded_lightyellow_background));
                 isAdvocate = true;
+                setButtonToggleVisibility();
             }
         });
 
@@ -63,16 +64,26 @@ public class SelectRoleFragment extends Fragment {
                 civilianRoleLayout.setBackground(getActivity().getResources().getDrawable
                         (R.drawable.rounded_lightyellow_background));
                 isCivilian = true;
+                setButtonToggleVisibility();
             }
         });
 
         return view;
     }
 
+    private void setButtonToggleVisibility()
+    {
+        if (isAdvocate || isCivilian){
+            continueButton.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void initView(View view) {
         continueButton = view.findViewById(R.id.button_continue);
         advocateRoleLayout = view.findViewById(R.id.layout_role1);
         civilianRoleLayout = view.findViewById(R.id.layout_role2);
+        continueButton.setVisibility(View.GONE);
+
     }
 
     private void loadRegistrationFragment(Fragment fragment) {
