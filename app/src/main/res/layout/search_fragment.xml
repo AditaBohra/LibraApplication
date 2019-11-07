@@ -7,7 +7,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search here..."
+        android:hint="Party, Court name, Judges"
         android:drawableRight="@drawable/search_icon"
         app:layout_constraintTop_toTopOf="parent"/>
 
