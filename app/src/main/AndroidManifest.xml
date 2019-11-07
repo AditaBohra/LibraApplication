@@ -9,8 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DashBoardActivity"></activity>
+
+        <activity android:name=".DashBoardActivity"
+            android:theme="@style/LoginTheme">
+        </activity>
+
         <activity android:name=".ForgotPasswordActivity" />
+
         <activity
             android:name=".RegistrationActivity"
             android:theme="@style/LoginTheme">
@@ -20,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LoginActivity"
             android:theme="@style/LoginTheme" />
