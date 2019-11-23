@@ -19,5 +19,13 @@
     <!--Login Activity-->
     <string name="create_an_account_text">Create an account? Register</string>
 
+    <!--Task Fragment-->
+    <string name="add_new_task">Add new task</string>
+
+    <!--Bottom Navigation Menu-->
+    <string name="home_icon_text">Home</string>
+    <string name="cases_icon_text">Cases</string>
+    <string name="alert_icon_text">Alerts</string>
+
 
 </resources>
