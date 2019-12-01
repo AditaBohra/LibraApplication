@@ -33,8 +33,6 @@ public class TabFragment extends Fragment
     private void setUpViewPager(ViewPager viewPager) {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(new HearingFragment(), "Hearing");
-        viewPagerAdapter.addFragment(new TasksFragment(), "Tasks");
         viewPager.setAdapter(viewPagerAdapter);
     }
 }
