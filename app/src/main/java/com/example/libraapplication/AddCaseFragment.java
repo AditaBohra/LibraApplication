@@ -60,9 +60,10 @@ public class AddCaseFragment extends Fragment
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container, fragment);
+        fragmentTransaction.add(R.id.add_case_container, fragment);
         fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
+
 }

@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.action_alerts:
                         Toast.makeText(HomeActivity.this, "Alert Selected", Toast.LENGTH_SHORT).show();
-                        loadFragment(new AddCaseFragment());
+                        loadFragment(new CaseFragment());
                         break;
                 }
                 return false;
