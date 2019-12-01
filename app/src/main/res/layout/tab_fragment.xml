@@ -52,6 +52,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextAppearance="@style/tablayoutTextApperance"
         app:layout_constraintTop_toBottomOf="@id/home_toolbar_text_name"/>
 
     <androidx.viewpager.widget.ViewPager

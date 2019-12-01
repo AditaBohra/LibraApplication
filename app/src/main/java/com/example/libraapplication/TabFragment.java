@@ -12,27 +12,27 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
+
 public class TabFragment extends Fragment
 {
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.tab_fragment,null);
-        mViewPager = view.findViewById(R.id.viewpager);
-        setUpViewPager(mViewPager);
+        ViewPager viewPager = view.findViewById(R.id.viewpager);
+        setUpViewPager(viewPager);
 
-        mTabLayout = view.findViewById(R.id.tabs);
-        mTabLayout.setupWithViewPager(mViewPager);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
         return view;
     }
 
     private void setUpViewPager(ViewPager viewPager) {
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), 0);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), 0);
         viewPager.setAdapter(viewPagerAdapter);
     }
 }

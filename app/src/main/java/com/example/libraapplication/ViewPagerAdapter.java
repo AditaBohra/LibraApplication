@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    private String[] tabTitles = new String[]{"Hearings", "Tasks"};
+    private String[] tabTitles = new String[]{"Hearings", "Tasks","Appointments"};
 
     ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -22,6 +22,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new HearingFragment();
             case 1:
                 return new TasksFragment();
+            case 2:
+                return new AppointmentFragment();
             default:
                 throw new IllegalArgumentException();
         }
@@ -29,7 +31,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
