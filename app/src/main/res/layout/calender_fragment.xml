@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#1886f7"
+    android:layout_width="match_parent"
+    android:padding="16dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="Select Your Date Here"
+        android:id="@+id/selectedDateText"
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
+
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/calenderView"
+        android:background="@drawable/rounded_yellow_background"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Save Date"
+        android:id="@+id/btnSaveDate"
+        android:background="@drawable/rounded_yellow_background"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

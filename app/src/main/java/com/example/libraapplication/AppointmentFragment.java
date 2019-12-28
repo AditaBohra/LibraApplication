@@ -66,11 +66,9 @@ public class AppointmentFragment extends Fragment {
                     getTaskData();
                 }
                 catch (Exception e){
-
                 }
             }
         });
-
         return view;
     }
 
@@ -82,5 +80,4 @@ public class AppointmentFragment extends Fragment {
             mAppointmentRecyclerView.setAdapter(mAppointmentListAdapter);
         }
     }
-
 }

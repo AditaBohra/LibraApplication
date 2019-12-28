@@ -16,6 +16,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     private Context mContext;
     private ArrayList<TaskModel> mTaskList;
 
+
     public TaskListAdapter(Context context, ArrayList<TaskModel> taskList) {
         mContext = context;
         mTaskList = taskList;
@@ -47,7 +48,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.text_title);
-            mydate = itemView.findViewById(R.id.tasklist_date_text);
+            mydate = itemView.findViewById(R.id.display_date_text);
         }
     }
 }
