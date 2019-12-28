@@ -22,6 +22,8 @@
     <!--Task Fragment-->
     <string name="add_new_task">Add new task</string>
 
+    <!--AppointementFragment Fragment-->
+    <string name="add_new_appointement">ADD NEW APPOINTMENT</string>
     <!--Bottom Navigation Menu-->
     <string name="home_icon_text">Home</string>
     <string name="cases_icon_text">Cases</string>

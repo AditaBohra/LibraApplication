@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-public class TaskDialogBox extends Dialog
+public class AppointmentDialogBox extends Dialog
 {
     private Context mContext;
     private EditText edit_task_title;
     private TextView button_save;
-    private TaskDBHelper dbHelper;
+    private AppointmentDBHelper dbHelper;
 
-    public TaskDialogBox(@NonNull Context context) {
+    public AppointmentDialogBox(@NonNull Context context) {
         super(context);
         mContext = context;
     }
@@ -27,7 +27,7 @@ public class TaskDialogBox extends Dialog
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.task_dialog);
-        dbHelper = new TaskDBHelper(mContext);
+        dbHelper = new AppointmentDBHelper(mContext);
         dbHelper.getReadableDatabase();
 
         edit_task_title = findViewById(R.id.edit_task_title);

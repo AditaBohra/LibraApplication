@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +24,7 @@ public class TasksFragment extends Fragment {
     private RecyclerView mTaskListRecyclerView;
     private Button mAddTaskButton;
     private ArrayList<TaskModel> mTaskList;
-    private DBHelper dbHelper;
+    private TaskDBHelper dbHelper;
     private TaskDialogBox mDialogBox;
 
     @Nullable
@@ -37,7 +35,7 @@ public class TasksFragment extends Fragment {
         mTaskListRecyclerView = view.findViewById(R.id.tasklist_recyclerview);
         mAddTaskButton = view.findViewById(R.id.add_task_button);
         mTaskList = new ArrayList<>();
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = new TaskDBHelper(getActivity());
         mDialogBox = new TaskDialogBox(getActivity());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED)
