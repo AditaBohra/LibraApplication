@@ -1,6 +1,8 @@
 package com.example.libraapplication;
 
-public class CaseModel {
+import java.io.Serializable;
+
+public class CaseModel implements Serializable {
     private String party1;
     private String party2;
     private String text1;
@@ -46,4 +48,5 @@ public class CaseModel {
     public void setText3(String text3) {
         this.text3 = text3;
     }
+
 }

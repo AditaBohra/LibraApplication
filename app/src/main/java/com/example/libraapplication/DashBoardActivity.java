@@ -1,5 +1,7 @@
 package com.example.libraapplication;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,12 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.Window;
-
 import java.util.ArrayList;
 
-public class DashBoardActivity extends AppCompatActivity {
+public class DashBoardActivity extends AppCompatActivity implements CaseAdapter.OnItemClickListener {
 
     private RecyclerView mCaseListrecyclerView;
     private CaseAdapter mCaseAdapter;
@@ -94,7 +93,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
     private void setCaseListAdapter() {
         mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        mCaseAdapter = new CaseAdapter(this, mCaseList);
+        mCaseAdapter = new CaseAdapter(this, mCaseList,this);
         mCaseListrecyclerView.setAdapter(mCaseAdapter);
     }
 
@@ -105,5 +104,10 @@ public class DashBoardActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onItemClick(CaseModel caseModel) {
+
     }
 }

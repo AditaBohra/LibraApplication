@@ -1,5 +1,6 @@
 package com.example.libraapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class HearingFragment extends Fragment
+public class HearingFragment extends Fragment implements CaseAdapter.OnItemClickListener
 {
     private RecyclerView mCaseListrecyclerView;
     private CaseAdapter mCaseAdapter;
@@ -97,7 +98,14 @@ public class HearingFragment extends Fragment
 
     private void setCaseListAdapter() {
         mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        mCaseAdapter = new CaseAdapter(getActivity(), mCaseList);
+        mCaseAdapter = new CaseAdapter(getActivity(), mCaseList,this);
         mCaseListrecyclerView.setAdapter(mCaseAdapter);
+    }
+
+    @Override
+    public void onItemClick(CaseModel caseModel) {
+        Intent intent = new Intent(getActivity(),CaseDetailsActivity.class);
+        intent.putExtra("bundle",caseModel);
+        startActivity(intent);
     }
 }

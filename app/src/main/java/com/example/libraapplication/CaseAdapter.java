@@ -15,10 +15,17 @@ import java.util.ArrayList;
 public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
     private ArrayList<CaseModel> mCaseList;
     private Context mContext;
+    private final OnItemClickListener mListener;
 
-    public CaseAdapter(Context context, ArrayList<CaseModel> caseList) {
+    public  CaseAdapter(Context context, ArrayList<CaseModel> caseList,OnItemClickListener listener) {
         mContext = context;
         mCaseList = caseList;
+        mListener = listener;
+
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(CaseModel caseModel);
     }
 
     @NonNull
@@ -37,6 +44,10 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
         holder.t1.setText(caseModel.getText1());
         holder.t2.setText(caseModel.getText2());
         holder.t3.setText(caseModel.getText3());
+
+        holder.itemView.setOnClickListener( v -> {
+            mListener.onItemClick(caseModel);
+        });
 
     }
 
@@ -59,6 +70,7 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
             t1 = itemView.findViewById(R.id.t1);
             t2 = itemView.findViewById(R.id.t2);
             t3 = itemView.findViewById(R.id.t3);
+
         }
     }
 
