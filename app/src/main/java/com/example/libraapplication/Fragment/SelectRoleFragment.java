@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.libraapplication.R;
 
 public class SelectRoleFragment extends Fragment {
     private Button continueButton;

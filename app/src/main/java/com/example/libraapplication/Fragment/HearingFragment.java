@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.libraapplication.Activity.CaseDetailsActivity;
+import com.example.libraapplication.Adapter.CaseAdapter;
+import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.R;
 
 import java.util.ArrayList;
 
@@ -104,7 +109,7 @@ public class HearingFragment extends Fragment implements CaseAdapter.OnItemClick
 
     @Override
     public void onItemClick(CaseModel caseModel) {
-        Intent intent = new Intent(getActivity(),CaseDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), CaseDetailsActivity.class);
         intent.putExtra("bundle",caseModel);
         startActivity(intent);
     }

@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+
+import com.example.libraapplication.Fragment.AddCaseFragment;
+import com.example.libraapplication.R;
 
 public class AddCaseActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.libraapplication.Adapter.CaseDetailsViewpagerAdapter;
+import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.R;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;

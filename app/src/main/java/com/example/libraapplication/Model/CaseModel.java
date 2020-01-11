@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Model;
 
 import java.io.Serializable;
 

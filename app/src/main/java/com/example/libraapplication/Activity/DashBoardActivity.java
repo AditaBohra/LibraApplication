@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Activity;
 
 import android.os.Bundle;
 
@@ -8,6 +8,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.libraapplication.Adapter.CaseAdapter;
+import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.R;
+import com.example.libraapplication.Fragment.SearchFragment;
 
 import java.util.ArrayList;
 

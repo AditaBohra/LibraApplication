@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.libraapplication.R;
+import com.example.libraapplication.Model.TaskModel;
 
 import java.util.ArrayList;
 

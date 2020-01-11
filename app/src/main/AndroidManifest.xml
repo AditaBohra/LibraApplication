@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CaseDetailsActivity"></activity>
-        <activity android:name=".AddCaseActivity" />
+        <activity android:name=".Activity.CaseDetailsActivity"></activity>
+        <activity android:name=".Activity.AddCaseActivity" />
         <activity
-            android:name=".DashBoardActivity"
+            android:name=".Activity.DashBoardActivity"
             android:theme="@style/LoginTheme" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activity.HomeActivity"
             android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".Activity.ForgotPasswordActivity" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".Activity.RegistrationActivity"
             android:theme="@style/LoginTheme"></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:theme="@style/LoginTheme" />
 
         <meta-data

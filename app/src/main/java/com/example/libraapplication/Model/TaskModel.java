@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Model;
 
 public class TaskModel
 {

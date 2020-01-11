@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,11 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.libraapplication.Fragment.AppointmentFragment;
+import com.example.libraapplication.Fragment.TasksFragment;
+import com.example.libraapplication.Fragment.HearingFragment;
+
 public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {
 
     private String[] tabTitles = new String[]{"Timeline", "Docs","Notes","Notify"};
 
-    CaseDetailsViewpagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    public CaseDetailsViewpagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 

@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Activity;
 
 import android.os.Bundle;
 
@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.libraapplication.Fragment.CaseFragment;
+import com.example.libraapplication.Fragment.TabFragment;
+import com.example.libraapplication.Fragment.TasksFragment;
+import com.example.libraapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {

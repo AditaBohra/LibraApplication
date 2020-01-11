@@ -1,10 +1,14 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Activity;
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.libraapplication.R;
+import com.example.libraapplication.Fragment.SelectRoleFragment;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -20,6 +24,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     /**
      * Method to load fragment
+     *
      * @param fragment name of fragment screen
      */
     private void loadFragment(Fragment fragment) {

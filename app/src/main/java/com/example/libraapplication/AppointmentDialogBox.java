@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import org.w3c.dom.Text;
+import com.example.libraapplication.Database.AppointmentDBHelper;
 
 public class AppointmentDialogBox extends Dialog
 {

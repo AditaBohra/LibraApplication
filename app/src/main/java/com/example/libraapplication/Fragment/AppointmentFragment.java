@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Fragment;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -8,38 +8,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.libraapplication.AppointmentDialogBox;
+import com.example.libraapplication.Database.AppointmentDBHelper;
+import com.example.libraapplication.R;
+import com.example.libraapplication.Adapter.TaskListAdapter;
+import com.example.libraapplication.Model.TaskModel;
+
 import java.util.ArrayList;
 
-public class TasksFragment extends Fragment {
-    private TaskListAdapter mTaskListAdapter;
-    private RecyclerView mTaskListRecyclerView;
-    private Button mAddTaskButton;
-    private ArrayList<TaskModel> mTaskList;
-    private TaskDBHelper dbHelper;
-    private TaskDialogBox mDialogBox;
+public class AppointmentFragment extends Fragment {
+
+    private TaskListAdapter mAppointmentListAdapter;
+    private RecyclerView mAppointmentRecyclerView;
+    private Button mAddAppointmentButton;
+    private ArrayList<TaskModel> mAppointmentList;
+    private AppointmentDBHelper dbHelper;
+    private AppointmentDialogBox mDialogBox;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.tasks_fragment, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.appointment_fragment,null);
 
-        mTaskListRecyclerView = view.findViewById(R.id.tasklist_recyclerview);
-        mAddTaskButton = view.findViewById(R.id.add_task_button);
-        mTaskList = new ArrayList<>();
-        dbHelper = new TaskDBHelper(getActivity());
-        mDialogBox = new TaskDialogBox(getActivity());
+        mAppointmentRecyclerView = view.findViewById(R.id.appointmentlist_recyclerview);
+        mAddAppointmentButton = view.findViewById(R.id.add_appointment_button);
+        mAppointmentList = new ArrayList<>();
+        dbHelper = new AppointmentDBHelper(getActivity());
+        mDialogBox = new AppointmentDialogBox(getActivity());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED)
         {
@@ -54,7 +58,7 @@ public class TasksFragment extends Fragment {
 
         }
 
-        mAddTaskButton.setOnClickListener(new View.OnClickListener() {
+        mAddAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialogBox.show();
@@ -68,20 +72,18 @@ public class TasksFragment extends Fragment {
                     getTaskData();
                 }
                 catch (Exception e){
-
                 }
             }
         });
-
         return view;
     }
 
     private void getTaskData() {
-        mTaskList = dbHelper.getData();
-        if (!mTaskList.isEmpty()) {
-            mTaskListRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-            mTaskListAdapter = new TaskListAdapter(getActivity(), mTaskList);
-            mTaskListRecyclerView.setAdapter(mTaskListAdapter);
+        mAppointmentList = dbHelper.getData();
+        if (!mAppointmentList.isEmpty()) {
+            mAppointmentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+            mAppointmentListAdapter = new TaskListAdapter(getActivity(), mAppointmentList);
+            mAppointmentRecyclerView.setAdapter(mAppointmentListAdapter);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,15 +8,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.libraapplication.Model.TaskModel;
+
 import java.util.ArrayList;
 
-public class AppointmentDBHelper extends SQLiteOpenHelper {
+public class TaskDBHelper extends SQLiteOpenHelper {
 
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "appointment_data.sqlite";
-    private static String tablename = "appointment";
+    private static final String DB_NAME = "task_data.sqlite";
+    private static String tablename = "task";
 
-    public AppointmentDBHelper(@Nullable Context context) {
+    public TaskDBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

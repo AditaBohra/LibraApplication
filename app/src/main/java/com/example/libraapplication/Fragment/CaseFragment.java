@@ -1,4 +1,4 @@
-package com.example.libraapplication;
+package com.example.libraapplication.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.libraapplication.Activity.AddCaseActivity;
+import com.example.libraapplication.R;
 
 public class CaseFragment extends Fragment {
 
@@ -24,7 +27,7 @@ public class CaseFragment extends Fragment {
         btnAddCase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent caseActivityIntent = new Intent(getActivity(),AddCaseActivity.class);
+                Intent caseActivityIntent = new Intent(getActivity(), AddCaseActivity.class);
                 startActivity(caseActivityIntent);
             }
         });
