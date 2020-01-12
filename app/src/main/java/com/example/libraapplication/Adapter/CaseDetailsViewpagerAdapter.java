@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.example.libraapplication.Fragment.AppointmentFragment;
 import com.example.libraapplication.Fragment.TasksFragment;
 import com.example.libraapplication.Fragment.HearingFragment;
+import com.example.libraapplication.Fragment.TimelineFragment;
 
 public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {
 
@@ -23,7 +24,7 @@ public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new HearingFragment();
+                return new TimelineFragment();
             case 1:
                 return new TasksFragment();
             case 2:
