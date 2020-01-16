@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,54 +11,97 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/edit_high_court"
+        android:id="@+id/edit_case_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/editext_rounded_shape"
-        android:hint="High Court of Bombay, Aurangabad Bench"
+        android:hint="Enter Case No"
         android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <EditText
-        android:id="@+id/edit_respondent"
+        android:id="@+id/edit_court_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/editext_rounded_shape"
-        android:hint="Petitiooner/Respondent"
+        android:hint="Enter Court Name"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edit_high_court" />
-
-
-    <Spinner
-        android:id="@+id/spinner_side"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/editext_rounded_shape"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edit_respondent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/edit_case_no" />
 
     <EditText
-        android:id="@+id/edit_year"
+        android:id="@+id/edit_judge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/editext_rounded_shape"
-        android:hint="Registered Year"
+        android:hint="Enter Judge Name"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/spinner_side" />
+        app:layout_constraintTop_toBottomOf="@id/edit_court_name" />
+
+    <EditText
+        android:id="@+id/edit_party1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/editext_rounded_shape"
+        android:hint="Enter Party1 Name"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_judge" />
+
+    <EditText
+        android:id="@+id/edit_party2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/editext_rounded_shape"
+        android:hint="Enter Party2 Name"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_party1" />
+
+<!--    <Spinner-->
+<!--        android:id="@+id/spinner_side"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="@drawable/editext_rounded_shape"-->
+<!--        android:padding="16dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/edit_respondent" />-->
+
+
+    <EditText
+        android:id="@+id/edit_lawyer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/editext_rounded_shape"
+        android:hint="Enter Lawyer Name"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_party2" />
+
+    <EditText
+        android:id="@+id/edit_select_team"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/editext_rounded_shape"
+        android:hint="Select Team"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_lawyer" />
 
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/continue_text"
+        android:layout_marginTop="20dp"
         android:textAllCaps="false"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_yellow_background"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/edit_select_team"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

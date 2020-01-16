@@ -12,9 +12,6 @@
         <activity android:name=".Activity.CaseDetailsActivity"></activity>
         <activity android:name=".Activity.AddCaseActivity" />
         <activity
-            android:name=".Activity.DashBoardActivity"
-            android:theme="@style/LoginTheme" />
-        <activity
             android:name=".Activity.HomeActivity"
             android:theme="@style/LoginTheme">
             <intent-filter>

@@ -29,7 +29,7 @@ public class HearingFragment extends Fragment implements CaseAdapter.OnItemClick
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_dash_board,null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.hearing_fragment,null);
 
         mCaseList = new ArrayList<>();
         mCaseListrecyclerView = view.findViewById(R.id.recycler_case_view);

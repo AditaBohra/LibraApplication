@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.example.libraapplication.Fragment.AddCaseFragment;
+import com.example.libraapplication.Fragment.AddCaseFragment1;
 import com.example.libraapplication.R;
 
 public class AddCaseActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class AddCaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_case);
 
-        loadFragment(new AddCaseFragment());
+        loadFragment(new AddCaseFragment1());
     }
 
     private void loadFragment(Fragment fragment) {
