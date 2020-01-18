@@ -8,15 +8,25 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/add_hearing_icon"
+        android:layout_marginTop="10dp"
+        android:id="@+id/add_hearing_button"/>
+
     <FrameLayout
         android:id="@+id/search_framelayout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_hearing_button"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_case_view"
+        android:id="@+id/recycler_hearing_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

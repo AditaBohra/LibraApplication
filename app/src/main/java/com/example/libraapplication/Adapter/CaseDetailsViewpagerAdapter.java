@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.libraapplication.Fragment.AppointmentFragment;
 import com.example.libraapplication.Fragment.TasksFragment;
-import com.example.libraapplication.Fragment.HearingFragment;
 import com.example.libraapplication.Fragment.TimelineFragment;
 
 public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {

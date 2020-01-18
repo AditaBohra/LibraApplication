@@ -5,25 +5,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Activity.CaseDetailsActivity;
-import com.example.libraapplication.Adapter.CaseAdapter;
-import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.Adapter.HearingAdapter;
+import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.R;
 
 import java.util.ArrayList;
 
-public class HearingFragment extends Fragment implements CaseAdapter.OnItemClickListener
+public class HearingFragment extends Fragment implements HearingAdapter.OnItemClickListener
 {
     private RecyclerView mCaseListrecyclerView;
-    private CaseAdapter mCaseAdapter;
-    private ArrayList<CaseModel> mCaseList;
+    private HearingAdapter mHearingAdapter;
+    private ArrayList<HearingModel> mHearingList;
+    private ImageView addHearingButton;
 
     @Nullable
     @Override
@@ -31,70 +35,79 @@ public class HearingFragment extends Fragment implements CaseAdapter.OnItemClick
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.hearing_fragment,null);
 
-        mCaseList = new ArrayList<>();
-        mCaseListrecyclerView = view.findViewById(R.id.recycler_case_view);
-
-        CaseModel caseModel = new CaseModel();
-        caseModel.setParty1("Vashi Police Station");
-        caseModel.setParty2("Gangaram RamSingh Verma");
-        caseModel.setText1("R.C.C./1100095/2002");
-        caseModel.setText2("Civil Court Junior Division, Vashi");
-        caseModel.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel);
+        mHearingList = new ArrayList<>();
+        mCaseListrecyclerView = view.findViewById(R.id.recycler_hearing_view);
+        addHearingButton = view.findViewById(R.id.add_hearing_button);
 
 
-        CaseModel caseModel1 = new CaseModel();
-        caseModel1.setParty1("Vashi Police Station");
-        caseModel1.setParty2("Gangaram RamSingh Verma");
-        caseModel1.setText1("R.C.C./1100095/2002");
-        caseModel1.setText2("Civil Court Junior Division, Vashi");
-        caseModel1.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel1);
+        addHearingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(new AddHearingFragment());
+            }
+        });
+
+        HearingModel hearingModel = new HearingModel();
+        hearingModel.setParty1("Vashi Police Station");
+        hearingModel.setParty2("Gangaram RamSingh Verma");
+        hearingModel.setText1("R.C.C./1100095/2002");
+        hearingModel.setText2("Civil Court Junior Division, Vashi");
+        hearingModel.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel);
 
 
-        CaseModel caseModel2 = new CaseModel();
-        caseModel2.setParty1("Vashi Police Station");
-        caseModel2.setParty2("Gangaram RamSingh Verma");
-        caseModel2.setText1("R.C.C./1100095/2002");
-        caseModel2.setText2("Civil Court Junior Division, Vashi");
-        caseModel2.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel2);
+        HearingModel hearingModel1 = new HearingModel();
+        hearingModel1.setParty1("Vashi Police Station");
+        hearingModel1.setParty2("Gangaram RamSingh Verma");
+        hearingModel1.setText1("R.C.C./1100095/2002");
+        hearingModel1.setText2("Civil Court Junior Division, Vashi");
+        hearingModel1.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel1);
 
 
-        CaseModel caseModel3 = new CaseModel();
-        caseModel3.setParty1("Vashi Police Station");
-        caseModel3.setParty2("Gangaram RamSingh Verma");
-        caseModel3.setText1("R.C.C./1100095/2002");
-        caseModel3.setText2("Civil Court Junior Division, Vashi");
-        caseModel3.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel3);
+        HearingModel hearingModel2 = new HearingModel();
+        hearingModel2.setParty1("Vashi Police Station");
+        hearingModel2.setParty2("Gangaram RamSingh Verma");
+        hearingModel2.setText1("R.C.C./1100095/2002");
+        hearingModel2.setText2("Civil Court Junior Division, Vashi");
+        hearingModel2.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel2);
 
 
-        CaseModel caseModel4 = new CaseModel();
-        caseModel4.setParty1("Vashi Police Station");
-        caseModel4.setParty2("Gangaram RamSingh Verma");
-        caseModel4.setText1("R.C.C./1100095/2002");
-        caseModel4.setText2("Civil Court Junior Division, Vashi");
-        caseModel4.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel4);
+        HearingModel hearingModel3 = new HearingModel();
+        hearingModel3.setParty1("Vashi Police Station");
+        hearingModel3.setParty2("Gangaram RamSingh Verma");
+        hearingModel3.setText1("R.C.C./1100095/2002");
+        hearingModel3.setText2("Civil Court Junior Division, Vashi");
+        hearingModel3.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel3);
 
 
-        CaseModel caseModel5 = new CaseModel();
-        caseModel5.setParty1("Vashi Police Station");
-        caseModel5.setParty2("Gangaram RamSingh Verma");
-        caseModel5.setText1("R.C.C./1100095/2002");
-        caseModel5.setText2("Civil Court Junior Division, Vashi");
-        caseModel5.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel5);
+        HearingModel hearingModel4 = new HearingModel();
+        hearingModel4.setParty1("Vashi Police Station");
+        hearingModel4.setParty2("Gangaram RamSingh Verma");
+        hearingModel4.setText1("R.C.C./1100095/2002");
+        hearingModel4.setText2("Civil Court Junior Division, Vashi");
+        hearingModel4.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel4);
 
 
-        CaseModel caseModel6 = new CaseModel();
-        caseModel6.setParty1("Vashi Police Station");
-        caseModel6.setParty2("Gangaram RamSingh Verma");
-        caseModel6.setText1("R.C.C./1100095/2002");
-        caseModel6.setText2("Civil Court Junior Division, Vashi");
-        caseModel6.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mCaseList.add(caseModel6);
+        HearingModel hearingModel5 = new HearingModel();
+        hearingModel5.setParty1("Vashi Police Station");
+        hearingModel5.setParty2("Gangaram RamSingh Verma");
+        hearingModel5.setText1("R.C.C./1100095/2002");
+        hearingModel5.setText2("Civil Court Junior Division, Vashi");
+        hearingModel5.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel5);
+
+
+        HearingModel hearingModel6 = new HearingModel();
+        hearingModel6.setParty1("Vashi Police Station");
+        hearingModel6.setParty2("Gangaram RamSingh Verma");
+        hearingModel6.setText1("R.C.C./1100095/2002");
+        hearingModel6.setText2("Civil Court Junior Division, Vashi");
+        hearingModel6.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
+        mHearingList.add(hearingModel6);
 
         setCaseListAdapter();
 
@@ -103,14 +116,23 @@ public class HearingFragment extends Fragment implements CaseAdapter.OnItemClick
 
     private void setCaseListAdapter() {
         mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        mCaseAdapter = new CaseAdapter(getActivity(), mCaseList,this);
-        mCaseListrecyclerView.setAdapter(mCaseAdapter);
+        mHearingAdapter = new HearingAdapter(getActivity(), mHearingList,this);
+        mCaseListrecyclerView.setAdapter(mHearingAdapter);
     }
 
     @Override
-    public void onItemClick(CaseModel caseModel) {
+    public void onItemClick(HearingModel hearingModel) {
         Intent intent = new Intent(getActivity(), CaseDetailsActivity.class);
-        intent.putExtra("bundle",caseModel);
+        intent.putExtra("bundle", hearingModel);
         startActivity(intent);
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
     }
 }

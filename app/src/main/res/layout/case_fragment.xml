@@ -5,16 +5,20 @@
     android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:id="@+id/add_case_button"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Add Case"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:id="@+id/btn_add_case"
-        android:background="@drawable/rounded_yellow_background"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/add_hearing_icon"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_case_view"
+        app:layout_constraintTop_toBottomOf="@+id/add_case_button"
+        android:layout_marginTop="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

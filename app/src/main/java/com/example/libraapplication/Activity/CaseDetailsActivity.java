@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.libraapplication.Fragment.CaseDetailsFragment;
-import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.R;
 
 public class CaseDetailsActivity extends AppCompatActivity {
@@ -25,14 +25,14 @@ public class CaseDetailsActivity extends AppCompatActivity {
         court_party_name = findViewById(R.id.case_details_name);
         courtname = findViewById(R.id.case_details_court_name);
 
-        CaseModel caseModel = (CaseModel) getIntent().getSerializableExtra("bundle");
+        HearingModel hearingModel = (HearingModel) getIntent().getSerializableExtra("bundle");
         CaseDetailsFragment caseDetailsFragment = new CaseDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bundle",caseModel);
+        bundle.putSerializable("bundle", hearingModel);
         caseDetailsFragment.setArguments(bundle);
 
-        court_party_name.setText(String.format("%s\nVS %s", caseModel.getParty1(), caseModel.getParty2()));
-        courtname.setText(caseModel.getParty2());
+        court_party_name.setText(String.format("%s\nVS %s", hearingModel.getParty1(), hearingModel.getParty2()));
+        courtname.setText(hearingModel.getParty2());
 
 
 

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Model.CaseModel;
@@ -16,65 +15,55 @@ import com.example.libraapplication.R;
 import java.util.ArrayList;
 
 public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
-    private ArrayList<CaseModel> mCaseList;
-    private Context mContext;
-    private final OnItemClickListener mListener;
 
-    public  CaseAdapter(Context context, ArrayList<CaseModel> caseList,OnItemClickListener listener) {
-        mContext = context;
-        mCaseList = caseList;
-        mListener = listener;
+    private Context context;
+    private ArrayList<CaseModel> caseList;
 
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(CaseModel caseModel);
+    public CaseAdapter(Context context, ArrayList<CaseModel> caseList) {
+        this.context = context;
+        this.caseList = caseList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ConstraintLayout constraintLayout = (ConstraintLayout) LayoutInflater.from(mContext).inflate(R.layout.cardview_layout, null);
-        return new ViewHolder(constraintLayout);
+        View view = LayoutInflater.from(context).inflate(R.layout.case_fragment_recyclerview, null);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        CaseModel caseModel = mCaseList.get(position);
-        holder.party1Text.setText(caseModel.getParty1());
-        holder.party2Text.setText(caseModel.getParty2());
-        holder.t1.setText(caseModel.getText1());
-        holder.t2.setText(caseModel.getText2());
-        holder.t3.setText(caseModel.getText3());
-
-        holder.itemView.setOnClickListener( v -> {
-            mListener.onItemClick(caseModel);
-        });
-
+        CaseModel caseModel = caseList.get(position);
+        holder.case_no_text.setText(caseModel.getCaseNo());
+        holder.party1_text.setText(caseModel.getParty1());
+        holder.party2_text.setText(caseModel.getParty2());
+        holder.courtName_text.setText(caseModel.getCourtName());
+        holder.status_text.setText(caseModel.getStatus());
+        holder.hearingDate_text.setText(caseModel.getHearingDate());
     }
 
     @Override
     public int getItemCount() {
-        return mCaseList.size();
+        return caseList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView party1Text;
-        TextView party2Text;
-        TextView t1;
-        TextView t2;
-        TextView t3;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView party1_text;
+        private TextView party2_text;
+        private TextView status_text;
+        private TextView courtName_text;
+        private TextView hearingDate_text;
+        private TextView case_no_text;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            party1Text = itemView.findViewById(R.id.state_text_name);
-            party2Text = itemView.findViewById(R.id.vs_text_name);
-            t1 = itemView.findViewById(R.id.t1);
-            t2 = itemView.findViewById(R.id.t2);
-            t3 = itemView.findViewById(R.id.t3);
 
+            party1_text = itemView.findViewById(R.id.party1_text);
+            party2_text = itemView.findViewById(R.id.party2_text);
+            status_text = itemView.findViewById(R.id.status_text);
+            courtName_text = itemView.findViewById(R.id.court_name_text);
+            hearingDate_text = itemView.findViewById(R.id.hearing_date_text);
+            case_no_text = itemView.findViewById(R.id.case_no_text);
         }
     }
-
 }

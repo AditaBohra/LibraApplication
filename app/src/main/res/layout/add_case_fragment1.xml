@@ -61,15 +61,6 @@
         android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/edit_party1" />
 
-<!--    <Spinner-->
-<!--        android:id="@+id/spinner_side"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="55dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:background="@drawable/editext_rounded_shape"-->
-<!--        android:padding="16dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/edit_respondent" />-->
-
 
     <EditText
         android:id="@+id/edit_lawyer"
@@ -92,6 +83,40 @@
         app:layout_constraintTop_toBottomOf="@id/edit_lawyer" />
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Category"
+        android:id="@+id/text_select_category"
+        app:layout_constraintTop_toBottomOf="@+id/edit_select_team"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:id="@+id/radio_group_category"
+        app:layout_constraintTop_toBottomOf="@+id/text_select_category">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Pending"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:text="Dispose"/>
+
+    </RadioGroup>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,7 +125,7 @@
         android:textAllCaps="false"
         android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_yellow_background"
-        app:layout_constraintTop_toBottomOf="@+id/edit_select_team"/>
+        app:layout_constraintTop_toBottomOf="@+id/radio_group_category"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
