@@ -53,6 +53,7 @@ public class CaseFragment extends Fragment {
         caseModel.setCaseNo("R.C.C./1100095/2002");
         caseModel.setCourtName("Civil Court Junior Division, Vashi");
         caseModel.setStatus("Pending");
+        caseModel.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel);
 
 
@@ -62,6 +63,7 @@ public class CaseFragment extends Fragment {
         caseModel1.setCaseNo("R.C.C./1100095/2002");
         caseModel1.setCourtName("Civil Court Junior Division, Vashi");
         caseModel1.setStatus("Pending");
+        caseModel1.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel1);
 
 
@@ -71,6 +73,7 @@ public class CaseFragment extends Fragment {
         caseModel2.setCaseNo("R.C.C./1100095/2002");
         caseModel2.setCourtName("Civil Court Junior Division, Vashi");
         caseModel2.setStatus("Pending");
+        caseModel2.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel2);
 
 
@@ -79,6 +82,7 @@ public class CaseFragment extends Fragment {
         caseModel3.setParty2("Gangaram RamSingh Verma");
         caseModel3.setCaseNo("R.C.C./1100095/2002");
         caseModel3.setCourtName("Civil Court Junior Division, Vashi");
+        caseModel3.setHearingDate("Next Hearing: 12 Jan 2020");
         caseModel3.setStatus("Pending");
         mCaseList.add(caseModel3);
 
@@ -89,6 +93,7 @@ public class CaseFragment extends Fragment {
         caseModel4.setCaseNo("R.C.C./1100095/2002");
         caseModel4.setCourtName("Civil Court Junior Division, Vashi");
         caseModel4.setStatus("Pending");
+        caseModel4.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel4);
 
 
@@ -98,6 +103,7 @@ public class CaseFragment extends Fragment {
         caseModel5.setCaseNo("R.C.C./1100095/2002");
         caseModel5.setCourtName("Civil Court Junior Division, Vashi");
         caseModel5.setStatus("Pending");
+        caseModel5.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel5);
 
 
@@ -107,6 +113,7 @@ public class CaseFragment extends Fragment {
         caseModel6.setCaseNo("R.C.C./1100095/2002");
         caseModel6.setCourtName("Civil Court Junior Division, Vashi");
         caseModel6.setStatus("Pending");
+        caseModel6.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel6);
 
         caseAdapter = new CaseAdapter(getActivity(),mCaseList);

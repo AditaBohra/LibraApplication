@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.libraapplication.Fragment.AlertFragment;
 import com.example.libraapplication.Fragment.CaseFragment;
 import com.example.libraapplication.Fragment.TabFragment;
-import com.example.libraapplication.Fragment.TasksFragment;
 import com.example.libraapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -32,10 +32,10 @@ public class HomeActivity extends AppCompatActivity {
                     loadFragment(new TabFragment());
                     return true;
                 case R.id.action_cases:
-                    loadFragment(new TasksFragment());
+                    loadFragment(new CaseFragment());
                     return true;
                 case R.id.action_alerts:
-                    loadFragment(new CaseFragment());
+                    loadFragment(new AlertFragment());
                     return true;
             }
             return false;
