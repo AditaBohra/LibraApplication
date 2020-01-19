@@ -35,8 +35,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TaskModel taskModel = mTaskList.get(position);
-        holder.title.setText(taskModel.getTitle());
+        holder.title.setText("Title: "+taskModel.getTitle());
+        holder.description.setText("Task Description: "+taskModel.getDesc());
         holder.mydate.setText(taskModel.getDate());
+        holder.assignTo.setText("Assign To: "+taskModel.getAssignto());
     }
 
     @Override
@@ -46,12 +48,16 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
+        private TextView description;
         private TextView mydate;
+        private TextView assignTo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.text_title);
+            description = itemView.findViewById(R.id.display_task_desc_text);
             mydate = itemView.findViewById(R.id.display_date_text);
+            assignTo = itemView.findViewById(R.id.display_task_assignto_text);
         }
     }
 }

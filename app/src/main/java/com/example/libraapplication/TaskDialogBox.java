@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -19,8 +19,11 @@ public class TaskDialogBox extends Dialog
 {
     private Context mContext;
     private EditText edit_task_title;
-    private TextView button_save;
-    private TextView add_date_text;
+    private EditText edit_add_date;
+    private EditText edit_task_desc;
+    private EditText edit_assignto;
+
+    private Button button_save;
     private TaskDBHelper dbHelper;
     private CalenderBox mCalenderBox;
     private String calenderDate;
@@ -41,18 +44,25 @@ public class TaskDialogBox extends Dialog
         dbHelper.getReadableDatabase();
 
         edit_task_title = findViewById(R.id.edit_task_title);
+        edit_add_date = findViewById(R.id.edit_task_date);
+        edit_task_desc = findViewById(R.id.edit_task_desc);
+        edit_assignto = findViewById(R.id.edit_task_assignto);
         button_save = findViewById(R.id.button_save);
-        add_date_text = findViewById(R.id.add_date_text);
 
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.saveData(edit_task_title.getText().toString(),calenderDate);
+                dbHelper.saveData(edit_task_title.getText().toString(),edit_task_desc.getText().toString(),
+                        calenderDate,edit_assignto.getText().toString());
+                edit_task_title.setText("");
+                edit_add_date.setText("");
+                edit_task_desc.setText("");
+                edit_assignto.setText("");
                 dismiss();
             }
         });
 
-        add_date_text.setOnClickListener(new View.OnClickListener() {
+        edit_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCalenderBox.show();
@@ -66,7 +76,7 @@ public class TaskDialogBox extends Dialog
             public void onDismiss(DialogInterface dialogInterface) {
                 SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage",Context.MODE_PRIVATE);
                 calenderDate = sharedPreferences.getString("date",null);
-                add_date_text.setText(calenderDate);
+                edit_add_date.setText(calenderDate);
             }
         });
     }
