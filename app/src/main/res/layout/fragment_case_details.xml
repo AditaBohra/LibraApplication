@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/case_details_viewpager">
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/case_details_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextAppearance="@style/tablayoutTextApperance"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/case_details_tabs"
-        android:id="@+id/case_details_viewpager"/>
+    </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

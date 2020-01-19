@@ -1,7 +1,9 @@
 package com.example.libraapplication.Activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,10 +14,13 @@ import com.example.libraapplication.Fragment.CaseDetailsFragment;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.R;
 
+import java.util.Objects;
+
 public class CaseDetailsActivity extends AppCompatActivity {
 
     TextView court_party_name;
     TextView courtname;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,12 @@ public class CaseDetailsActivity extends AppCompatActivity {
 
         court_party_name = findViewById(R.id.case_details_name);
         courtname = findViewById(R.id.case_details_court_name);
+        mToolbar = findViewById(R.id.my_toolbar);
+        mToolbar.setTitle("Case Details");
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
+
+        setActionBar(mToolbar);
+        Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
 
         HearingModel hearingModel = (HearingModel) getIntent().getSerializableExtra("bundle");
         CaseDetailsFragment caseDetailsFragment = new CaseDetailsFragment();
@@ -49,4 +60,13 @@ public class CaseDetailsActivity extends AppCompatActivity {
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return true;
+    }
+
 }
