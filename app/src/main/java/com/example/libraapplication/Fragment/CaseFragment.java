@@ -1,15 +1,17 @@
 package com.example.libraapplication.Fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,27 +25,34 @@ import java.util.ArrayList;
 
 public class CaseFragment extends Fragment {
 
-    private ImageView btnAddCase;
+    private Button btnAddCase;
     private ArrayList<CaseModel> mCaseList;
     private RecyclerView recyclerView;
     private CaseAdapter caseAdapter;
+    private Toolbar mToolbar;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.case_fragment,null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.case_fragment, null);
         btnAddCase = view.findViewById(R.id.add_case_button);
         recyclerView = view.findViewById(R.id.recycler_case_view);
         mCaseList = new ArrayList<>();
 
-        btnAddCase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent caseActivityIntent = new Intent(getActivity(), AddCaseActivity.class);
-                startActivity(caseActivityIntent);
-            }
+        mToolbar = view.findViewById(R.id.my_toolbar);
+
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
+        mToolbar.setTitle("Cases");
+        getActivity().setActionBar(mToolbar);
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        btnAddCase.setOnClickListener(view1 -> {
+            Intent caseActivityIntent = new Intent(getActivity(), AddCaseActivity.class);
+            startActivity(caseActivityIntent);
         });
 
 
@@ -116,10 +125,11 @@ public class CaseFragment extends Fragment {
         caseModel6.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel6);
 
-        caseAdapter = new CaseAdapter(getActivity(),mCaseList);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        caseAdapter = new CaseAdapter(getActivity(), mCaseList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(caseAdapter);
         return view;
 
     }
+
 }

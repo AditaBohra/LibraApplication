@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.CaseDetailsActivity"></activity>
+        <activity android:name=".Activity.CaseDetailsActivity"
+            android:theme="@style/LoginTheme"></activity>
         <activity android:name=".Activity.AddCaseActivity" />
         <activity
             android:name=".Activity.HomeActivity"

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +14,19 @@ import com.example.libraapplication.R;
 
 public class AlertFragment extends Fragment {
 
+    Toolbar mToolbar;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_fragment,null);
+
+
+        mToolbar = view.findViewById(R.id.my_toolbar);
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
+        mToolbar.setTitle("Alerts");
+        getActivity().setActionBar(mToolbar);
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         return view;
     }
 }

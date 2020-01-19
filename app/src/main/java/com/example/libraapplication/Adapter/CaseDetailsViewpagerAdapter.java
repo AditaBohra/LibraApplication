@@ -6,13 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.libraapplication.Fragment.AppointmentFragment;
 import com.example.libraapplication.Fragment.TasksFragment;
 import com.example.libraapplication.Fragment.TimelineFragment;
 
 public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {
 
-    private String[] tabTitles = new String[]{"Timeline", "Docs","Notes","Notify"};
+    private String[] tabTitles = new String[]{"Timeline","Notify"};
 
     public CaseDetailsViewpagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -26,10 +25,6 @@ public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {
                 return new TimelineFragment();
             case 1:
                 return new TasksFragment();
-            case 2:
-                return new AppointmentFragment();
-            case 3:
-                return new AppointmentFragment();
             default:
                 throw new IllegalArgumentException();
         }
@@ -37,7 +32,7 @@ public class CaseDetailsViewpagerAdapter  extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
     @Nullable
