@@ -3,9 +3,9 @@ package com.example.libraapplication.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,8 +33,8 @@ public class CaseDetailsActivity extends AppCompatActivity {
         mToolbar.setTitle("Case Details");
         mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
 
-        setActionBar(mToolbar);
-        Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(mToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         HearingModel hearingModel = (HearingModel) getIntent().getSerializableExtra("bundle");
         CaseDetailsFragment caseDetailsFragment = new CaseDetailsFragment();

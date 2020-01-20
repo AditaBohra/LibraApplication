@@ -1,7 +1,6 @@
 package com.example.libraapplication.Activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -45,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
@@ -53,12 +52,4 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                loadFragment(new TabFragment());
-        }
-        return true;
-    }
 }

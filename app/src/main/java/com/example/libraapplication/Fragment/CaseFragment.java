@@ -1,22 +1,22 @@
 package com.example.libraapplication.Fragment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Activity.AddCaseActivity;
+import com.example.libraapplication.Activity.HomeActivity;
 import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
@@ -32,7 +32,6 @@ public class CaseFragment extends Fragment {
     private Toolbar mToolbar;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,9 +45,10 @@ public class CaseFragment extends Fragment {
 
         mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
         mToolbar.setTitle("Cases");
-        getActivity().setActionBar(mToolbar);
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(v -> ((HomeActivity) getActivity()).loadFragment(new TabFragment()));
 
         btnAddCase.setOnClickListener(view1 -> {
             Intent caseActivityIntent = new Intent(getActivity(), AddCaseActivity.class);
