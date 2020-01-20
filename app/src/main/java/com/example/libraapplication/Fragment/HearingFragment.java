@@ -130,8 +130,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container, fragment);
-        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }

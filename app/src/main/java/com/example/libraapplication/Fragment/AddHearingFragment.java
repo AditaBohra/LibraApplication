@@ -1,7 +1,7 @@
 package com.example.libraapplication.Fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.libraapplication.AddJudgeDialog;
 import com.example.libraapplication.CalenderBox;
@@ -65,6 +67,16 @@ public class AddHearingFragment extends Fragment implements AddJudgeDialog.UpDat
                 window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             }
         });
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                loadFragment(new TabFragment());
+                return true;
+            }
+            return false;
+        });
         return  view;
     }
 
@@ -78,4 +90,14 @@ public class AddHearingFragment extends Fragment implements AddJudgeDialog.UpDat
     public void updateJudgeList(ArrayList<String> judgesList) {
         this.judges_list = judgesList;
     }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
+    }
+
+
 }
