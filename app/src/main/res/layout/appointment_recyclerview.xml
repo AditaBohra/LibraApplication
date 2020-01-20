@@ -55,14 +55,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/display_date_text" />
 
             <TextView
-                android:id="@+id/display_task_assignto_text"
+                android:id="@+id/display_apt_clientname_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="assignto"
+                android:text="client name"
                 android:textColor="@color/black"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/display_task_desc_text" />
+
+            <TextView
+                android:id="@+id/display_apt_clientmbno_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="client mb no"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_apt_clientname_text" />
+
+            <TextView
+                android:id="@+id/display_apt_client_email_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="client email"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_apt_clientmbno_text" />
 
             <ImageView
                 android:id="@+id/img_delete"

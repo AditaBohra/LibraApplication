@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,13 +16,15 @@ import androidx.annotation.NonNull;
 
 import com.example.libraapplication.Database.AppointmentDBHelper;
 
-public class AppointmentDialogBox extends Dialog
-{
+public class AppointmentDialogBox extends Dialog {
     private Context mContext;
-    private EditText edit_task_title;
-    private TextView button_save;
-    private TextView add_date_text;
-
+    private EditText edit_appointment_title;
+    private EditText edit_appointment_desc;
+    private EditText edit_appointment_date;
+    private EditText edit_appointment_clientName;
+    private EditText edit_appointment_clientMobile;
+    private EditText edit_appointment_clientEmail;
+    private Button button_save;
     private AppointmentDBHelper dbHelper;
     private CalenderBox mCalenderBox;
     private String calenderDate;
@@ -35,26 +38,39 @@ public class AppointmentDialogBox extends Dialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.task_dialog);
+        setContentView(R.layout.appointment_dialog);
         mCalenderBox = new CalenderBox(mContext);
 
         dbHelper = new AppointmentDBHelper(mContext);
         dbHelper.getReadableDatabase();
 
-        edit_task_title = findViewById(R.id.edit_task_title);
+        edit_appointment_title = findViewById(R.id.edit_appointment_title);
+        edit_appointment_desc = findViewById(R.id.edit_appointment_desc);
+        edit_appointment_date = findViewById(R.id.edit_appointment_date);
+        edit_appointment_clientName = findViewById(R.id.edit_apt_client_name);
+        edit_appointment_clientMobile = findViewById(R.id.edit_apt_client_mb_no);
+        edit_appointment_clientEmail = findViewById(R.id.edit_apt_client_email);
+
+
         button_save = findViewById(R.id.button_save);
-        add_date_text = findViewById(R.id.add_date_text);
-
-
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.saveData(edit_task_title.getText().toString(),calenderDate);
+                dbHelper.saveData(edit_appointment_title.getText().toString(), edit_appointment_desc.getText().toString()
+                        , calenderDate, edit_appointment_clientName.getText().toString(), edit_appointment_clientMobile.getText().toString(),
+                        edit_appointment_clientEmail.getText().toString());
+
+                edit_appointment_title.setText("");
+                edit_appointment_desc.setText("");
+                edit_appointment_date.setText("");
+                edit_appointment_clientEmail.setText("");
+                edit_appointment_clientName.setText("");
+                edit_appointment_clientMobile.setText("");
                 dismiss();
             }
         });
 
-        add_date_text.setOnClickListener(new View.OnClickListener() {
+        edit_appointment_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCalenderBox.show();
@@ -66,9 +82,9 @@ public class AppointmentDialogBox extends Dialog
         mCalenderBox.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage",Context.MODE_PRIVATE);
-                calenderDate = sharedPreferences.getString("date",null);
-                add_date_text.setText(calenderDate);
+                SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage", Context.MODE_PRIVATE);
+                calenderDate = sharedPreferences.getString("date", null);
+                edit_appointment_date.setText(calenderDate);
             }
         });
 

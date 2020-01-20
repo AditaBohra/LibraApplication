@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.libraapplication.Model.AppointmentModel;
 import com.example.libraapplication.Model.TaskModel;
 
 import java.util.ArrayList;
@@ -24,41 +25,48 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE "+tablename+" (title TEXT, date TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE " + tablename + " (title TEXT, description TEXT, date TEXT, client_name TEXT, client_mobile TEXT, client_email TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String querry = "DROP TABLE IF EXISTS "+tablename;
+        String querry = "DROP TABLE IF EXISTS " + tablename;
         sqLiteDatabase.execSQL(querry);
         onCreate(sqLiteDatabase);
     }
 
-    public void saveData(String title, String date){
+    public void saveData(String title, String desc, String date, String clientName, String clientMobile, String clientEmail) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", title);
+        contentValues.put("description", desc);
         contentValues.put("date", date);
+        contentValues.put("client_name", clientName);
+        contentValues.put("client_mobile", clientMobile);
+        contentValues.put("client_email", clientEmail);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.insert(tablename,null,contentValues);
+        sqLiteDatabase.insert(tablename, null, contentValues);
     }
 
-    public ArrayList<TaskModel> getData()
-    {
-        String querry = "SELECT * FROM "+tablename;
+    public ArrayList<AppointmentModel> getData() {
+        String querry = "SELECT * FROM " + tablename;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(querry,null);
+        Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
 
-        ArrayList<TaskModel> arrayList = new ArrayList<>();
+        ArrayList<AppointmentModel> arrayList = new ArrayList<>();
 
-        if (cursor != null)
-        {
+        if (cursor != null) {
             cursor.moveToFirst();
-            do{
-                TaskModel taskModel = new TaskModel();
-                taskModel.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                taskModel.setDate(cursor.getString(cursor.getColumnIndex("date")));
-                arrayList.add(taskModel);
-            }while (cursor.moveToNext());
+            do {
+                AppointmentModel appointmentModel = new AppointmentModel();
+                appointmentModel.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                appointmentModel.setDesc(cursor.getString(cursor.getColumnIndex("description")));
+                appointmentModel.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                appointmentModel.setClientName(cursor.getString(cursor.getColumnIndex("client_name")));
+                appointmentModel.setClientMbNo(cursor.getString(cursor.getColumnIndex("client_mobile")));
+                appointmentModel.setClientEmail(cursor.getString(cursor.getColumnIndex("client_email")));
+                arrayList.add(appointmentModel);
+
+            } while (cursor.moveToNext());
             cursor.close();
         }
         return arrayList;

@@ -1,9 +1,11 @@
 package com.example.libraapplication.Model;
 
-public class TaskModel
-{
+public class TaskModel {
     private String title;
+    private String desc;
     private String date;
+    private String assignto;
+
 
     public String getTitle() {
         return title;
@@ -19,5 +21,21 @@ public class TaskModel
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getAssignto() {
+        return assignto;
+    }
+
+    public void setAssignto(String assignto) {
+        this.assignto = assignto;
     }
 }

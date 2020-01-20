@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -17,8 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.libraapplication.Adapter.AppointmentListAdapter;
 import com.example.libraapplication.AppointmentDialogBox;
 import com.example.libraapplication.Database.AppointmentDBHelper;
+import com.example.libraapplication.Model.AppointmentModel;
 import com.example.libraapplication.R;
 import com.example.libraapplication.Adapter.TaskListAdapter;
 import com.example.libraapplication.Model.TaskModel;
@@ -27,10 +31,10 @@ import java.util.ArrayList;
 
 public class AppointmentFragment extends Fragment {
 
-    private TaskListAdapter mAppointmentListAdapter;
+    private AppointmentListAdapter mAppointmentListAdapter;
     private RecyclerView mAppointmentRecyclerView;
     private Button mAddAppointmentButton;
-    private ArrayList<TaskModel> mAppointmentList;
+    private ArrayList<AppointmentModel> mAppointmentList;
     private AppointmentDBHelper dbHelper;
     private AppointmentDialogBox mDialogBox;
 
@@ -61,6 +65,8 @@ public class AppointmentFragment extends Fragment {
         mAddAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Window window = mDialogBox.getWindow();
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 mDialogBox.show();
             }
         });
@@ -82,7 +88,7 @@ public class AppointmentFragment extends Fragment {
         mAppointmentList = dbHelper.getData();
         if (!mAppointmentList.isEmpty()) {
             mAppointmentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-            mAppointmentListAdapter = new TaskListAdapter(getActivity(), mAppointmentList);
+            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), mAppointmentList);
             mAppointmentRecyclerView.setAdapter(mAppointmentListAdapter);
         }
     }

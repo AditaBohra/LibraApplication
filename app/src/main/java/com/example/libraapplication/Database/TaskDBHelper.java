@@ -24,7 +24,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE "+tablename+" (title TEXT, date TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE "+tablename+" (title TEXT, description TEXT, date TEXT, assignto TEXT)");
     }
 
     @Override
@@ -34,10 +34,12 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void saveData(String title, String date){
+    public void saveData(String title, String desc, String date, String assignto){
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", title);
+        contentValues.put("description", desc);
         contentValues.put("date", date);
+        contentValues.put("assignto", assignto);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.insert(tablename,null,contentValues);
     }
@@ -56,7 +58,9 @@ public class TaskDBHelper extends SQLiteOpenHelper {
             do{
                 TaskModel taskModel = new TaskModel();
                 taskModel.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                taskModel.setDesc(cursor.getString(cursor.getColumnIndex("description")));
                 taskModel.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                taskModel.setAssignto(cursor.getString(cursor.getColumnIndex("assignto")));
                 arrayList.add(taskModel);
             }while (cursor.moveToNext());
             cursor.close();
