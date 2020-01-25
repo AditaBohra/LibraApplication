@@ -18,10 +18,16 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<CaseModel> caseList;
+    private CaseClickListener caseClickListener;
 
-    public CaseAdapter(Context context, ArrayList<CaseModel> caseList) {
+    public interface CaseClickListener{
+        public void onCaseClick(CaseModel caseModel);
+    }
+
+    public CaseAdapter(Context context, ArrayList<CaseModel> caseList, CaseClickListener caseClickListener) {
         this.context = context;
         this.caseList = caseList;
+        this.caseClickListener = caseClickListener;
     }
 
     @NonNull
@@ -40,6 +46,12 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
         holder.courtName_text.setText(caseModel.getCourtName());
         holder.status_text.setText(caseModel.getStatus());
         holder.hearingDate_text.setText(caseModel.getHearingDate());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                caseClickListener.onCaseClick(caseModel);
+            }
+        });
     }
 
     @Override
@@ -57,7 +69,6 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             party1_text = itemView.findViewById(R.id.party1_text);
             party2_text = itemView.findViewById(R.id.party2_text);
             status_text = itemView.findViewById(R.id.status_text);

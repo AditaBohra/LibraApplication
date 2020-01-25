@@ -45,9 +45,6 @@ public class CaseDetailsActivity extends AppCompatActivity {
         court_party_name.setText(String.format("%s\nVS %s", hearingModel.getParty1(), hearingModel.getParty2()));
         courtname.setText(hearingModel.getParty2());
 
-
-
-
         loadFragment(caseDetailsFragment);
 
 

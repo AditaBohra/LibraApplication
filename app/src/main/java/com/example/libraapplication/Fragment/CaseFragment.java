@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Activity.AddCaseActivity;
+import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Activity.HomeActivity;
 import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
@@ -23,7 +24,7 @@ import com.example.libraapplication.R;
 
 import java.util.ArrayList;
 
-public class CaseFragment extends Fragment {
+public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListener {
 
     private Button btnAddCase;
     private ArrayList<CaseModel> mCaseList;
@@ -125,11 +126,17 @@ public class CaseFragment extends Fragment {
         caseModel6.setHearingDate("Next Hearing: 12 Jan 2020");
         mCaseList.add(caseModel6);
 
-        caseAdapter = new CaseAdapter(getActivity(), mCaseList);
+        caseAdapter = new CaseAdapter(getActivity(), mCaseList,this);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(caseAdapter);
         return view;
 
     }
 
+    @Override
+    public void onCaseClick(CaseModel caseModel) {
+        Intent caseDetailsActivityIntent = new Intent(getActivity(), CaseDetailsActivity.class);
+        caseDetailsActivityIntent.putExtra("bundle",caseModel);
+        startActivity(caseDetailsActivityIntent);
+    }
 }
