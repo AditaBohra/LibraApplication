@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +20,17 @@ import java.util.ArrayList;
 public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentListAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<AppointmentModel> mTaskList;
+    private AppointmentClickListener appointmentClickListener;
 
+    public interface AppointmentClickListener{
+        void onEditClick(AppointmentModel appointmentModel);
+        void onDeleteClick(AppointmentModel appointmentModel);
+    }
 
-    public AppointmentListAdapter(Context context, ArrayList<AppointmentModel> taskList) {
+    public AppointmentListAdapter(Context context, ArrayList<AppointmentModel> taskList, AppointmentClickListener appointmentClickListener) {
         mContext = context;
         mTaskList = taskList;
+        this.appointmentClickListener = appointmentClickListener;
     }
 
     @NonNull
@@ -42,6 +49,20 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         holder.clientName.setText("Client Name : " + appointmentModel.getClientName());
         holder.clientMbNo.setText("Client Mobile : " + appointmentModel.getClientMbNo());
         holder.clientEmail.setText("Client Email : " + appointmentModel.getClientEmail());
+
+        holder.editApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appointmentClickListener.onEditClick(appointmentModel);
+            }
+        });
+
+        holder.deleteApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appointmentClickListener.onDeleteClick(appointmentModel);
+            }
+        });
     }
 
     @Override
@@ -57,6 +78,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         private TextView clientMbNo;
         private TextView clientEmail;
 
+        private ImageView editApp;
+        private ImageView deleteApp;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.text_title);
@@ -65,6 +89,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             clientName = itemView.findViewById(R.id.display_apt_clientname_text);
             clientMbNo = itemView.findViewById(R.id.display_apt_clientmbno_text);
             clientEmail = itemView.findViewById(R.id.display_apt_client_email_text);
+
+            editApp = itemView.findViewById(R.id.img_edit);
+            deleteApp = itemView.findViewById(R.id.img_delete);
         }
     }
 }

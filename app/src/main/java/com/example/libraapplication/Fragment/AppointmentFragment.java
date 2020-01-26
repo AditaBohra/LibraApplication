@@ -27,7 +27,7 @@ import com.example.libraapplication.R;
 
 import java.util.ArrayList;
 
-public class AppointmentFragment extends Fragment {
+public class AppointmentFragment extends Fragment implements AppointmentListAdapter.AppointmentClickListener, AppointmentDialogBox.AppointmentDismissListener {
 
     private AppointmentListAdapter mAppointmentListAdapter;
     private RecyclerView mAppointmentRecyclerView;
@@ -45,7 +45,6 @@ public class AppointmentFragment extends Fragment {
         mAddAppointmentButton = view.findViewById(R.id.add_appointment_button);
         mAppointmentList = new ArrayList<>();
         dbHelper = new AppointmentDBHelper(getActivity());
-        mDialogBox = new AppointmentDialogBox(getActivity());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED)
         {
@@ -63,31 +62,57 @@ public class AppointmentFragment extends Fragment {
         mAddAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Window window = mDialogBox.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                mDialogBox.show();
+                createAppointment();
             }
         });
 
-        mDialogBox.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                try {
-                    getTaskData();
-                }
-                catch (Exception e){
-                }
-            }
-        });
         return view;
+    }
+
+    private void createAppointment() {
+        mDialogBox = new AppointmentDialogBox(getActivity(),this);
+        openAppointmentDialog();
+    }
+
+    private void openAppointmentDialog() {
+        Window window = mDialogBox.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        mDialogBox.show();
     }
 
     private void getTaskData() {
         mAppointmentList = dbHelper.getData();
         if (!mAppointmentList.isEmpty()) {
             mAppointmentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), mAppointmentList);
+            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), mAppointmentList,this);
             mAppointmentRecyclerView.setAdapter(mAppointmentListAdapter);
+        }
+    }
+
+    @Override
+    public void onEditClick(AppointmentModel appointmentModel) {
+        mDialogBox = new AppointmentDialogBox(getActivity(), appointmentModel,this);
+        openAppointmentDialog();
+    }
+
+    @Override
+    public void onDeleteClick(AppointmentModel appointmentModel) {
+        dbHelper.deleteAppointmentData(appointmentModel.getTitle());
+        try {
+            getTaskData();
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onApptDismiss() {
+        try {
+            getTaskData();
+        }
+        catch (Exception e){
+
         }
     }
 }

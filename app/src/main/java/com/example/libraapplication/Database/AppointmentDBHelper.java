@@ -47,6 +47,12 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.insert(tablename, null, contentValues);
     }
 
+    public void deleteAppointmentData(String myTitle){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + tablename+ " WHERE title"+"='"+myTitle+"'");
+        db.close();
+    }
+
     public ArrayList<AppointmentModel> getData() {
         String querry = "SELECT * FROM " + tablename;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();

@@ -97,7 +97,6 @@ public class TasksFragment extends Fragment implements TaskListAdapter.TaskClick
 
     @Override
     public void onDeleteClick(TaskModel taskModel) {
-        Toast.makeText(getActivity(), "Delete Clicked", Toast.LENGTH_SHORT).show();
         dbHelper.deleteTaskData(taskModel.getTitle());
         try {
             getTaskData();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.libraapplication.Database.AppointmentDBHelper;
+import com.example.libraapplication.Model.AppointmentModel;
 
 public class AppointmentDialogBox extends Dialog {
     private Context mContext;
@@ -29,10 +30,25 @@ public class AppointmentDialogBox extends Dialog {
     private AppointmentDBHelper dbHelper;
     private CalenderBox mCalenderBox;
     private String calenderDate;
+    private AppointmentModel appointmentModel;
+    private boolean isFromEdit;
+    private AppointmentDismissListener appointmentDismissListener;
 
-    public AppointmentDialogBox(@NonNull Context context) {
+    public interface AppointmentDismissListener{
+        void onApptDismiss();
+    }
+    public AppointmentDialogBox(@NonNull Context context, AppointmentDismissListener appointmentDismissListener) {
         super(context);
         mContext = context;
+        this.appointmentDismissListener = appointmentDismissListener;
+    }
+
+    public AppointmentDialogBox(@NonNull Context context, AppointmentModel appointmentModel, AppointmentDismissListener appointmentDismissListener) {
+        super(context);
+        mContext = context;
+        this.appointmentModel = appointmentModel;
+        isFromEdit = true;
+        this.appointmentDismissListener = appointmentDismissListener;
     }
 
     @Override
@@ -52,6 +68,15 @@ public class AppointmentDialogBox extends Dialog {
         edit_appointment_clientMobile = findViewById(R.id.edit_apt_client_mb_no);
         edit_appointment_clientEmail = findViewById(R.id.edit_apt_client_email);
 
+        if (appointmentModel != null){
+            edit_appointment_title.setText(appointmentModel.getTitle());
+            edit_appointment_desc.setText(appointmentModel.getDesc());
+            edit_appointment_date.setText(appointmentModel.getDate());
+            edit_appointment_clientName.setText(appointmentModel.getClientName());
+            edit_appointment_clientMobile.setText(appointmentModel.getClientMbNo());
+            edit_appointment_clientEmail.setText(appointmentModel.getClientEmail());
+        }
+
 
         button_save = findViewById(R.id.button_save);
         button_save.setOnClickListener(new View.OnClickListener() {
@@ -62,12 +87,16 @@ public class AppointmentDialogBox extends Dialog {
                     Toast.makeText(mContext, "Please fill form completely..", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+                    if (isFromEdit){
+                        dbHelper.deleteAppointmentData(appointmentModel.getTitle());
+                    }
+                    dbHelper.saveData(edit_appointment_title.getText().toString(), edit_appointment_desc.getText().toString()
+                            , edit_appointment_date.getText().toString(), edit_appointment_clientName.getText().toString(), edit_appointment_clientMobile.getText().toString(),
+                            edit_appointment_clientEmail.getText().toString());
+                    clearEditBoxes();
+                    dismiss();
+                    appointmentDismissListener.onApptDismiss();
                 }
-                dbHelper.saveData(edit_appointment_title.getText().toString(), edit_appointment_desc.getText().toString()
-                        , calenderDate, edit_appointment_clientName.getText().toString(), edit_appointment_clientMobile.getText().toString(),
-                        edit_appointment_clientEmail.getText().toString());
-                clearEditBoxes();
-                dismiss();
             }
         });
 
