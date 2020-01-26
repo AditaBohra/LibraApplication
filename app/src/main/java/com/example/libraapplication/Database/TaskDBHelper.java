@@ -34,6 +34,17 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public void updateTaskData(TaskModel taskModel){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("UPDATE "+tablename+" SET title = "+"'"+taskModel.getTitle()+"' "+ "WHERE title = "+"'"+taskModel.getTitle()+"'");
+    }
+
+    public void deleteTaskData(String myTitle){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + tablename+ " WHERE title"+"='"+myTitle+"'");
+        db.close();
+    }
+
     public void saveData(String title, String desc, String date, String assignto){
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", title);

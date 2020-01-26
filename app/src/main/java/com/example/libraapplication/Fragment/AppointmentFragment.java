@@ -24,8 +24,6 @@ import com.example.libraapplication.AppointmentDialogBox;
 import com.example.libraapplication.Database.AppointmentDBHelper;
 import com.example.libraapplication.Model.AppointmentModel;
 import com.example.libraapplication.R;
-import com.example.libraapplication.Adapter.TaskListAdapter;
-import com.example.libraapplication.Model.TaskModel;
 
 import java.util.ArrayList;
 

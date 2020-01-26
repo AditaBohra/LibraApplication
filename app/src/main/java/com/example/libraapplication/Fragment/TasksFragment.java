@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,7 @@ import com.example.libraapplication.Model.TaskModel;
 
 import java.util.ArrayList;
 
-public class TasksFragment extends Fragment {
+public class TasksFragment extends Fragment implements TaskListAdapter.TaskClickListener, TaskDialogBox.TaskDismissListener {
     private TaskListAdapter mTaskListAdapter;
     private RecyclerView mTaskListRecyclerView;
     private Button mAddTaskButton;
@@ -44,7 +45,6 @@ public class TasksFragment extends Fragment {
         mAddTaskButton = view.findViewById(R.id.add_task_button);
         mTaskList = new ArrayList<>();
         dbHelper = new TaskDBHelper(getActivity());
-        mDialogBox = new TaskDialogBox(getActivity());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED)
         {
@@ -62,33 +62,58 @@ public class TasksFragment extends Fragment {
         mAddTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Window window = mDialogBox.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                mDialogBox.show();
-            }
-        });
-
-        mDialogBox.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                try {
-                    getTaskData();
-                }
-                catch (Exception e){
-
-                }
+                createTask();
             }
         });
 
         return view;
     }
 
+    private void createTask() {
+        mDialogBox = new TaskDialogBox(getActivity(), this);
+        openTaskDialog();
+    }
+
+    private void openTaskDialog() {
+        Window window = mDialogBox.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        mDialogBox.show();
+    }
+
     private void getTaskData() {
         mTaskList = dbHelper.getData();
         if (!mTaskList.isEmpty()) {
             mTaskListRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-            mTaskListAdapter = new TaskListAdapter(getActivity(), mTaskList);
+            mTaskListAdapter = new TaskListAdapter(getActivity(), mTaskList,this);
             mTaskListRecyclerView.setAdapter(mTaskListAdapter);
+        }
+    }
+
+    @Override
+    public void onEditClick(TaskModel taskModel) {
+        mDialogBox = new TaskDialogBox(getActivity(),taskModel, this);
+        openTaskDialog();
+    }
+
+    @Override
+    public void onDeleteClick(TaskModel taskModel) {
+        Toast.makeText(getActivity(), "Delete Clicked", Toast.LENGTH_SHORT).show();
+        dbHelper.deleteTaskData(taskModel.getTitle());
+        try {
+            getTaskData();
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onTaskDismiss() {
+        try {
+            getTaskData();
+        }
+        catch (Exception e){
+
         }
     }
 }
