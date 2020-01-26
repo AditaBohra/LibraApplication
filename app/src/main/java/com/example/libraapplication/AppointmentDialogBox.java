@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -56,16 +57,16 @@ public class AppointmentDialogBox extends Dialog {
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (checkValidation()) {
+                    Toast.makeText(mContext, "Please fill form completely..", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                }
                 dbHelper.saveData(edit_appointment_title.getText().toString(), edit_appointment_desc.getText().toString()
                         , calenderDate, edit_appointment_clientName.getText().toString(), edit_appointment_clientMobile.getText().toString(),
                         edit_appointment_clientEmail.getText().toString());
-
-                edit_appointment_title.setText("");
-                edit_appointment_desc.setText("");
-                edit_appointment_date.setText("");
-                edit_appointment_clientEmail.setText("");
-                edit_appointment_clientName.setText("");
-                edit_appointment_clientMobile.setText("");
+                clearEditBoxes();
                 dismiss();
             }
         });
@@ -89,5 +90,25 @@ public class AppointmentDialogBox extends Dialog {
         });
 
     }
+
+    private boolean checkValidation() {
+        if (edit_appointment_title.getText().toString().isEmpty() || edit_appointment_desc.getText().toString().isEmpty() ||
+                edit_appointment_clientName.getText().toString().isEmpty() || edit_appointment_clientMobile.getText().toString().isEmpty()
+                || edit_appointment_clientEmail.getText().toString().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void clearEditBoxes() {
+        edit_appointment_title.setText("");
+        edit_appointment_desc.setText("");
+        edit_appointment_date.setText("");
+        edit_appointment_clientEmail.setText("");
+        edit_appointment_clientName.setText("");
+        edit_appointment_clientMobile.setText("");
+    }
+
 
 }

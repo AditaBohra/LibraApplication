@@ -1,6 +1,8 @@
 package com.example.libraapplication.Model;
 
-public class CaseModel {
+import java.io.Serializable;
+
+public class CaseModel implements Serializable {
     private String party1;
     private String party2;
     private String status;

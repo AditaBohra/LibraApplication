@@ -22,6 +22,7 @@ import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListener {

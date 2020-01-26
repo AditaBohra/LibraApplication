@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -52,15 +53,21 @@ public class TaskDialogBox extends Dialog
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.saveData(edit_task_title.getText().toString(),edit_task_desc.getText().toString(),
-                        calenderDate,edit_assignto.getText().toString());
-                edit_task_title.setText("");
-                edit_add_date.setText("");
-                edit_task_desc.setText("");
-                edit_assignto.setText("");
-                dismiss();
+                if (checkValidation()){
+                    Toast.makeText(mContext, "Please fill form completely..", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    dbHelper.saveData(edit_task_title.getText().toString(),edit_task_desc.getText().toString(),
+                            calenderDate,edit_assignto.getText().toString());
+                    clearEditBoxes();
+                    dismiss();
+                }
+
+
             }
         });
+
 
         edit_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +86,23 @@ public class TaskDialogBox extends Dialog
                 edit_add_date.setText(calenderDate);
             }
         });
+    }
+
+    private boolean checkValidation() {
+        if (edit_task_title.getText().toString().isEmpty() || edit_add_date.getText().toString().isEmpty() ||
+        edit_assignto.getText().toString().isEmpty() || edit_task_desc.getText().toString().isEmpty()){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void clearEditBoxes(){
+        edit_task_title.setText("");
+        edit_add_date.setText("");
+        edit_task_desc.setText("");
+        edit_assignto.setText("");
     }
 
 
