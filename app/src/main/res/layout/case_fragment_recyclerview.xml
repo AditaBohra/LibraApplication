@@ -35,7 +35,6 @@
                 android:padding="5dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Pending"
                 android:textColor="@color/black"
                 android:textSize="10sp"
                 app:layout_constraintRight_toRightOf="parent"

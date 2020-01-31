@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.libraapplication.Adapter.CaseDetailsViewpagerAdapter;
-import com.example.libraapplication.Model.HearingModel;
+import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,7 +30,7 @@ public class CaseDetailsFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         if(getArguments() != null){
-            HearingModel hearingModel = (HearingModel) getArguments().getSerializable("bundle");
+            CaseModel  caseModel = (CaseModel) getArguments().getSerializable("bundle");
         }
 
 

@@ -59,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = mFireBaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     Toast.makeText(LoginActivity.this, "User Authorized", Toast.LENGTH_SHORT).show();
+                    if(firebaseAuth.getCurrentUser() != null){
+                        Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(dashBoardIntent);
+                    }
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }

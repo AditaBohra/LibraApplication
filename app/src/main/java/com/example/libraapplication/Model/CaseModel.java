@@ -9,6 +9,13 @@ public class CaseModel implements Serializable {
     private String caseNo;
     private String courtName;
     private String hearingDate;
+    private String judgeName;
+    private String lawyer;
+    private String team;
+
+    public CaseModel() {
+
+    }
 
     public String getParty1() {
         return party1;
@@ -57,4 +64,29 @@ public class CaseModel implements Serializable {
     public void setHearingDate(String hearingDate) {
         this.hearingDate = hearingDate;
     }
+
+    public String getJudgeName() {
+        return judgeName;
+    }
+
+    public void setJudgeName(String judgeName) {
+        this.judgeName = judgeName;
+    }
+
+    public String getLawyer() {
+        return lawyer;
+    }
+
+    public void setLawyer(String lawyer) {
+        this.lawyer = lawyer;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
 }

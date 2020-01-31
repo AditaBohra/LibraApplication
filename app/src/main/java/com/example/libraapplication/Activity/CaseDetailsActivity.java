@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.libraapplication.Fragment.CaseDetailsFragment;
-import com.example.libraapplication.Model.HearingModel;
+import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
 
 import java.util.Objects;
@@ -36,14 +36,14 @@ public class CaseDetailsActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        HearingModel hearingModel = (HearingModel) getIntent().getSerializableExtra("bundle");
+        CaseModel caseModel = (CaseModel) getIntent().getSerializableExtra("bundle");
         CaseDetailsFragment caseDetailsFragment = new CaseDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bundle", hearingModel);
+        bundle.putSerializable("bundle", caseModel);
         caseDetailsFragment.setArguments(bundle);
 
-        court_party_name.setText(String.format("%s\nVS %s", hearingModel.getParty1(), hearingModel.getParty2()));
-        courtname.setText(hearingModel.getParty2());
+        court_party_name.setText(String.format("%s\nVS %s", caseModel.getParty1(), caseModel.getParty2()));
+        courtname.setText(caseModel.getParty2());
 
         loadFragment(caseDetailsFragment);
 

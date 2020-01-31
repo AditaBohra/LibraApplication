@@ -2,6 +2,7 @@ package com.example.libraapplication.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,13 @@ import com.example.libraapplication.Activity.HomeActivity;
 import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListener {
@@ -32,6 +38,8 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
     private RecyclerView recyclerView;
     private CaseAdapter caseAdapter;
     private Toolbar mToolbar;
+    private FirebaseDatabase mDatabase;
+    public static final String TAG = CaseFragment.class.getSimpleName();
 
 
     @Nullable
@@ -57,82 +65,42 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
             startActivity(caseActivityIntent);
         });
 
-
-        CaseModel caseModel = new CaseModel();
-        caseModel.setParty1("Vashi Police Station");
-        caseModel.setParty2("Gangaram RamSingh Verma");
-        caseModel.setCaseNo("R.C.C./1100095/2002");
-        caseModel.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel.setStatus("Pending");
-        caseModel.setHearingDate("Next Hearing: 12 Jan 2020");
-        mCaseList.add(caseModel);
+        createView();
 
 
-        CaseModel caseModel1 = new CaseModel();
-        caseModel1.setParty1("Vashi Police Station");
-        caseModel1.setParty2("Gangaram RamSingh Verma");
-        caseModel1.setCaseNo("R.C.C./1100095/2002");
-        caseModel1.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel1.setStatus("Pending");
-        caseModel1.setHearingDate("Next Hearing: 12 Jan 2020");
-        mCaseList.add(caseModel1);
-
-
-        CaseModel caseModel2 = new CaseModel();
-        caseModel2.setParty1("Vashi Police Station");
-        caseModel2.setParty2("Gangaram RamSingh Verma");
-        caseModel2.setCaseNo("R.C.C./1100095/2002");
-        caseModel2.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel2.setStatus("Pending");
-        caseModel2.setHearingDate("Next Hearing: 12 Jan 2020");
-        mCaseList.add(caseModel2);
-
-
-        CaseModel caseModel3 = new CaseModel();
-        caseModel3.setParty1("Vashi Police Station");
-        caseModel3.setParty2("Gangaram RamSingh Verma");
-        caseModel3.setCaseNo("R.C.C./1100095/2002");
-        caseModel3.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel3.setHearingDate("Next Hearing: 12 Jan 2020");
-        caseModel3.setStatus("Pending");
-        mCaseList.add(caseModel3);
-
-
-        CaseModel caseModel4 = new CaseModel();
-        caseModel4.setParty1("Vashi Police Station");
-        caseModel4.setParty2("Gangaram RamSingh Verma");
-        caseModel4.setCaseNo("R.C.C./1100095/2002");
-        caseModel4.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel4.setStatus("Pending");
-        caseModel4.setHearingDate("Next Hearing: 12 Jan 2020");
-        mCaseList.add(caseModel4);
-
-
-        CaseModel caseModel5 = new CaseModel();
-        caseModel5.setParty1("Vashi Police Station");
-        caseModel5.setParty2("Gangaram RamSingh Verma");
-        caseModel5.setCaseNo("R.C.C./1100095/2002");
-        caseModel5.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel5.setStatus("Pending");
-        caseModel5.setHearingDate("Next Hearing: 12 Jan 2020");
-        mCaseList.add(caseModel5);
-
-
-        CaseModel caseModel6 = new CaseModel();
-        caseModel6.setParty1("Vashi Police Station");
-        caseModel6.setParty2("Gangaram RamSingh Verma");
-        caseModel6.setCaseNo("R.C.C./1100095/2002");
-        caseModel6.setCourtName("Civil Court Junior Division, Vashi");
-        caseModel6.setStatus("Pending");
-        caseModel6.setHearingDate("Next Hearing: 12 Jan 2020");
-        mCaseList.add(caseModel6);
-
-        caseAdapter = new CaseAdapter(getActivity(), mCaseList,this);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        recyclerView.setAdapter(caseAdapter);
         return view;
 
     }
+
+    private void createView(){
+        mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef = mDatabase.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Cases");
+        mDatabaseRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).keepSynced(true);
+        caseAdapter = new CaseAdapter(getActivity(), mCaseList, this);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        recyclerView.setAdapter(caseAdapter);
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    CaseModel caseModel = dataSnapshot1.getValue(CaseModel.class);
+                    if(caseModel != null ) {
+                        mCaseList.add(caseModel);
+                    }
+                }
+                caseAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, databaseError.getMessage());
+                //Do nothing
+            }
+        });
+    }
+
 
     @Override
     public void onCaseClick(CaseModel caseModel) {
@@ -140,4 +108,5 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
         caseDetailsActivityIntent.putExtra("bundle",caseModel);
         startActivity(caseDetailsActivityIntent);
     }
+
 }

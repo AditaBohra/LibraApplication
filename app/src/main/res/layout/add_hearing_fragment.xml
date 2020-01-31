@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:editable="false"
+        android:inputType="date"
         android:background="@drawable/editext_rounded_shape"
         android:hint="Select Hearing Date"
         android:padding="16dp"
