@@ -42,11 +42,11 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         HearingModel hearingModel = mCaseList.get(position);
-        holder.party1Text.setText(hearingModel.getParty1());
-        holder.party2Text.setText(hearingModel.getParty2());
-        holder.t1.setText(hearingModel.getText1());
-        holder.t2.setText(hearingModel.getText2());
-        holder.t3.setText(hearingModel.getText3());
+        if(hearingModel != null) {
+            holder.room_tv.setText(hearingModel.getCategory());
+            holder.judge_tv.setText(hearingModel.getJudge_name());
+            holder.date_tv.setText(hearingModel.getHearing_date());
+        }
 
         holder.itemView.setOnClickListener( v -> {
             mListener.onItemClick(hearingModel);
@@ -60,21 +60,19 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView party1Text;
-        TextView party2Text;
-        TextView t1;
-        TextView t2;
-        TextView t3;
+        TextView room_tv;
+        TextView judge_tv;
+        TextView date_tv;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            party1Text = itemView.findViewById(R.id.state_text_name);
-            party2Text = itemView.findViewById(R.id.vs_text_name);
-            t1 = itemView.findViewById(R.id.t1);
-            t2 = itemView.findViewById(R.id.t2);
-            t3 = itemView.findViewById(R.id.t3);
+            room_tv = itemView.findViewById(R.id.room_text_name_hearing);
+            judge_tv = itemView.findViewById(R.id.judge_text_name_hearing);
+            date_tv = itemView.findViewById(R.id.hearing_date);
 
         }
     }
+
 
 }

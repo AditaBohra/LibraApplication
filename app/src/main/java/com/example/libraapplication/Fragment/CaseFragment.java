@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListener {
 
@@ -49,7 +50,7 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.case_fragment, null);
         btnAddCase = view.findViewById(R.id.add_case_button);
         recyclerView = view.findViewById(R.id.recycler_case_view);
-        mCaseList = new ArrayList<>();
+
 
         mToolbar = view.findViewById(R.id.my_toolbar);
 
@@ -74,22 +75,24 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
 
     private void createView(){
         mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabaseRef = mDatabase.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Cases");
-        mDatabaseRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).keepSynced(true);
-        caseAdapter = new CaseAdapter(getActivity(), mCaseList, this);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        recyclerView.setAdapter(caseAdapter);
+        DatabaseReference mDatabaseRef = mDatabase.getReference()
+                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("Cases");
+
+
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mCaseList = new ArrayList<>();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     CaseModel caseModel = dataSnapshot1.getValue(CaseModel.class);
                     if(caseModel != null ) {
                         mCaseList.add(caseModel);
                     }
                 }
-                caseAdapter.notifyDataSetChanged();
+                caseAdapter = new CaseAdapter(getActivity(), mCaseList, CaseFragment.this);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                recyclerView.setAdapter(caseAdapter);
 
             }
 

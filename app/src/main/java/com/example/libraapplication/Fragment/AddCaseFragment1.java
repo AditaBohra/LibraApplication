@@ -95,7 +95,7 @@ public class AddCaseFragment1 extends Fragment {
 
 
             mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-                    .child("Cases").push().setValue(caseModel);
+                    .child("Cases").child(caseModel.getCaseNo()).setValue(caseModel);
 
             if (getActivity() != null) {
                 getActivity().finish();

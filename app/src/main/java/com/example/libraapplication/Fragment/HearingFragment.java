@@ -19,8 +19,15 @@ import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Adapter.HearingAdapter;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HearingFragment extends Fragment implements HearingAdapter.OnItemClickListener
 {
@@ -28,6 +35,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
     private HearingAdapter mHearingAdapter;
     private ArrayList<HearingModel> mHearingList;
     private ImageView addHearingButton;
+    private FirebaseDatabase mDatabase;
 
     @Nullable
     @Override
@@ -35,7 +43,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.hearing_fragment,null);
 
-        mHearingList = new ArrayList<>();
+
         mCaseListrecyclerView = view.findViewById(R.id.recycler_hearing_view);
         addHearingButton = view.findViewById(R.id.add_hearing_button);
 
@@ -47,77 +55,38 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
             }
         });
 
-        HearingModel hearingModel = new HearingModel();
-        hearingModel.setParty1("Vashi Police Station");
-        hearingModel.setParty2("Gangaram RamSingh Verma");
-        hearingModel.setText1("R.C.C./1100095/2002");
-        hearingModel.setText2("Civil Court Junior Division, Vashi");
-        hearingModel.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel);
+        mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef = mDatabase.getReference()
+                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("hearings");
 
 
-        HearingModel hearingModel1 = new HearingModel();
-        hearingModel1.setParty1("Vashi Police Station");
-        hearingModel1.setParty2("Gangaram RamSingh Verma");
-        hearingModel1.setText1("R.C.C./1100095/2002");
-        hearingModel1.setText2("Civil Court Junior Division, Vashi");
-        hearingModel1.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel1);
+
+        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
-        HearingModel hearingModel2 = new HearingModel();
-        hearingModel2.setParty1("Vashi Police Station");
-        hearingModel2.setParty2("Gangaram RamSingh Verma");
-        hearingModel2.setText1("R.C.C./1100095/2002");
-        hearingModel2.setText2("Civil Court Junior Division, Vashi");
-        hearingModel2.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel2);
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mHearingList = new ArrayList<>();
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    HearingModel hearingModel = dataSnapshot1.getValue(HearingModel.class);
+                    if(hearingModel != null){
+                        mHearingList.add(hearingModel);
+                    }
 
+                }
+                mHearingAdapter = new HearingAdapter(getActivity(), mHearingList, HearingFragment.this);
+                mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                mCaseListrecyclerView.setAdapter(mHearingAdapter);
 
-        HearingModel hearingModel3 = new HearingModel();
-        hearingModel3.setParty1("Vashi Police Station");
-        hearingModel3.setParty2("Gangaram RamSingh Verma");
-        hearingModel3.setText1("R.C.C./1100095/2002");
-        hearingModel3.setText2("Civil Court Junior Division, Vashi");
-        hearingModel3.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel3);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        HearingModel hearingModel4 = new HearingModel();
-        hearingModel4.setParty1("Vashi Police Station");
-        hearingModel4.setParty2("Gangaram RamSingh Verma");
-        hearingModel4.setText1("R.C.C./1100095/2002");
-        hearingModel4.setText2("Civil Court Junior Division, Vashi");
-        hearingModel4.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel4);
-
-
-        HearingModel hearingModel5 = new HearingModel();
-        hearingModel5.setParty1("Vashi Police Station");
-        hearingModel5.setParty2("Gangaram RamSingh Verma");
-        hearingModel5.setText1("R.C.C./1100095/2002");
-        hearingModel5.setText2("Civil Court Junior Division, Vashi");
-        hearingModel5.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel5);
-
-
-        HearingModel hearingModel6 = new HearingModel();
-        hearingModel6.setParty1("Vashi Police Station");
-        hearingModel6.setParty2("Gangaram RamSingh Verma");
-        hearingModel6.setText1("R.C.C./1100095/2002");
-        hearingModel6.setText2("Civil Court Junior Division, Vashi");
-        hearingModel6.setText3("12th Jt. C.j.j.d And J.m.f.c Vashi Navi Mumbai");
-        mHearingList.add(hearingModel6);
-
-        setCaseListAdapter();
+            }
+        });
 
         return view;
-    }
-
-    private void setCaseListAdapter() {
-        mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        mHearingAdapter = new HearingAdapter(getActivity(), mHearingList,this);
-        mCaseListrecyclerView.setAdapter(mHearingAdapter);
     }
 
     @Override
@@ -130,7 +99,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.add(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }

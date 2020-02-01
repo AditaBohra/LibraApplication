@@ -3,50 +3,44 @@ package com.example.libraapplication.Model;
 import java.io.Serializable;
 
 public class HearingModel implements Serializable {
-    private String party1;
-    private String party2;
-    private String text1;
-    private String text2;
-    private String text3;
+    private String judge_name;
+    private String hearing_date;
+    private String category;
+    private String case_no;
 
-    public String getParty1() {
-        return party1;
+    public HearingModel() {
     }
 
-    public void setParty1(String party1) {
-        this.party1 = party1;
+
+    public String getJudge_name() {
+        return judge_name;
     }
 
-    public String getParty2() {
-        return party2;
+    public void setJudge_name(String judge_name) {
+        this.judge_name = judge_name;
     }
 
-    public void setParty2(String party2) {
-        this.party2 = party2;
+    public String getHearing_date() {
+        return hearing_date;
     }
 
-    public String getText1() {
-        return text1;
+    public void setHearing_date(String hearing_date) {
+        this.hearing_date = hearing_date;
     }
 
-    public void setText1(String text1) {
-        this.text1 = text1;
+    public String getCategory() {
+        return category;
     }
 
-    public String getText2() {
-        return text2;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setText2(String text2) {
-        this.text2 = text2;
+    public String getCase_no() {
+        return case_no;
     }
 
-    public String getText3() {
-        return text3;
+    public void setCase_no(String case_no) {
+        this.case_no = case_no;
     }
-
-    public void setText3(String text3) {
-        this.text3 = text3;
-    }
-
 }

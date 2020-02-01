@@ -13,6 +13,7 @@ public class CaseModel implements Serializable {
     private String lawyer;
     private String team;
 
+
     public CaseModel() {
 
     }
