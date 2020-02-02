@@ -23,14 +23,17 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
     private final OnItemClickListener mListener;
     private List<HearingModel> mHearingModelList = new ArrayList<>();
     private CaseModel mCaseModel;
+    private ArrayList<CaseModel> mCaseList;
 
     public HearingAdapter(Context context, List<CaseModel> caseModelList, OnItemClickListener listener) {
+        mCaseList = new ArrayList<>();
         mContext = context;
         mCaseModelList = caseModelList;
         mListener = listener;
 
-        for(CaseModel caseModel: mCaseModelList){
+        for (CaseModel caseModel : mCaseModelList) {
             mCaseModel = caseModel;
+            mCaseList.add(caseModel);
             mHearingModelList.addAll(caseModel.getHearingModels());
         }
 
@@ -49,16 +52,23 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        HearingModel hearingModel = mHearingModelList.get(position);
 
-            HearingModel hearingModel =  mHearingModelList.get(position);
+
+        for (CaseModel caseModel: mCaseList){
+            if (caseModel.getCaseNo().equals(hearingModel.getCase_no())) {
                 if (hearingModel != null) {
                     holder.category.setText(hearingModel.getCategory());
-                    holder.court_name_tv.setText(mCaseModel.getCourtName());
+                    holder.court_name_tv.setText(caseModel.getCourtName());
                     holder.date_tv.setText(hearingModel.getHearing_date());
-                    holder.party1_tv.setText(mCaseModel.getParty1());
-                    holder.party2_tv.setText(mCaseModel.getParty2());
+                    holder.party1_tv.setText(caseModel.getParty1());
+                    holder.party2_tv.setText(caseModel.getParty2());
                     holder.case_no_tv.setText(hearingModel.getCase_no());
                 }
+            }
+        }
+
+
 
 
         holder.itemView.setOnClickListener(v -> {
@@ -69,10 +79,9 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        if(mHearingModelList != null) {
+        if (mHearingModelList != null) {
             return mHearingModelList.size();
-        }
-        else {
+        } else {
             return mCaseModelList.size();
         }
     }
