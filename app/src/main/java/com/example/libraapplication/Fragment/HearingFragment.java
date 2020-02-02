@@ -74,18 +74,22 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
                 List<CaseModel> caseModelList = new ArrayList<>();
                 CaseModel caseModel;
                 mHearingList = new ArrayList<>();
+                List<HearingModel> tempHearing = null;
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    caseModel = dataSnapshot1.getValue(CaseModel.class);
                     if(dataSnapshot1.hasChild("hearings")) {
+                        mHearingList.clear();
+                        caseModel = dataSnapshot1.getValue(CaseModel.class);
                         for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("hearings").getChildren()) {
                             HearingModel hearingModel = dataSnapshot2.getValue(HearingModel.class);
                             if (hearingModel != null) {
                                 mHearingList.add(hearingModel);
+                                 tempHearing = new ArrayList<>(mHearingList);
+
                             }
                         }
 
                         if (caseModel != null) {
-                            caseModel.setHearings(mHearingList);
+                            caseModel.setHearings(tempHearing);
                             caseModelList.add(caseModel);
                         }
                     }
