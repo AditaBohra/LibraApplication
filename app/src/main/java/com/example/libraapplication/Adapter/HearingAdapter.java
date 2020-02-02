@@ -55,14 +55,12 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
         for (CaseModel caseModel : mCaseList) {
             mCaseModel = caseModel;
             if (caseModel.getCaseNo().equals(hearingModel.getCase_no())) {
-                if (hearingModel != null) {
                     holder.category.setText(hearingModel.getCategory());
                     holder.court_name_tv.setText(caseModel.getCourtName());
                     holder.date_tv.setText(hearingModel.getHearing_date());
                     holder.party1_tv.setText(caseModel.getParty1());
                     holder.party2_tv.setText(caseModel.getParty2());
                     holder.case_no_tv.setText(hearingModel.getCase_no());
-                }
             }
         }
 
