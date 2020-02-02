@@ -12,6 +12,7 @@ import com.example.libraapplication.Fragment.SelectRoleFragment;
 
 public class RegistrationActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

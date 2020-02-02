@@ -36,13 +36,13 @@ public class TaskDialogBox extends Dialog {
         void onTaskDismiss();
     }
     public TaskDialogBox(@NonNull Context context, TaskDismissListener taskDismissListener) {
-        super(context);
+        super(context,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
         mContext = context;
         this.taskDismissListener = taskDismissListener;
     }
 
     public TaskDialogBox(@NonNull Context context, TaskModel taskModel, TaskDismissListener taskDismissListener) {
-        super(context);
+        super(context,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
         mContext = context;
         this.taskModel = taskModel;
         this.taskDismissListener = taskDismissListener;
@@ -96,8 +96,6 @@ public class TaskDialogBox extends Dialog {
             @Override
             public void onClick(View view) {
                 mCalenderBox.show();
-                Window window = mCalenderBox.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             }
         });
 

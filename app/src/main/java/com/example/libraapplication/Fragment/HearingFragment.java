@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Adapter.HearingAdapter;
 import com.example.libraapplication.Model.HearingModel;
+import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +37,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
     private ArrayList<HearingModel> mHearingList;
     private ImageView addHearingButton;
     private FirebaseDatabase mDatabase;
+    private ProgressDialogData progressDialogData;
 
     @Nullable
     @Override
@@ -43,7 +45,8 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.hearing_fragment,null);
 
-
+        progressDialogData = new ProgressDialogData(getActivity());
+        progressDialogData.show();
         mCaseListrecyclerView = view.findViewById(R.id.recycler_hearing_view);
         addHearingButton = view.findViewById(R.id.add_hearing_button);
 
@@ -77,6 +80,8 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
                 mHearingAdapter = new HearingAdapter(getActivity(), mHearingList, HearingFragment.this);
                 mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 mCaseListrecyclerView.setAdapter(mHearingAdapter);
+
+                progressDialogData.dismiss();
 
             }
 

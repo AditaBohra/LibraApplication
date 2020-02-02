@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Activity.HomeActivity;
 import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +44,7 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
     private Toolbar mToolbar;
     private FirebaseDatabase mDatabase;
     public static final String TAG = CaseFragment.class.getSimpleName();
-
+    private ProgressDialogData progressDialogData;
 
     @Nullable
     @Override
@@ -51,6 +54,8 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
         btnAddCase = view.findViewById(R.id.add_case_button);
         recyclerView = view.findViewById(R.id.recycler_case_view);
 
+        progressDialogData = new ProgressDialogData(getActivity());
+        progressDialogData.show();
 
         mToolbar = view.findViewById(R.id.my_toolbar);
 
@@ -94,6 +99,7 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 recyclerView.setAdapter(caseAdapter);
 
+                progressDialogData.dismiss();
             }
 
             @Override

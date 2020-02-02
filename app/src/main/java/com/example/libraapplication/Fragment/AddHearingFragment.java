@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.libraapplication.Model.HearingModel;
+import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +47,7 @@ public class AddHearingFragment extends Fragment{
     private static ArrayList<String> caseNoList;
     private static final String TAG = AddHearingFragment.class.getSimpleName();
     private DatabaseReference mDatabaseRef;
+    private ProgressDialogData progressDialogData;
 
 
     @Nullable
@@ -56,9 +58,10 @@ public class AddHearingFragment extends Fragment{
         hearing_date_tv = view.findViewById(R.id.edit_hearing_date);
         continueBtn = view.findViewById(R.id.hearing_continue_btn);
         RadioGroup radioGroup = view.findViewById(R.id.radio_group_category_hearing);
-
         mCalender = Calendar.getInstance();
         Spinner spinner = view.findViewById(R.id.case_no_spinner);
+        progressDialogData = new ProgressDialogData(getActivity());
+        progressDialogData.show();
 
         getSpinnerData(spinner);
 
@@ -142,6 +145,8 @@ public class AddHearingFragment extends Fragment{
                 caseNoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 spinner.setAdapter(caseNoAdapter);
+
+                progressDialogData.dismiss();
             }
 
             @Override

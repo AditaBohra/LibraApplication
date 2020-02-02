@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.libraapplication.Model.LoginModel;
+import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,13 +27,14 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mFireBaseAuth;
     private TextView navigationToRegisterPageText;
     private TextView mForgotpasswordText;
+    private ProgressDialogData progressDialogData;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_login_page);
-
+        progressDialogData = new ProgressDialogData(this);
         mFireBaseAuth = FirebaseAuth.getInstance();
 
         mEmail = findViewById(R.id.edit_emailid);
@@ -62,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(firebaseAuth.getCurrentUser() != null){
                         Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(dashBoardIntent);
+                        finish();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -75,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialogData.show();
                 LoginModel login = new LoginModel();
                 login.setEmail(mEmail.getText().toString());
                 login.setPassword(mPassword.getText().toString());
@@ -90,10 +94,13 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Auth Failed", Toast.LENGTH_SHORT).show();
+                                progressDialogData.dismiss();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(dashBoardIntent);
+                                progressDialogData.dismiss();
+                                finish();
 
                             }
                         }

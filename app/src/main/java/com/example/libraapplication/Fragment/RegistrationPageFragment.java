@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.libraapplication.Activity.LoginActivity;
+import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,7 @@ public class RegistrationPageFragment extends Fragment {
     private TextView mPassTextView;
     private FirebaseAuth mFirebaseAuth;
     private Button mRegisterButton;
+    private ProgressDialogData progressDialogData;
 
     @Nullable
     @Override
@@ -42,8 +44,10 @@ public class RegistrationPageFragment extends Fragment {
         mPassTextView = view.findViewById(R.id.edit_password_register);
         mRegisterButton = view.findViewById(R.id.button_register);
 
+        progressDialogData = new ProgressDialogData(getActivity());
 
         mRegisterButton.setOnClickListener(v -> {
+            progressDialogData.show();
             String emailTxt = mEmailTextView.getText().toString();
             String passTxt = mPassTextView.getText().toString();
             if (emailTxt.isEmpty()) {
@@ -58,7 +62,9 @@ public class RegistrationPageFragment extends Fragment {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (!task.isSuccessful()) {
                                         Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                                        progressDialogData.dismiss();
                                     } else {
+                                        progressDialogData.dismiss();
                                         navigateToLoginActivity();
                                     }
                                 }

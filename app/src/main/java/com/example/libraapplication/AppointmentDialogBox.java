@@ -38,13 +38,13 @@ public class AppointmentDialogBox extends Dialog {
         void onApptDismiss();
     }
     public AppointmentDialogBox(@NonNull Context context, AppointmentDismissListener appointmentDismissListener) {
-        super(context);
+        super(context,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
         mContext = context;
         this.appointmentDismissListener = appointmentDismissListener;
     }
 
     public AppointmentDialogBox(@NonNull Context context, AppointmentModel appointmentModel, AppointmentDismissListener appointmentDismissListener) {
-        super(context);
+        super(context,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
         mContext = context;
         this.appointmentModel = appointmentModel;
         isFromEdit = true;
@@ -104,8 +104,6 @@ public class AppointmentDialogBox extends Dialog {
             @Override
             public void onClick(View view) {
                 mCalenderBox.show();
-                Window window = mCalenderBox.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             }
         });
 
