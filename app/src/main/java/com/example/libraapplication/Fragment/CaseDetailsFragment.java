@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.libraapplication.Adapter.CaseDetailsViewpagerAdapter;
-import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -29,19 +28,9 @@ public class CaseDetailsFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.case_details_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        if(getArguments() != null){
-            CaseModel  caseModel = (CaseModel) getArguments().getSerializable("bundle");
-        }
-
-
         return view;
-
-
-
-
     }
     private void setUpViewPager(ViewPager viewPager) {
-
         CaseDetailsViewpagerAdapter viewPagerAdapter = new CaseDetailsViewpagerAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), 0);
         viewPager.setAdapter(viewPagerAdapter);
     }
