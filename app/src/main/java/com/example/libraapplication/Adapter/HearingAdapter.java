@@ -22,8 +22,8 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
     private Context mContext;
     private final OnItemClickListener mListener;
     private List<HearingModel> mHearingModelList = new ArrayList<>();
-    private CaseModel mCaseModel;
     private ArrayList<CaseModel> mCaseList;
+    private CaseModel mCaseModel = new CaseModel();
 
     public HearingAdapter(Context context, List<CaseModel> caseModelList, OnItemClickListener listener) {
         mCaseList = new ArrayList<>();
@@ -32,7 +32,6 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
         mListener = listener;
 
         for (CaseModel caseModel : mCaseModelList) {
-            mCaseModel = caseModel;
             mCaseList.add(caseModel);
             mHearingModelList.addAll(caseModel.getHearingModels());
         }
@@ -53,9 +52,8 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HearingModel hearingModel = mHearingModelList.get(position);
-
-
-        for (CaseModel caseModel: mCaseList){
+        for (CaseModel caseModel : mCaseList) {
+            mCaseModel = caseModel;
             if (caseModel.getCaseNo().equals(hearingModel.getCase_no())) {
                     holder.category.setText(hearingModel.getCategory());
                     holder.court_name_tv.setText(caseModel.getCourtName());
@@ -67,10 +65,12 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
         }
 
 
-
-
         holder.itemView.setOnClickListener(v -> {
-            mListener.onItemClick(mCaseModel);
+            for (CaseModel caseModel : mCaseList) {
+                if (mHearingModelList.get(position).getCase_no().equals(caseModel.getCaseNo())) {
+                    mListener.onItemClick(caseModel);
+                }
+            }
         });
 
     }

@@ -22,12 +22,22 @@ public class CaseDetailsActivity extends AppCompatActivity {
     TextView courtname;
     TextView lawyer;
     Toolbar mToolbar;
+    private OnCaseDetailListener onCaseDetailListener;
+
+    public interface OnCaseDetailListener{
+        public void setCaseDeatails(CaseModel caseModel);
+    }
+
+    public void setOnCaseDetailListener(OnCaseDetailListener listener){
+        onCaseDetailListener = listener;
+        CaseModel caseModel = (CaseModel) getIntent().getSerializableExtra("bundle");
+        onCaseDetailListener.setCaseDeatails(caseModel);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_details);
-
         court_party_name = findViewById(R.id.case_details_name);
         courtname = findViewById(R.id.case_details_court_name);
         lawyer = findViewById(R.id.case_details_lawyer_name);
@@ -40,9 +50,6 @@ public class CaseDetailsActivity extends AppCompatActivity {
 
         CaseModel caseModel = (CaseModel) getIntent().getSerializableExtra("bundle");
         CaseDetailsFragment caseDetailsFragment = new CaseDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bundle", caseModel);
-        caseDetailsFragment.setArguments(bundle);
 
         court_party_name.setText(String.format("%s\nVS %s", caseModel.getParty1(), caseModel.getParty2()));
         courtname.setText(caseModel.getCourtName());
