@@ -1,5 +1,6 @@
 package com.example.libraapplication;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,17 +19,22 @@ import androidx.annotation.NonNull;
 import com.example.libraapplication.Database.AppointmentDBHelper;
 import com.example.libraapplication.Model.AppointmentModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Objects;
+
 public class AppointmentDialogBox extends Dialog {
     private Context mContext;
     private EditText edit_appointment_title;
     private EditText edit_appointment_desc;
-    private EditText edit_appointment_date;
+    private TextView edit_appointment_date;
     private EditText edit_appointment_clientName;
     private EditText edit_appointment_clientMobile;
     private EditText edit_appointment_clientEmail;
     private Button button_save;
     private AppointmentDBHelper dbHelper;
-    private CalenderBox mCalenderBox;
+    private Calendar mCalender;
     private String calenderDate;
     private AppointmentModel appointmentModel;
     private boolean isFromEdit;
@@ -56,7 +62,7 @@ public class AppointmentDialogBox extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.appointment_dialog);
-        mCalenderBox = new CalenderBox(mContext);
+        mCalender = Calendar.getInstance();
 
         dbHelper = new AppointmentDBHelper(mContext);
         dbHelper.getReadableDatabase();
@@ -100,22 +106,34 @@ public class AppointmentDialogBox extends Dialog {
             }
         });
 
-        edit_appointment_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCalenderBox.show();
-            }
-        });
+        DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
+            mCalender.set(Calendar.YEAR, year);
+            mCalender.set(Calendar.MONTH, month);
+            mCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        mCalenderBox.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage", Context.MODE_PRIVATE);
-                calenderDate = sharedPreferences.getString("date", null);
-                edit_appointment_date.setText(calenderDate);
-            }
-        });
+            setDateEditText(edit_appointment_date, mCalender);
+        };
 
+        edit_appointment_date.setOnClickListener(v -> new DatePickerDialog(Objects.requireNonNull(mContext),
+                date, mCalender.get(Calendar.YEAR), mCalender.get(Calendar.MONTH),
+                mCalender.get(Calendar.DAY_OF_MONTH)).show());
+
+//        mCalender.(new OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialogInterface) {
+//                SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage", Context.MODE_PRIVATE);
+//                calenderDate = sharedPreferences.getString("date", null);
+//                edit_appointment_date.setText(calenderDate);
+//            }
+//        });
+
+    }
+
+    private void setDateEditText(TextView case_date, Calendar mCalender) {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        case_date.setText(sdf.format(mCalender.getTime()));
     }
 
     private boolean checkValidation() {
