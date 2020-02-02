@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Adapter.HearingAdapter;
+import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HearingFragment extends Fragment implements HearingAdapter.OnItemClickListener
@@ -60,7 +62,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
 
         mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = mDatabase.getReference()
-                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("hearings");
+                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("Cases");
 
 
 
@@ -69,15 +71,28 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<CaseModel> caseModelList = new ArrayList<>();
+                CaseModel caseModel;
                 mHearingList = new ArrayList<>();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    HearingModel hearingModel = dataSnapshot1.getValue(HearingModel.class);
-                    if(hearingModel != null){
-                        mHearingList.add(hearingModel);
+                    caseModel = dataSnapshot1.getValue(CaseModel.class);
+                    if(dataSnapshot1.hasChild("hearings")) {
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("hearings").getChildren()) {
+                            HearingModel hearingModel = dataSnapshot2.getValue(HearingModel.class);
+                            if (hearingModel != null) {
+                                mHearingList.add(hearingModel);
+                            }
+                        }
+
+                        if (caseModel != null) {
+                            caseModel.setHearings(mHearingList);
+                            caseModelList.add(caseModel);
+                        }
                     }
 
+
                 }
-                mHearingAdapter = new HearingAdapter(getActivity(), mHearingList, HearingFragment.this);
+                mHearingAdapter = new HearingAdapter(getActivity(), caseModelList, HearingFragment.this);
                 mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 mCaseListrecyclerView.setAdapter(mHearingAdapter);
 
@@ -95,9 +110,9 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
     }
 
     @Override
-    public void onItemClick(HearingModel hearingModel) {
+    public void onItemClick(CaseModel caseModel) {
         Intent intent = new Intent(getActivity(), CaseDetailsActivity.class);
-        intent.putExtra("bundle", hearingModel);
+        intent.putExtra("bundle", caseModel);
         startActivity(intent);
     }
 

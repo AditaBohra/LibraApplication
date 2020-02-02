@@ -20,6 +20,7 @@ public class CaseDetailsActivity extends AppCompatActivity {
 
     TextView court_party_name;
     TextView courtname;
+    TextView lawyer;
     Toolbar mToolbar;
 
     @Override
@@ -29,6 +30,7 @@ public class CaseDetailsActivity extends AppCompatActivity {
 
         court_party_name = findViewById(R.id.case_details_name);
         courtname = findViewById(R.id.case_details_court_name);
+        lawyer = findViewById(R.id.case_details_lawyer_name);
         mToolbar = findViewById(R.id.my_toolbar);
         mToolbar.setTitle("Case Details");
         mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
@@ -43,7 +45,8 @@ public class CaseDetailsActivity extends AppCompatActivity {
         caseDetailsFragment.setArguments(bundle);
 
         court_party_name.setText(String.format("%s\nVS %s", caseModel.getParty1(), caseModel.getParty2()));
-        courtname.setText(caseModel.getParty2());
+        courtname.setText(caseModel.getCourtName());
+        lawyer.setText(caseModel.getLawyer());
 
         loadFragment(caseDetailsFragment);
 

@@ -45,8 +45,18 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:textSize="14sp"
-        android:text="Lawyer: J. Ramgopal"
+        android:text="Lawyer: "
         />
+
+    <TextView
+        android:id="@+id/case_details_lawyer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/case_details_court_lawyer"
+        app:layout_constraintTop_toBottomOf="@id/case_details_court_name"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
 
     <TextView
         android:id="@+id/case_details_stage"

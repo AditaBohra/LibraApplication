@@ -111,9 +111,9 @@ public class AddHearingFragment extends Fragment{
 
 
                 mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-                        .child("hearings").push().setValue(hearingModel);
+                        .child("Cases").child(hearingModel.getCase_no()).child("hearings").push().setValue(hearingModel);
 
-                loadFragment(new HearingFragment());
+                loadFragment(new TabFragment());
 
 
 

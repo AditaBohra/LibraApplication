@@ -13,7 +13,17 @@
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent">
 
-
+        <TextView
+            android:id="@+id/date_text_hearing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Bold"
+            android:padding="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/rounded_blue_background"
+            android:textSize="12sp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,79 +37,84 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_blue_background"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="20 May 19"
-        android:layout_marginTop="10dp"
-        android:id="@+id/hearing_date"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:cardCornerRadius="4dp"
-        app:layout_constraintTop_toBottomOf="@+id/hearing_date">
+        app:layout_constraintTop_toBottomOf="@+id/day_date_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+
             <TextView
-                android:id="@+id/hearing_text"
+                android:id="@+id/party_1_text"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hearing"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <TextView
-                android:id="@+id/room_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Room :"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hearing_text" />
+                android:textColor="@android:color/darker_gray"
+                android:id="@+id/radio_group_category_hearing"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:id="@+id/room_text_name_hearing"
+                android:id="@+id/vs_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VS"
+                android:textSize="10sp"
+                android:paddingStart="5dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/party_1_text" />
+
+            <TextView
+                android:id="@+id/party_2_text"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                app:layout_constraintLeft_toRightOf="@+id/room_text"
-                app:layout_constraintTop_toBottomOf="@+id/hearing_text" />
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/vs_text"
+                app:layout_constraintTop_toBottomOf="@+id/party_1_text" />
 
             <TextView
-                android:id="@+id/judge_text"
+                android:id="@+id/case_no_hearing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Judge(s):"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/room_text" />
+                app:layout_constraintTop_toBottomOf="@id/vs_text" />
 
             <TextView
-                android:id="@+id/judge_text_name_hearing"
+                android:id="@+id/court_name_text_hearing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                app:layout_constraintLeft_toRightOf="@+id/judge_text"
-                app:layout_constraintTop_toBottomOf="@id/room_text" />
+                app:layout_constraintLeft_toRightOf="@+id/case_no_hearing"
+                app:layout_constraintTop_toBottomOf="@id/vs_text" />
 
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Last Buisiness Details"
+                android:textColor="@color/blue"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/court_name_text_hearing" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

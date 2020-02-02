@@ -10,25 +10,33 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHolder> {
-    private ArrayList<HearingModel> mCaseList;
+    private List<CaseModel> mCaseModelList;
     private Context mContext;
     private final OnItemClickListener mListener;
+    private List<HearingModel> mHearingModelList;
+    private CaseModel mCaseModel;
 
-    public HearingAdapter(Context context, ArrayList<HearingModel> caseList, OnItemClickListener listener) {
+    public HearingAdapter(Context context, List<CaseModel> caseModelList, OnItemClickListener listener) {
         mContext = context;
-        mCaseList = caseList;
+        mCaseModelList = caseModelList;
         mListener = listener;
+
+        for(CaseModel caseModel: mCaseModelList){
+            mCaseModel = caseModel;
+            mHearingModelList = caseModel.getHearingModels();
+        }
 
     }
 
     public interface OnItemClickListener {
-        void onItemClick(HearingModel hearingModel);
+        void onItemClick(CaseModel caseModel);
     }
 
     @NonNull
@@ -41,35 +49,45 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        HearingModel hearingModel = mCaseList.get(position);
-        if(hearingModel != null) {
-            holder.room_tv.setText(hearingModel.getCategory());
-            holder.judge_tv.setText(hearingModel.getJudge_name());
-            holder.date_tv.setText(hearingModel.getHearing_date());
-        }
+            HearingModel hearingModel =  mHearingModelList.get(position);
+                if (hearingModel != null) {
+                    holder.category.setText(hearingModel.getCategory());
+                    holder.court_name_tv.setText(mCaseModel.getCourtName());
+                    holder.date_tv.setText(hearingModel.getHearing_date());
+                    holder.party1_tv.setText(mCaseModel.getParty1());
+                    holder.party2_tv.setText(mCaseModel.getParty2());
+                    holder.case_no_tv.setText(hearingModel.getCase_no());
+                }
 
-        holder.itemView.setOnClickListener( v -> {
-            mListener.onItemClick(hearingModel);
+
+        holder.itemView.setOnClickListener(v -> {
+            mListener.onItemClick(mCaseModel);
         });
 
     }
 
     @Override
     public int getItemCount() {
-        return mCaseList.size();
+        return mHearingModelList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView room_tv;
-        TextView judge_tv;
+        TextView party1_tv;
+        TextView party2_tv;
+        TextView court_name_tv;
+        TextView case_no_tv;
         TextView date_tv;
+        TextView category;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            room_tv = itemView.findViewById(R.id.room_text_name_hearing);
-            judge_tv = itemView.findViewById(R.id.judge_text_name_hearing);
-            date_tv = itemView.findViewById(R.id.hearing_date);
+            party1_tv = itemView.findViewById(R.id.party_1_text);
+            party2_tv = itemView.findViewById(R.id.party_2_text);
+            date_tv = itemView.findViewById(R.id.date_text_hearing);
+            court_name_tv = itemView.findViewById(R.id.court_name_text_hearing);
+            case_no_tv = itemView.findViewById(R.id.case_no_hearing);
+            category = itemView.findViewById(R.id.radio_group_category_hearing);
 
         }
     }
