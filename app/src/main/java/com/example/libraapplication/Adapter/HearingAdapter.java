@@ -68,7 +68,12 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mHearingModelList.size();
+        if(mHearingModelList != null) {
+            return mHearingModelList.size();
+        }
+        else {
+            return mCaseModelList.size();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
