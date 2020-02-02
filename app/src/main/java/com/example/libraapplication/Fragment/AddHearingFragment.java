@@ -115,8 +115,6 @@ public class AddHearingFragment extends Fragment{
 
                 loadFragment(new TabFragment());
 
-
-
             }
         });
 

@@ -113,9 +113,9 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
 
     @Override
     public void onCaseClick(CaseModel caseModel) {
-        Intent caseDetailsActivityIntent = new Intent(getActivity(), CaseDetailsActivity.class);
-        caseDetailsActivityIntent.putExtra("bundle",caseModel);
-        startActivity(caseDetailsActivityIntent);
+//        Intent caseDetailsActivityIntent = new Intent(getActivity(), CaseDetailsActivity.class);
+//        caseDetailsActivityIntent.putExtra("bundle",caseModel);
+//        startActivity(caseDetailsActivityIntent);
     }
 
 }

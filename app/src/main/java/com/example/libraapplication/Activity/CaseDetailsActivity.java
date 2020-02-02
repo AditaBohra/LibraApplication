@@ -25,13 +25,15 @@ public class CaseDetailsActivity extends AppCompatActivity {
     private OnCaseDetailListener onCaseDetailListener;
 
     public interface OnCaseDetailListener{
-        public void setCaseDeatails(CaseModel caseModel);
+        void setCaseDeatails(CaseModel caseModel);
     }
 
     public void setOnCaseDetailListener(OnCaseDetailListener listener){
-        onCaseDetailListener = listener;
-        CaseModel caseModel = (CaseModel) getIntent().getSerializableExtra("bundle");
-        onCaseDetailListener.setCaseDeatails(caseModel);
+        if (onCaseDetailListener == null){
+            onCaseDetailListener = listener;
+            CaseModel caseModel = (CaseModel) getIntent().getSerializableExtra("bundle");
+            onCaseDetailListener.setCaseDeatails(caseModel);
+        }
     }
 
     @Override
