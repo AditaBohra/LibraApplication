@@ -14,13 +14,14 @@ import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHolder> {
     private List<CaseModel> mCaseModelList;
     private Context mContext;
     private final OnItemClickListener mListener;
-    private List<HearingModel> mHearingModelList;
+    private List<HearingModel> mHearingModelList = new ArrayList<>();
     private CaseModel mCaseModel;
 
     public HearingAdapter(Context context, List<CaseModel> caseModelList, OnItemClickListener listener) {
@@ -30,7 +31,7 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
 
         for(CaseModel caseModel: mCaseModelList){
             mCaseModel = caseModel;
-            mHearingModelList = caseModel.getHearingModels();
+            mHearingModelList.addAll(caseModel.getHearingModels());
         }
 
     }
