@@ -61,6 +61,7 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
                     holder.party1_tv.setText(caseModel.getParty1());
                     holder.party2_tv.setText(caseModel.getParty2());
                     holder.case_no_tv.setText(hearingModel.getCase_no());
+                    holder.judge_name.setText(hearingModel.getJudge_name());
             }
         }
 
@@ -91,7 +92,7 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
         TextView case_no_tv;
         TextView date_tv;
         TextView category;
-
+        TextView judge_name;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,7 +102,7 @@ public class HearingAdapter extends RecyclerView.Adapter<HearingAdapter.ViewHold
             court_name_tv = itemView.findViewById(R.id.court_name_text_hearing);
             case_no_tv = itemView.findViewById(R.id.case_no_hearing);
             category = itemView.findViewById(R.id.radio_group_category_hearing);
-
+            judge_name = itemView.findViewById(R.id.judge_name_text_hearing);
         }
     }
 
