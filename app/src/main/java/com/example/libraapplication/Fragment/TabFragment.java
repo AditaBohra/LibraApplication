@@ -2,6 +2,8 @@ package com.example.libraapplication.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,4 +39,5 @@ public class TabFragment extends Fragment
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), 0);
         viewPager.setAdapter(viewPagerAdapter);
     }
+
 }
