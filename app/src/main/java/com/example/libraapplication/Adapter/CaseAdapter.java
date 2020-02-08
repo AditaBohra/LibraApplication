@@ -1,12 +1,16 @@
 package com.example.libraapplication.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Model.CaseModel;
@@ -44,8 +48,15 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
         holder.party1_text.setText(caseModel.getParty1());
         holder.party2_text.setText(caseModel.getParty2());
         holder.courtName_text.setText(caseModel.getCourtName());
+        if (caseModel.getStatus().contains("Dispose")){
+            holder.status_text.setBackground(ContextCompat.getDrawable(this.context,R.drawable.rounded_button));
+            holder.status_text.setTextColor(Color.WHITE);
+        }
+        else {
+            holder.status_text.setBackground(ContextCompat.getDrawable(this.context,R.drawable.rounded_button_grey));
+        }
         holder.status_text.setText(caseModel.getStatus());
-        holder.hearingDate_text.setText(caseModel.getHearingDate());
+        holder.hearingDate_text.setText("Next Hearing: "+caseModel.getHearingDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

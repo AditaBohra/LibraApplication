@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +32,9 @@ public class AddCaseFragment1 extends Fragment {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
     private Calendar mCalender;
-
+    private EditText case_no, case_court_name, case_edit_judge_name, case_party1, case_party2, case_lawyer, case_team;
+    private RadioGroup case_category;
+    private TextView case_date;
 
     @Nullable
     @Override
@@ -40,15 +43,15 @@ public class AddCaseFragment1 extends Fragment {
 
         Button continueButton = view.findViewById(R.id.continueBtn);
 
-        EditText case_no = view.findViewById(R.id.edit_case_no);
-        EditText case_court_name = view.findViewById(R.id.edit_court_name);
-        EditText case_edit_judge_name = view.findViewById(R.id.edit_judge);
-        EditText case_party1 = view.findViewById(R.id.edit_party1);
-        EditText case_party2 = view.findViewById(R.id.edit_party2);
-        EditText case_lawyer = view.findViewById(R.id.edit_lawyer);
-        EditText case_team = view.findViewById(R.id.edit_select_team);
-        RadioGroup case_category = view.findViewById(R.id.radio_group_category);
-        TextView case_date = view.findViewById(R.id.edit_case_date);
+        case_no = view.findViewById(R.id.edit_case_no);
+        case_court_name = view.findViewById(R.id.edit_court_name);
+        case_edit_judge_name = view.findViewById(R.id.edit_judge);
+        case_party1 = view.findViewById(R.id.edit_party1);
+        case_party2 = view.findViewById(R.id.edit_party2);
+        case_lawyer = view.findViewById(R.id.edit_lawyer);
+        case_team = view.findViewById(R.id.edit_select_team);
+        case_category = view.findViewById(R.id.radio_group_category);
+        case_date = view.findViewById(R.id.edit_case_date);
         mCalender = Calendar.getInstance();
 
         DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
@@ -65,16 +68,36 @@ public class AddCaseFragment1 extends Fragment {
 
 
         continueButton.setOnClickListener(v -> {
-            int id = case_category.getCheckedRadioButtonId();
-            String radioButtonText = ((RadioButton) view.findViewById(id)).getText().toString();
-            String case_number = case_no.getText().toString();
-            String court_name = case_court_name.getText().toString();
-            String case_judge_name = case_edit_judge_name.getText().toString();
-            String party1 = case_party1.getText().toString();
-            String party2 = case_party2.getText().toString();
-            String lawyer = case_lawyer.getText().toString();
-            String team = case_team.getText().toString();
-            String case_date_text = case_date.getText().toString();
+
+            int id;
+            String radioButtonText = null, case_number = null, court_name = null, case_judge_name = null,
+                    party1 = null, party2 = null, lawyer = null, team = null, case_date_text = null;
+            if (case_category.getCheckedRadioButtonId() != -1) {
+                id = case_category.getCheckedRadioButtonId();
+                if (((RadioButton) view.findViewById(id)).getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "Please select case status ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            else {
+                Toast.makeText(getActivity(), "Please select case status ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (isValidateForm()) {
+                id = case_category.getCheckedRadioButtonId();
+                radioButtonText = ((RadioButton) view.findViewById(id)).getText().toString();
+                case_number = case_no.getText().toString();
+                court_name = case_court_name.getText().toString();
+                case_judge_name = case_edit_judge_name.getText().toString();
+                party1 = case_party1.getText().toString();
+                party2 = case_party2.getText().toString();
+                lawyer = case_lawyer.getText().toString();
+                team = case_team.getText().toString();
+                case_date_text = case_date.getText().toString();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter Details..", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
 
             CaseModel caseModel = new CaseModel();
@@ -104,6 +127,16 @@ public class AddCaseFragment1 extends Fragment {
         });
 
         return view;
+    }
+
+    private boolean isValidateForm() {
+        if (!case_no.getText().toString().isEmpty() && !case_court_name.getText().toString().isEmpty() && !case_edit_judge_name.getText().toString().isEmpty()
+                && !case_party1.getText().toString().isEmpty() && !case_party2.getText().toString().isEmpty() && !case_lawyer.getText().toString().isEmpty() &&
+                !case_team.getText().toString().isEmpty() && !case_date.getText().toString().isEmpty() && case_category.getCheckedRadioButtonId() != 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void setDateEditText(TextView case_date, Calendar mCalender) {
