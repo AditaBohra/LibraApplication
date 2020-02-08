@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,7 +49,7 @@ public class AddHearingFragment extends Fragment{
     private static final String TAG = AddHearingFragment.class.getSimpleName();
     private DatabaseReference mDatabaseRef;
     private ProgressDialogData progressDialogData;
-
+    private Spinner spinner;
 
     @Nullable
     @Override
@@ -59,7 +60,7 @@ public class AddHearingFragment extends Fragment{
         continueBtn = view.findViewById(R.id.hearing_continue_btn);
         RadioGroup radioGroup = view.findViewById(R.id.radio_group_category_hearing);
         mCalender = Calendar.getInstance();
-        Spinner spinner = view.findViewById(R.id.case_no_spinner);
+        spinner = view.findViewById(R.id.case_no_spinner);
         progressDialogData = new ProgressDialogData(getActivity());
         progressDialogData.show();
 
@@ -94,11 +95,33 @@ public class AddHearingFragment extends Fragment{
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = radioGroup.getCheckedRadioButtonId();
-                String radioButtonText = ((RadioButton) view.findViewById(id)).getText().toString();
-                String judge = edit_add_judges.getText().toString();
-                String case_no = spinner.getSelectedItem().toString();
-                String hearing_date = hearing_date_tv.getText().toString();
+
+                int id;
+                String radioButtonText, judge, case_no, hearing_date;
+
+                if (radioGroup.getCheckedRadioButtonId() != -1) {
+                    id = radioGroup.getCheckedRadioButtonId();
+                    if (((RadioButton) view.findViewById(id)).getText().toString().isEmpty()) {
+                        Toast.makeText(getActivity(), "Please select case status ", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                else {
+                    Toast.makeText(getActivity(), "Please select case status ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (isValidateForm()) {
+                    id = radioGroup.getCheckedRadioButtonId();
+                    radioButtonText = ((RadioButton) view.findViewById(id)).getText().toString();
+                    judge = edit_add_judges.getText().toString();
+                    case_no = spinner.getSelectedItem().toString();
+                    hearing_date = hearing_date_tv.getText().toString();
+
+                } else {
+                    Toast.makeText(getActivity(), "Please Enter Details..", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 HearingModel hearingModel = new HearingModel();
                 hearingModel.setCase_no(case_no);
@@ -120,6 +143,15 @@ public class AddHearingFragment extends Fragment{
 
 
         return  view;
+    }
+
+    private boolean isValidateForm() {
+        if (!edit_add_judges.getText().toString().isEmpty() && !spinner.getSelectedItem().toString().isEmpty() &&
+                !hearing_date_tv.getText().toString().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void getSpinnerData(Spinner spinner){

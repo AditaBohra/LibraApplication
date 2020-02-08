@@ -132,7 +132,7 @@ public class AddCaseFragment1 extends Fragment {
     private boolean isValidateForm() {
         if (!case_no.getText().toString().isEmpty() && !case_court_name.getText().toString().isEmpty() && !case_edit_judge_name.getText().toString().isEmpty()
                 && !case_party1.getText().toString().isEmpty() && !case_party2.getText().toString().isEmpty() && !case_lawyer.getText().toString().isEmpty() &&
-                !case_team.getText().toString().isEmpty() && !case_date.getText().toString().isEmpty() && case_category.getCheckedRadioButtonId() != 0) {
+                !case_team.getText().toString().isEmpty() && !case_date.getText().toString().isEmpty()) {
             return true;
         } else {
             return false;
