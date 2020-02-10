@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +41,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
     private ImageView addHearingButton;
     private FirebaseDatabase mDatabase;
     private ProgressDialogData progressDialogData;
+    private TextView hearingsEmptyText;
 
     @Nullable
     @Override
@@ -51,7 +53,7 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
         progressDialogData.show();
         mCaseListrecyclerView = view.findViewById(R.id.recycler_hearing_view);
         addHearingButton = view.findViewById(R.id.add_hearing_button);
-
+        hearingsEmptyText = view.findViewById(R.id.hearings_empty_text);
 
         addHearingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +98,16 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
 
 
                 }
-                mHearingAdapter = new HearingAdapter(getActivity(), caseModelList, HearingFragment.this);
-                mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-                mCaseListrecyclerView.setAdapter(mHearingAdapter);
+                if (caseModelList.isEmpty()){
+                    hearingsEmptyText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    hearingsEmptyText.setVisibility(View.GONE);
+                    mHearingAdapter = new HearingAdapter(getActivity(), caseModelList, HearingFragment.this);
+                    mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                    mCaseListrecyclerView.setAdapter(mHearingAdapter);
+                }
+
 
                 progressDialogData.dismiss();
 

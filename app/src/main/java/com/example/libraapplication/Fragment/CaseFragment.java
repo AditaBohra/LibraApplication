@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
     private FirebaseDatabase mDatabase;
     public static final String TAG = CaseFragment.class.getSimpleName();
     private ProgressDialogData progressDialogData;
+    private TextView casesEmptyText;
 
     @Nullable
     @Override
@@ -58,6 +60,7 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
         progressDialogData.show();
 
         mToolbar = view.findViewById(R.id.my_toolbar);
+        casesEmptyText = view.findViewById(R.id.cases_empty_text);
 
         mToolbar.setBackgroundColor(getResources().getColor(R.color.white));
         mToolbar.setTitle("Cases");
@@ -95,9 +98,16 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
                         mCaseList.add(caseModel);
                     }
                 }
-                caseAdapter = new CaseAdapter(getActivity(), mCaseList, CaseFragment.this);
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-                recyclerView.setAdapter(caseAdapter);
+                if (mCaseList.isEmpty()){
+                    casesEmptyText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    casesEmptyText.setVisibility(View.GONE);
+                    caseAdapter = new CaseAdapter(getActivity(), mCaseList, CaseFragment.this);
+                    recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                    recyclerView.setAdapter(caseAdapter);
+                }
+
 
                 progressDialogData.dismiss();
             }
