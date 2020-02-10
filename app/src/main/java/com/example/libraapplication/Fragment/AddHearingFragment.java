@@ -66,10 +66,6 @@ public class AddHearingFragment extends Fragment{
 
         getSpinnerData(spinner);
 
-
-
-
-
         DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
             mCalender.set(Calendar.YEAR, year);
             mCalender.set(Calendar.MONTH, month);
@@ -146,7 +142,7 @@ public class AddHearingFragment extends Fragment{
     }
 
     private boolean isValidateForm() {
-        if (!edit_add_judges.getText().toString().isEmpty() && !spinner.getSelectedItem().toString().isEmpty() &&
+        if (!edit_add_judges.getText().toString().isEmpty() && spinner.getSelectedItem() != null &&
                 !hearing_date_tv.getText().toString().isEmpty()) {
             return true;
         } else {
