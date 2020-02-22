@@ -36,7 +36,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please Click On Add Case Button \n To Add Cases.."
+        android:text="Please Click On Add Case Button to add cases.."
         android:textSize="20sp"
         android:fontFamily="@font/arvo"
         android:id="@+id/cases_empty_text"

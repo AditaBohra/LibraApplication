@@ -52,4 +52,20 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getCurrentFragment() instanceof  CaseFragment || getCurrentFragment()instanceof AlertFragment){
+            loadFragment(new TabFragment());
+        }
+        else {
+            super.onBackPressed();
+        }
+
+    }
+
+    private Fragment getCurrentFragment()
+    {
+        return getSupportFragmentManager()
+                .findFragmentById(R.id.container);
+    }
 }

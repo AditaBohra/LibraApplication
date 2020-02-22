@@ -51,61 +51,45 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        /** @Aditya
-         *  Add comment...
-         */
-        mFireBaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = mFireBaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    Toast.makeText(LoginActivity.this, "User Authorized", Toast.LENGTH_SHORT).show();
-                    if(firebaseAuth.getCurrentUser() != null){
-                        Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(dashBoardIntent);
-                        finish();
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                }
+        FirebaseUser firebaseUser = mFireBaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            if(mFireBaseAuth.getCurrentUser() != null){
+                Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(dashBoardIntent);
+                finish();
             }
-        });
+        }
 
         /**
          *  Handle login functionality using firebase..
          */
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressDialogData.show();
-                LoginModel login = new LoginModel();
-                login.setEmail(mEmail.getText().toString());
-                login.setPassword(mPassword.getText().toString());
-                if (login.getEmail().isEmpty()) {
-                    mEmail.setError("Please Enter Email");
-                    mEmail.requestFocus();
-                } else if (login.getPassword().isEmpty()) {
-                    mPassword.setError("Please Enter Password");
-                    mPassword.requestFocus();
-                } else {
-                    mFireBaseAuth.signInWithEmailAndPassword(login.getEmail(), login.getPassword()).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Auth Failed", Toast.LENGTH_SHORT).show();
-                                progressDialogData.dismiss();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                startActivity(dashBoardIntent);
-                                progressDialogData.dismiss();
-                                finish();
+        mBtnLogin.setOnClickListener(view -> {
+            progressDialogData.show();
+            LoginModel login = new LoginModel();
+            login.setEmail(mEmail.getText().toString());
+            login.setPassword(mPassword.getText().toString());
+            if (login.getEmail().isEmpty()) {
+                mEmail.setError("Please Enter Email");
+                mEmail.requestFocus();
+            } else if (login.getPassword().isEmpty()) {
+                mPassword.setError("Please Enter Password");
+                mPassword.requestFocus();
+            } else {
+                mFireBaseAuth.signInWithEmailAndPassword(login.getEmail(), login.getPassword()).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Please enter correct Email id and Password", Toast.LENGTH_SHORT).show();
+                            progressDialogData.dismiss();
+                        } else {
+                            Intent dashBoardIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(dashBoardIntent);
+                            progressDialogData.dismiss();
+                            finish();
 
-                            }
                         }
-                    });
-                }
+                    }
+                });
             }
         });
 

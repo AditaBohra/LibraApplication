@@ -2,10 +2,12 @@ package com.example.libraapplication.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Objects;
 
@@ -31,6 +35,7 @@ public class RegistrationPageFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth;
     private Button mRegisterButton;
     private ProgressDialogData progressDialogData;
+    private EditText mUsername;
 
     @Nullable
     @Override
@@ -43,6 +48,7 @@ public class RegistrationPageFragment extends Fragment {
         mEmailTextView = view.findViewById(R.id.edit_emailid_register);
         mPassTextView = view.findViewById(R.id.edit_password_register);
         mRegisterButton = view.findViewById(R.id.button_register);
+        mUsername = view.findViewById(R.id.edit_username);
 
         progressDialogData = new ProgressDialogData(getActivity());
 
@@ -50,6 +56,7 @@ public class RegistrationPageFragment extends Fragment {
             progressDialogData.show();
             String emailTxt = mEmailTextView.getText().toString();
             String passTxt = mPassTextView.getText().toString();
+            String userName = mUsername.getText().toString();
             if (emailTxt.isEmpty()) {
                 mEmailTextView.setError("Please Enter Email");
                 mEmailTextView.requestFocus();
@@ -65,6 +72,19 @@ public class RegistrationPageFragment extends Fragment {
                                         progressDialogData.dismiss();
                                     } else {
                                         progressDialogData.dismiss();
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(userName).build();
+                                        if (user != null) {
+                                            user.updateProfile(profileUpdates)
+                                                    .addOnCompleteListener(task1 -> {
+                                                        if (task1.isSuccessful()) {
+                                                            Log.d("Registration Page :", "User profile updated.");
+                                                        }
+                                                    });
+                                        }
+
                                         navigateToLoginActivity();
                                     }
                                 }
