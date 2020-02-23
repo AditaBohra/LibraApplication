@@ -50,6 +50,17 @@
         android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@+id/edit_task_date" />
 
+    <EditText
+        android:id="@+id/edit_add_task_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/editext_rounded_shape"
+        android:hint="Add Note Here.."
+        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_assignto" />
+
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
@@ -60,7 +71,7 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_assignto" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_add_task_note" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

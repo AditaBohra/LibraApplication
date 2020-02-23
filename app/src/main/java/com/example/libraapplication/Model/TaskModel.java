@@ -5,7 +5,7 @@ public class TaskModel {
     private String desc;
     private String date;
     private String assignto;
-
+    private String note;
 
     public String getTitle() {
         return title;
@@ -37,5 +37,13 @@ public class TaskModel {
 
     public void setAssignto(String assignto) {
         this.assignto = assignto;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

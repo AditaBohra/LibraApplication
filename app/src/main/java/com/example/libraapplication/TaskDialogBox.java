@@ -30,11 +30,10 @@ public class TaskDialogBox extends Dialog {
     private TextView edit_add_date;
     private EditText edit_task_desc;
     private EditText edit_assignto;
-
+    private EditText edit_task_note;
     private Button button_save;
     private TaskDBHelper dbHelper;
     private Calendar mCalender;
-    private String calenderDate;
     private TaskDismissListener taskDismissListener;
     private TaskModel taskModel;
     private boolean isFromEdit;
@@ -69,6 +68,7 @@ public class TaskDialogBox extends Dialog {
         edit_add_date = findViewById(R.id.edit_task_date);
         edit_task_desc = findViewById(R.id.edit_task_desc);
         edit_assignto = findViewById(R.id.edit_task_assignto);
+        edit_task_note = findViewById(R.id.edit_add_task_note);
         button_save = findViewById(R.id.button_save);
 
         if (taskModel != null) {
@@ -76,6 +76,7 @@ public class TaskDialogBox extends Dialog {
             edit_add_date.setText(taskModel.getDate());
             edit_task_desc.setText(taskModel.getDesc());
             edit_assignto.setText(taskModel.getAssignto());
+            edit_task_note.setText(taskModel.getNote());
         }
 
         button_save.setOnClickListener(new View.OnClickListener() {
