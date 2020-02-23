@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,12 +26,14 @@ public class TimelineFragment extends Fragment implements CaseDetailsActivity.On
     private ArrayList<Timeline> timelineArrayList = new ArrayList<>();
     private RecyclerView recyclerView;
     private CaseDetailsActivity caseDetailsActivity;
+    private TextView empty_time_line;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.timeline_fragment,null);
         recyclerView = view.findViewById(R.id.timeline_recyclerview);
+        empty_time_line = view.findViewById(R.id.timeline_empty_text);
 
         caseDetailsActivity = (CaseDetailsActivity) getActivity();
         caseDetailsActivity.setOnCaseDetailListener(this);
@@ -45,12 +48,17 @@ public class TimelineFragment extends Fragment implements CaseDetailsActivity.On
 
     @Override
     public void setCaseDeatails(CaseModel caseModel) {
-        for (HearingModel hearingModel: caseModel.getHearingModels()){
-            Timeline timeline = new Timeline();
-            timeline.setJudge_name(hearingModel.getJudge_name());
+        if(caseModel.getHearingModels() != null) {
+            for (HearingModel hearingModel : caseModel.getHearingModels()) {
+                Timeline timeline = new Timeline();
+                timeline.setJudge_name(hearingModel.getJudge_name());
 //                timeline.setRoom_name(hearingModel.);
-            timeline.setDate(hearingModel.getHearing_date());
-            timelineArrayList.add(timeline);
+                timeline.setDate(hearingModel.getHearing_date());
+                timelineArrayList.add(timeline);
+            }
+        }
+        else {
+            empty_time_line.setVisibility(View.VISIBLE);
         }
     }
 }

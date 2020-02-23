@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Activity.AddCaseActivity;
+import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Activity.HomeActivity;
 import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
+import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListener {
@@ -46,6 +49,7 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
     public static final String TAG = CaseFragment.class.getSimpleName();
     private ProgressDialogData progressDialogData;
     private TextView casesEmptyText;
+    CaseModel mCaseModel;
 
     @Nullable
     @Override
@@ -90,12 +94,27 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<HearingModel> mHearingList = new ArrayList<>();
+                List<HearingModel> tempHearing = null;
                 mCaseList = new ArrayList<>();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    CaseModel caseModel = dataSnapshot1.getValue(CaseModel.class);
-                    if(caseModel != null ) {
-                        mCaseList.add(caseModel);
+                    mCaseModel = dataSnapshot1.getValue(CaseModel.class);
+                    if(dataSnapshot1.hasChild("hearings")) {
+                        mHearingList.clear();
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("hearings").getChildren()) {
+                            HearingModel hearingModel = dataSnapshot2.getValue(HearingModel.class);
+                            if (hearingModel != null) {
+                                mHearingList.add(hearingModel);
+                                tempHearing = new ArrayList<>(mHearingList);
+
+                            }
+                        }
+
+                        if (mCaseModel != null) {
+                            mCaseModel.setHearings(tempHearing);
+                        }
                     }
+                    mCaseList.add(mCaseModel);
                 }
                 if (mCaseList.isEmpty()){
                     casesEmptyText.setVisibility(View.VISIBLE);
@@ -129,9 +148,9 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
 
     @Override
     public void onCaseClick(CaseModel caseModel) {
-//        Intent caseDetailsActivityIntent = new Intent(getActivity(), CaseDetailsActivity.class);
-//        caseDetailsActivityIntent.putExtra("bundle",caseModel);
-//        startActivity(caseDetailsActivityIntent);
+        Intent caseDetailsActivityIntent = new Intent(getActivity(), CaseDetailsActivity.class);
+        caseDetailsActivityIntent.putExtra("bundle",caseModel);
+        startActivity(caseDetailsActivityIntent);
     }
 
 }
