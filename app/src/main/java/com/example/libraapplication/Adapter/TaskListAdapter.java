@@ -1,7 +1,6 @@
 package com.example.libraapplication.Adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.libraapplication.R;
 import com.example.libraapplication.Model.TaskModel;
+import com.example.libraapplication.R;
 
 import java.util.ArrayList;
 
@@ -86,4 +85,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             imgDelete = itemView.findViewById(R.id.img_delete);
         }
     }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
 }
