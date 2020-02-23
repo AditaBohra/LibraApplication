@@ -21,12 +21,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Database.TaskDBHelper;
+import com.example.libraapplication.Model.AppointmentModel;
 import com.example.libraapplication.R;
 import com.example.libraapplication.TaskDialogBox;
 import com.example.libraapplication.Adapter.TaskListAdapter;
 import com.example.libraapplication.Model.TaskModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TasksFragment extends Fragment implements TaskListAdapter.TaskClickListener, TaskDialogBox.TaskDismissListener {
     private TaskListAdapter mTaskListAdapter;
@@ -83,6 +86,15 @@ public class TasksFragment extends Fragment implements TaskListAdapter.TaskClick
     private void getTaskData() {
         mTaskList = dbHelper.getData();
         if (!mTaskList.isEmpty()) {
+
+            Collections.sort(mTaskList,Collections.reverseOrder(new Comparator<TaskModel>() {
+                @Override
+                public int compare(TaskModel taskModel, TaskModel t1) {
+                    return taskModel.getDate().compareTo(t1.getDate());
+                }
+            }));
+
+
             mTaskListRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
             mTaskListAdapter = new TaskListAdapter(getActivity(), mTaskList,this);
             mTaskListRecyclerView.setAdapter(mTaskListAdapter);

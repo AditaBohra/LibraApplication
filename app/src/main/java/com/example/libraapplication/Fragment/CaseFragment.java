@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Activity.AddCaseActivity;
-import com.example.libraapplication.Activity.CaseDetailsActivity;
 import com.example.libraapplication.Activity.HomeActivity;
 import com.example.libraapplication.Adapter.CaseAdapter;
 import com.example.libraapplication.Model.CaseModel;
@@ -34,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListener {
@@ -103,6 +102,13 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
                 }
                 else {
                     casesEmptyText.setVisibility(View.GONE);
+                    Collections.sort(mCaseList,Collections.reverseOrder(new Comparator<CaseModel>() {
+                        @Override
+                        public int compare(CaseModel caseModel, CaseModel t1) {
+                            return caseModel.getHearingDate().compareTo(t1.getHearingDate());
+                        }
+                    }));
+
                     caseAdapter = new CaseAdapter(getActivity(), mCaseList, CaseFragment.this);
                     recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                     recyclerView.setAdapter(caseAdapter);

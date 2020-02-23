@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -103,6 +105,14 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
                 }
                 else {
                     hearingsEmptyText.setVisibility(View.GONE);
+
+                    Collections.sort(caseModelList,Collections.reverseOrder(new Comparator<CaseModel>() {
+                        @Override
+                        public int compare(CaseModel caseModel, CaseModel t1) {
+                            return caseModel.getHearingDate().compareTo(t1.getHearingDate());
+                        }
+                    }));
+
                     mHearingAdapter = new HearingAdapter(getActivity(), caseModelList, HearingFragment.this);
                     mCaseListrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                     mCaseListrecyclerView.setAdapter(mHearingAdapter);

@@ -23,9 +23,12 @@ import com.example.libraapplication.Adapter.AppointmentListAdapter;
 import com.example.libraapplication.AppointmentDialogBox;
 import com.example.libraapplication.Database.AppointmentDBHelper;
 import com.example.libraapplication.Model.AppointmentModel;
+import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class AppointmentFragment extends Fragment implements AppointmentListAdapter.AppointmentClickListener, AppointmentDialogBox.AppointmentDismissListener {
 
@@ -83,6 +86,14 @@ public class AppointmentFragment extends Fragment implements AppointmentListAdap
     private void getTaskData() {
         mAppointmentList = dbHelper.getData();
         if (!mAppointmentList.isEmpty()) {
+
+            Collections.sort(mAppointmentList,Collections.reverseOrder(new Comparator<AppointmentModel>() {
+                @Override
+                public int compare(AppointmentModel appointmentModel, AppointmentModel t1) {
+                    return appointmentModel.getDate().compareTo(t1.getDate());
+                }
+            }));
+
             mAppointmentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
             mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), mAppointmentList,this);
             mAppointmentRecyclerView.setAdapter(mAppointmentListAdapter);
