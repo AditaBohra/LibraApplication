@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
          *  Handle login functionality using firebase..
          */
         mBtnLogin.setOnClickListener(view -> {
-            progressDialogData.show();
             LoginModel login = new LoginModel();
             login.setEmail(mEmail.getText().toString());
             login.setPassword(mPassword.getText().toString());
@@ -75,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 mPassword.setError("Please Enter Password");
                 mPassword.requestFocus();
             } else {
+                progressDialogData.show();
                 mFireBaseAuth.signInWithEmailAndPassword(login.getEmail(), login.getPassword()).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
