@@ -52,7 +52,7 @@ public class TimelineFragment extends Fragment implements CaseDetailsActivity.On
             for (HearingModel hearingModel : caseModel.getHearingModels()) {
                 Timeline timeline = new Timeline();
                 timeline.setJudge_name(hearingModel.getJudge_name());
-//                timeline.setRoom_name(hearingModel.);
+                timeline.setRoom_name(caseModel.getCourtName());
                 timeline.setDate(hearingModel.getHearing_date());
                 timelineArrayList.add(timeline);
             }
