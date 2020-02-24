@@ -1,7 +1,6 @@
 package com.example.libraapplication.Fragment;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import com.example.libraapplication.Adapter.AppointmentListAdapter;
 import com.example.libraapplication.AppointmentDialogBox;
 import com.example.libraapplication.Database.AppointmentDBHelper;
 import com.example.libraapplication.Model.AppointmentModel;
-import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.R;
 
 import java.util.ArrayList;
