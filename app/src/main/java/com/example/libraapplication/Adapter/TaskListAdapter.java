@@ -45,7 +45,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         holder.description.setText("Task Description: "+taskModel.getDesc());
         holder.mydate.setText(taskModel.getDate());
         holder.assignTo.setText("Assign To: "+taskModel.getAssignto());
-
+        holder.notes.setText("Note: "+taskModel.getNote());
         holder.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +73,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         private TextView assignTo;
         private ImageView imgEdit;
         private ImageView imgDelete;
+        private TextView notes;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -83,6 +84,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             assignTo = itemView.findViewById(R.id.display_task_assignto_text);
             imgEdit = itemView.findViewById(R.id.img_edit);
             imgDelete = itemView.findViewById(R.id.img_delete);
+            notes = itemView.findViewById(R.id.display_task_notes_text);
         }
     }
     @Override

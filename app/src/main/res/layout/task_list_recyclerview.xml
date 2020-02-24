@@ -64,6 +64,16 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/display_task_desc_text" />
 
+            <TextView
+                android:id="@+id/display_task_notes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="notes"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_task_assignto_text" />
+
             <ImageView
                 android:id="@+id/img_delete"
                 android:layout_width="14dp"
