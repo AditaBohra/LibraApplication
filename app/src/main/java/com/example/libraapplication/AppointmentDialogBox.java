@@ -3,12 +3,9 @@ package com.example.libraapplication;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,8 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.libraapplication.Database.AppointmentDBHelper;
 import com.example.libraapplication.Model.AppointmentModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,12 +32,13 @@ public class AppointmentDialogBox extends Dialog {
     private EditText edit_appointment_clientMobile;
     private EditText edit_appointment_clientEmail;
     private Button button_save;
-    private AppointmentDBHelper dbHelper;
     private Calendar mCalender;
-    private String calenderDate;
     private AppointmentModel appointmentModel;
     private boolean isFromEdit;
     private AppointmentDismissListener appointmentDismissListener;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+
 
     public interface AppointmentDismissListener{
         void onApptDismiss();
@@ -64,9 +64,6 @@ public class AppointmentDialogBox extends Dialog {
         setContentView(R.layout.appointment_dialog);
         mCalender = Calendar.getInstance();
 
-        dbHelper = new AppointmentDBHelper(mContext);
-        dbHelper.getReadableDatabase();
-
         edit_appointment_title = findViewById(R.id.edit_appointment_title);
         edit_appointment_desc = findViewById(R.id.edit_appointment_desc);
         edit_appointment_date = findViewById(R.id.edit_appointment_date);
@@ -88,17 +85,29 @@ public class AppointmentDialogBox extends Dialog {
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mDatabase = FirebaseDatabase.getInstance();
+                mDatabaseRef = mDatabase.getReference();
 
                 if (checkValidation()) {
                     Toast.makeText(mContext, "Please fill form completely..", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     if (isFromEdit){
-                        dbHelper.deleteAppointmentData(appointmentModel.getTitle());
+                        mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
+                                .child("Appointments").child(appointmentModel.getTitle()).removeValue();
                     }
-                    dbHelper.saveData(edit_appointment_title.getText().toString(), edit_appointment_desc.getText().toString()
-                            , edit_appointment_date.getText().toString(), edit_appointment_clientName.getText().toString(), edit_appointment_clientMobile.getText().toString(),
-                            edit_appointment_clientEmail.getText().toString());
+                    else {
+                        appointmentModel = new AppointmentModel();
+                    }
+                    appointmentModel.setTitle(edit_appointment_title.getText().toString());
+                    appointmentModel.setDesc(edit_appointment_desc.getText().toString());
+                    appointmentModel.setClientEmail(edit_appointment_clientEmail.getText().toString());
+                    appointmentModel.setDate(edit_appointment_date.getText().toString());
+                    appointmentModel.setClientName(edit_appointment_clientName.getText().toString());
+                    appointmentModel.setClientMbNo(edit_appointment_clientMobile.getText().toString());
+
+                    mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
+                            .child("Appointments").child(appointmentModel.getTitle()).setValue(appointmentModel);
                     clearEditBoxes();
                     dismiss();
                     appointmentDismissListener.onApptDismiss();
@@ -117,15 +126,6 @@ public class AppointmentDialogBox extends Dialog {
         edit_appointment_date.setOnClickListener(v -> new DatePickerDialog(Objects.requireNonNull(mContext),
                 date, mCalender.get(Calendar.YEAR), mCalender.get(Calendar.MONTH),
                 mCalender.get(Calendar.DAY_OF_MONTH)).show());
-
-//        mCalender.(new OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialogInterface) {
-//                SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage", Context.MODE_PRIVATE);
-//                calenderDate = sharedPreferences.getString("date", null);
-//                edit_appointment_date.setText(calenderDate);
-//            }
-//        });
 
     }
 

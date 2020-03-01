@@ -117,15 +117,6 @@ public class TaskDialogBox extends Dialog {
                 date, mCalender.get(Calendar.YEAR), mCalender.get(Calendar.MONTH),
                 mCalender.get(Calendar.DAY_OF_MONTH)).show());
 
-
-//        mCalenderBox.setOnDismissListener(new OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialogInterface) {
-//                SharedPreferences sharedPreferences = mContext.getSharedPreferences("datestorage", Context.MODE_PRIVATE);
-//                calenderDate = sharedPreferences.getString("date", null);
-//                edit_add_date.setText(calenderDate);
-//            }
-//        });
     }
 
     private void setDateEditText(TextView case_date, Calendar mCalender) {

@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.libraapplication.Model.AppointmentModel;
-import com.example.libraapplication.Model.TaskModel;
 import com.example.libraapplication.R;
 
 import java.util.ArrayList;
@@ -44,25 +43,15 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AppointmentModel appointmentModel = mTaskList.get(position);
         holder.title.setText("Title: " + appointmentModel.getTitle());
-        holder.description.setText("Task Description: " + appointmentModel.getDesc());
+        holder.description.setText("Description: " + appointmentModel.getDesc());
         holder.mydate.setText(appointmentModel.getDate());
         holder.clientName.setText("Client Name : " + appointmentModel.getClientName());
         holder.clientMbNo.setText("Client Mobile : " + appointmentModel.getClientMbNo());
         holder.clientEmail.setText("Client Email : " + appointmentModel.getClientEmail());
 
-        holder.editApp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                appointmentClickListener.onEditClick(appointmentModel);
-            }
-        });
+        holder.editApp.setOnClickListener(view -> appointmentClickListener.onEditClick(appointmentModel));
 
-        holder.deleteApp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                appointmentClickListener.onDeleteClick(appointmentModel);
-            }
-        });
+        holder.deleteApp.setOnClickListener(view -> appointmentClickListener.onDeleteClick(appointmentModel));
     }
 
     @Override
