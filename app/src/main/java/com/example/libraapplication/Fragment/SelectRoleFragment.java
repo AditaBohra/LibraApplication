@@ -94,6 +94,14 @@ public class SelectRoleFragment extends Fragment {
         fragmentTransaction.replace(R.id.registartion_conatiner, fragment);
         fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Bundle bundle = new Bundle();
+        if (isAdvocate){
+            bundle.putString("selectedRole","advocate");
+        }
+        else {
+            bundle.putString("selectedRole","civilian");
+        }
+        fragment.setArguments(bundle);
         fragmentTransaction.commit();
     }
 

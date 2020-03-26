@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.libraapplication.Activity.LoginActivity;
+import com.example.libraapplication.Model.UsersModel;
 import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -36,6 +39,9 @@ public class RegistrationPageFragment extends Fragment {
     private Button mRegisterButton;
     private ProgressDialogData progressDialogData;
     private EditText mUsername;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private String selectedRole;
 
     @Nullable
     @Override
@@ -44,6 +50,8 @@ public class RegistrationPageFragment extends Fragment {
         initView(view);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference();
 
         mEmailTextView = view.findViewById(R.id.edit_emailid_register);
         mPassTextView = view.findViewById(R.id.edit_password_register);
@@ -51,7 +59,8 @@ public class RegistrationPageFragment extends Fragment {
         mUsername = view.findViewById(R.id.edit_username);
 
         progressDialogData = new ProgressDialogData(getActivity());
-
+        Bundle bundle = getArguments();
+        selectedRole = bundle.getString("selectedRole");
         mRegisterButton.setOnClickListener(v -> {
             progressDialogData.show();
             String emailTxt = mEmailTextView.getText().toString();
@@ -84,6 +93,14 @@ public class RegistrationPageFragment extends Fragment {
                                                         }
                                                     });
                                         }
+
+//
+                                        UsersModel usersModel = new UsersModel();
+                                        usersModel.setEuid(user.getUid());
+                                        usersModel.setEmail(user.getEmail());
+                                        usersModel.setSelectedRole(selectedRole);
+                                        usersModel.setUname(userName);
+                                        mDatabaseRef.child("Users").child(user.getUid()).setValue(usersModel);
 
                                         navigateToLoginActivity();
                                     }
