@@ -82,7 +82,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                 try {
                     createMultiChoiceDialog();
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getActivity(), "Wait..", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -104,8 +104,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                     Toast.makeText(getActivity(), "Please select case status ", Toast.LENGTH_SHORT).show();
                     return;
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(getActivity(), "Please select case status ", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -134,6 +133,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             caseModel.setParty2(party2);
             caseModel.setLawyer(lawyer);
             caseModel.setTeam(team);
+            caseModel.setEuidList(euidList);
             if (!radioButtonText.isEmpty()) {
                 caseModel.setStatus(radioButtonText);
             }
@@ -143,9 +143,9 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             mDatabaseRef = mDatabase.getReference();
 
             // Code to set data to all team members..............
-            if (usersModelArrayList.size() > 0){
-                for (String euid : euidList){
-                    if (euid != FirebaseAuth.getInstance().getUid()){
+            if (usersModelArrayList.size() > 0) {
+                for (String euid : euidList) {
+                    if (euid != FirebaseAuth.getInstance().getUid()) {
                         mDatabaseRef.child(euid)
                                 .child("Cases").child(caseModel.getCaseNo()).setValue(caseModel);
                     }
@@ -171,18 +171,24 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         builder.setMultiChoiceItems(userNameList, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
-                if (isChecked){
-                    if (!mSelectedTeamList.contains(position)){
+                if (isChecked) {
+                    if (!mSelectedTeamList.contains(position)) {
                         mSelectedTeamList.add(position);
                         euidList.add(usersModelArrayList.get(position).getEuid());
-                    }
-                    else {
-                        mSelectedTeamList.remove(position);
+                    } else {
+                        for (int i = 0; i < mSelectedTeamList.size(); i++) {
+                            if (mSelectedTeamList.get(i) == position) {
+                                mSelectedTeamList.remove(i);
+                            }
+                        }
                         euidList.remove(usersModelArrayList.get(position).getEuid());
                     }
-                }
-                else{
-                    mSelectedTeamList.remove(position);
+                } else {
+                    for (int i = 0; i < mSelectedTeamList.size(); i++) {
+                        if (mSelectedTeamList.get(i) == position) {
+                            mSelectedTeamList.remove(i);
+                        }
+                    }
                     euidList.remove(usersModelArrayList.get(position).getEuid());
                 }
             }
@@ -192,16 +198,15 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 String item = "";
-                for (int i = 0; i< mSelectedTeamList.size(); i++){
+                for (int i = 0; i < mSelectedTeamList.size(); i++) {
                     item = item + userNameList[mSelectedTeamList.get(i)];
-                    if (i != mSelectedTeamList.size() - 1){
+                    if (i != mSelectedTeamList.size() - 1) {
                         item = item + ", ";
                     }
                 }
-                if (mSelectedTeamList.size() > 0){
+                if (mSelectedTeamList.size() > 0) {
                     mselectedTeamText.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     mselectedTeamText.setVisibility(View.GONE);
                 }
                 mselectedTeamText.setText(item);
@@ -211,10 +216,9 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (mSelectedTeamList.size() > 0){
+                if (mSelectedTeamList.size() > 0) {
                     mselectedTeamText.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     mselectedTeamText.setVisibility(View.GONE);
                 }
                 dialogInterface.dismiss();
@@ -224,7 +228,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                for (int i=0; i < checkedItems.length; i++){
+                for (int i = 0; i < checkedItems.length; i++) {
                     checkedItems[i] = false;
                     mSelectedTeamList.clear();
                     euidList.clear();
@@ -238,8 +242,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         dialog.show();
     }
 
-    public static String[] getStringArray(ArrayList<String> arr)
-    {
+    public static String[] getStringArray(ArrayList<String> arr) {
 
         String str[] = new String[arr.size()];
 
@@ -268,7 +271,6 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
     }
 
 
-
     @Override
     public void getUserList(ArrayList<UsersModel> usersModelArrayList) {
         setTeamListAdapter(usersModelArrayList);
@@ -277,7 +279,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
     void setTeamListAdapter(ArrayList<UsersModel> usersModelArrayList) {
         Toast.makeText(getActivity(), "Data Recieved", Toast.LENGTH_SHORT).show();
         for (UsersModel usersModel : usersModelArrayList) {
-                users.add(usersModel.getUname());
+            users.add(usersModel.getUname());
         }
         this.usersModelArrayList = usersModelArrayList;
         userNameList = getStringArray(users);

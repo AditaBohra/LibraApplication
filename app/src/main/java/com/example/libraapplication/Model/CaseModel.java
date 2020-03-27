@@ -1,6 +1,7 @@
 package com.example.libraapplication.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CaseModel implements Serializable {
@@ -13,6 +14,20 @@ public class CaseModel implements Serializable {
     private String judgeName;
     private String lawyer;
     private String team;
+    private ArrayList<String> EuidList;
+
+    public ArrayList<String> getEuidList() {
+        return EuidList;
+    }
+
+    public void setEuidList(ArrayList<String> euidList) {
+        EuidList = euidList;
+    }
+
+    public List<HearingModel> getHearings() {
+        return hearings;
+    }
+
     private List<HearingModel> hearings;
 
 
