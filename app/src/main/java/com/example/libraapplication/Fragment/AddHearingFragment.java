@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.libraapplication.Model.EuidModel;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
@@ -50,7 +51,7 @@ public class AddHearingFragment extends Fragment{
     private DatabaseReference mDatabaseRef;
     private ProgressDialogData progressDialogData;
     private Spinner spinner;
-
+    ArrayList<String> euids;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -128,7 +129,15 @@ public class AddHearingFragment extends Fragment{
                 mDatabase = FirebaseDatabase.getInstance();
                 mDatabaseRef = mDatabase.getReference();
 
+                if (euids.size() > 0){
+                    for (String euid : euids){
+                        if (!euid.equals(FirebaseAuth.getInstance().getUid())){
+                            mDatabaseRef.child(euid)
+                                    .child("Cases").child(hearingModel.getCase_no()).child("hearings").push().setValue(hearingModel);
+                        }
+                    }
 
+                }
                 mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                         .child("Cases").child(hearingModel.getCase_no()).child("hearings").push().setValue(hearingModel);
 
@@ -165,6 +174,9 @@ public class AddHearingFragment extends Fragment{
                     String caseNumber = dataSnapshot1.getKey();
                     if(caseNumber!= null && !caseNumber.isEmpty()) {
                         caseNoList.add(caseNumber);
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("euids").getChildren()) {
+                           euids = (ArrayList<String>) dataSnapshot2.getValue();
+                        }
                     }
                 }
                 ArrayAdapter<String> caseNoAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),android.R.layout.simple_spinner_item, caseNoList);

@@ -155,6 +155,9 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                     .child("Cases").child(caseModel.getCaseNo()).setValue(caseModel);
 
+            mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
+                    .child("Cases").child(caseModel.getCaseNo()).child("euids").push().setValue(euidList);
+
             if (getActivity() != null) {
                 getActivity().finish();
             }
