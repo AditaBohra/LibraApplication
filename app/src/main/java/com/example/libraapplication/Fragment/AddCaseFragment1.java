@@ -177,12 +177,21 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                         euidList.add(usersModelArrayList.get(position).getEuid());
                     }
                     else {
-                        mSelectedTeamList.remove(position);
+
+                        for (int i = 0; i < mSelectedTeamList.size(); i++) {
+                            if (mSelectedTeamList.get(i) == position) {
+                                mSelectedTeamList.remove(i);
+                            }
+                        }
                         euidList.remove(usersModelArrayList.get(position).getEuid());
                     }
                 }
                 else{
-                    mSelectedTeamList.remove(position);
+                    for (int i = 0; i < mSelectedTeamList.size(); i++) {
+                        if (mSelectedTeamList.get(i) == position) {
+                            mSelectedTeamList.remove(i);
+                        }
+                    }
                     euidList.remove(usersModelArrayList.get(position).getEuid());
                 }
             }
