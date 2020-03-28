@@ -32,7 +32,7 @@ public class TaskDialogBox extends Dialog implements Utility.GetUserModelListLis
     private EditText edit_task_title;
     private TextView edit_add_date, mselectedTeamText;
     private EditText edit_task_desc;
-    private EditText edit_assignto;
+    private TextView edit_assignto;
     private EditText edit_task_note;
     private Button button_save;
     private Calendar mCalender;
