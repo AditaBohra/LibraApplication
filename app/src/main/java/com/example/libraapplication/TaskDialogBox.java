@@ -181,20 +181,12 @@ public class TaskDialogBox extends Dialog implements Utility.GetUserModelListLis
                         euidList.add(usersModelArrayList.get(position).getEuid());
                     }
                     else {
-                        for (int i = 0; i < mSelectedTeamList.size(); i++) {
-                            if (mSelectedTeamList.get(i) == position) {
-                                mSelectedTeamList.remove(i);
-                            }
-                        }
+                        mSelectedTeamList.remove(position);
                         euidList.remove(usersModelArrayList.get(position).getEuid());
                     }
                 }
                 else{
-                    for (int i = 0; i < mSelectedTeamList.size(); i++) {
-                        if (mSelectedTeamList.get(i) == position) {
-                            mSelectedTeamList.remove(i);
-                        }
-                    }
+                    mSelectedTeamList.remove(position);
                     euidList.remove(usersModelArrayList.get(position).getEuid());
                 }
             }
