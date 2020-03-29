@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -44,7 +45,11 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CaseModel caseModel = caseList.get(position);
-        holder.case_no_text.setText(caseModel.getCaseNo());
+        String case_number = caseModel.getCaseNo();
+        if (case_number.contains("_")){
+            case_number = case_number.replaceAll("_","/");
+        }
+        holder.case_no_text.setText(case_number);
         holder.party1_text.setText(caseModel.getParty1());
         holder.party2_text.setText(caseModel.getParty2());
         holder.courtName_text.setText(caseModel.getCourtName());

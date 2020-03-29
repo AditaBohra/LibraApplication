@@ -113,6 +113,10 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                 id = case_category.getCheckedRadioButtonId();
                 radioButtonText = ((RadioButton) view.findViewById(id)).getText().toString();
                 case_number = case_no.getText().toString();
+                if (case_number.contains("/")){
+                    case_number = case_number.replaceAll("/","_");
+                    Toast.makeText(getActivity(), ""+case_number, Toast.LENGTH_SHORT).show();
+                }
                 court_name = case_court_name.getText().toString();
                 case_judge_name = case_edit_judge_name.getText().toString();
                 party1 = case_party1.getText().toString();
