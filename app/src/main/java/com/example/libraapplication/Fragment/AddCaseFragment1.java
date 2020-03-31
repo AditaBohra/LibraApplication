@@ -146,6 +146,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             }
             caseModel.setHearingDate(case_date_text);
             if (euidList != null && euidList.size() > 0){
+                euidList.add(FirebaseAuth.getInstance().getUid());
                 caseModel.setAllTeamEuidList(euidList);
             }
             caseModel.setUuid(uniqueID);
@@ -166,8 +167,6 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                     .child("Cases").child(uniqueID).setValue(caseModel);
 
-//            mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-//                    .child("Cases").child(uniqueID).child("euids").push().setValue(euidList);
 
             if (getActivity() != null) {
                 getActivity().finish();
