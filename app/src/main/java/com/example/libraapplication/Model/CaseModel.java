@@ -1,6 +1,7 @@
 package com.example.libraapplication.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CaseModel implements Serializable {
@@ -13,8 +14,10 @@ public class CaseModel implements Serializable {
     private String judgeName;
     private String lawyer;
     private String team;
+    private String euid;
     private List<HearingModel> hearings;
-
+    private String uuid;
+    private ArrayList<String> allTeamEuidList;
 
     public CaseModel() {
 
@@ -98,5 +101,30 @@ public class CaseModel implements Serializable {
 
     public void setHearings(List<HearingModel> hearings) {
         this.hearings = hearings;
+    }
+
+    public String getEuid() {
+        return euid;
+    }
+
+    public void setEuid(String euid) {
+        this.euid = euid;
+    }
+
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public ArrayList<String> getAllTeamEuidList() {
+        return allTeamEuidList;
+    }
+
+    public void setAllTeamEuidList(ArrayList<String> allTeamEuidList) {
+        this.allTeamEuidList = allTeamEuidList;
     }
 }

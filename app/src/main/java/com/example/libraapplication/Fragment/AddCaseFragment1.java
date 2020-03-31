@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelListListener {
@@ -129,6 +130,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                 return;
             }
 
+            String uniqueID = UUID.randomUUID().toString();
 
             CaseModel caseModel = new CaseModel();
             caseModel.setCaseNo(case_number);
@@ -138,11 +140,15 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             caseModel.setParty2(party2);
             caseModel.setLawyer(lawyer);
             caseModel.setTeam(team);
+            caseModel.setEuid(FirebaseAuth.getInstance().getUid());
             if (!radioButtonText.isEmpty()) {
                 caseModel.setStatus(radioButtonText);
             }
             caseModel.setHearingDate(case_date_text);
-
+            if (euidList != null && euidList.size() > 0){
+                caseModel.setAllTeamEuidList(euidList);
+            }
+            caseModel.setUuid(uniqueID);
             mDatabase = FirebaseDatabase.getInstance();
             mDatabaseRef = mDatabase.getReference();
 
@@ -150,17 +156,18 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             if (usersModelArrayList.size() > 0){
                 for (String euid : euidList){
                     if (euid != FirebaseAuth.getInstance().getUid()){
+                        caseModel.setEuid(euid);
                         mDatabaseRef.child(euid)
-                                .child("Cases").child(caseModel.getCaseNo()).setValue(caseModel);
+                                .child("Cases").child(uniqueID).setValue(caseModel);
                     }
                 }
 
             }
             mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-                    .child("Cases").child(caseModel.getCaseNo()).setValue(caseModel);
+                    .child("Cases").child(uniqueID).setValue(caseModel);
 
-            mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-                    .child("Cases").child(caseModel.getCaseNo()).child("euids").push().setValue(euidList);
+//            mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
+//                    .child("Cases").child(uniqueID).child("euids").push().setValue(euidList);
 
             if (getActivity() != null) {
                 getActivity().finish();

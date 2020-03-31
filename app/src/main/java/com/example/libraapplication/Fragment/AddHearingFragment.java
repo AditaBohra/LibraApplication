@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.libraapplication.Model.CaseModel;
 import com.example.libraapplication.Model.EuidModel;
 import com.example.libraapplication.Model.HearingModel;
 import com.example.libraapplication.ProgressDialogData;
@@ -52,6 +53,7 @@ public class AddHearingFragment extends Fragment{
     private ProgressDialogData progressDialogData;
     private Spinner spinner;
     ArrayList<String> euids;
+    private ArrayList<CaseModel> caseModelArrayList;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -129,17 +131,29 @@ public class AddHearingFragment extends Fragment{
                 mDatabase = FirebaseDatabase.getInstance();
                 mDatabaseRef = mDatabase.getReference();
 
-                if (euids.size() > 0){
+                euids = getEuids(hearingModel.getCase_no());
+
+                if (euids != null && euids.size() > 0){
                     for (String euid : euids){
                         if (!euid.equals(FirebaseAuth.getInstance().getUid())){
-                            mDatabaseRef.child(euid)
-                                    .child("Cases").child(hearingModel.getCase_no()).child("hearings").push().setValue(hearingModel);
+                            for (CaseModel caseModel: caseModelArrayList){
+                                if (caseModel.getCaseNo().equals(hearingModel.getCase_no())) {
+                                    mDatabaseRef.child(euid)
+                                            .child("Cases").child(caseModel.getUuid()).child("hearings").push().setValue(hearingModel);
+                                }
+                            }
                         }
                     }
 
                 }
-                mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-                        .child("Cases").child(hearingModel.getCase_no()).child("hearings").push().setValue(hearingModel);
+                for (CaseModel caseModel: caseModelArrayList){
+                    if (caseModel.getCaseNo().equals(hearingModel.getCase_no())){
+                        mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
+                                .child("Cases").child(caseModel.getUuid()).child("hearings").push().setValue(hearingModel);
+                    }
+
+                }
+
 
                 loadFragment(new TabFragment());
 
@@ -148,6 +162,16 @@ public class AddHearingFragment extends Fragment{
 
 
         return  view;
+    }
+
+    private ArrayList<String> getEuids(String case_no)
+    {
+        for (CaseModel caseModel: caseModelArrayList){
+            if (caseModel.getCaseNo().equals(case_no)){
+                return caseModel.getAllTeamEuidList();
+            }
+        }
+        return null;
     }
 
     private boolean isValidateForm() {
@@ -170,13 +194,13 @@ public class AddHearingFragment extends Fragment{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 caseNoList = new ArrayList<>();
+                caseModelArrayList = new ArrayList<>();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    String caseNumber = dataSnapshot1.getKey();
+                    CaseModel caseModel = dataSnapshot1.getValue(CaseModel.class);
+                    caseModelArrayList.add(caseModel);
+                    String caseNumber = caseModel.getCaseNo();
                     if(caseNumber!= null && !caseNumber.isEmpty()) {
                         caseNoList.add(caseNumber);
-                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("euids").getChildren()) {
-                           euids = (ArrayList<String>) dataSnapshot2.getValue();
-                        }
                     }
                 }
                 ArrayAdapter<String> caseNoAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),android.R.layout.simple_spinner_item, caseNoList);
