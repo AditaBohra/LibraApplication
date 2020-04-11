@@ -44,10 +44,12 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
     private TextView case_date;
     private boolean[] checkedItems;
     private ArrayList<Integer> mSelectedTeamList = new ArrayList<>();
-    private String[] userNameList;
-    private ArrayList<String> users = new ArrayList<>();
+    private String[] advocateStringList;
+    private ArrayList<String> advocateArrayList = new ArrayList<>();
     private ArrayList<UsersModel> usersModelArrayList;
     private ArrayList<String> euidList = new ArrayList<>();
+    private ArrayList<String> civilianArrayList = new ArrayList<>();
+    private String[] civilianStringList;
 
     @Nullable
     @Override
@@ -181,7 +183,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
     private void createMultiChoiceDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Please select your team");
-        builder.setMultiChoiceItems(userNameList, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(advocateStringList, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
                 if (isChecked){
@@ -215,7 +217,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             public void onClick(DialogInterface dialogInterface, int which) {
                 String item = "";
                 for (int i = 0; i< mSelectedTeamList.size(); i++){
-                    item = item + userNameList[mSelectedTeamList.get(i)];
+                    item = item + advocateStringList[mSelectedTeamList.get(i)];
                     if (i != mSelectedTeamList.size() - 1){
                         item = item + ", ";
                     }
@@ -297,12 +299,19 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
     }
 
     void setTeamListAdapter(ArrayList<UsersModel> usersModelArrayList) {
-        Toast.makeText(getActivity(), "Data Recieved", Toast.LENGTH_SHORT).show();
-        for (UsersModel usersModel : usersModelArrayList) {
-            users.add(usersModel.getUname());
-        }
         this.usersModelArrayList = usersModelArrayList;
-        userNameList = getStringArray(users);
-        checkedItems = new boolean[users.size()];
+        for (UsersModel usersModel : usersModelArrayList) {
+            if (usersModel.getSelectedRole().equals("advocate")){
+                advocateArrayList.add(usersModel.getUname());
+            }
+            else {
+                civilianArrayList.add(usersModel.getUname());
+            }
+        }
+        if (!advocateArrayList.isEmpty()){
+            advocateStringList = getStringArray(advocateArrayList);
+            checkedItems = new boolean[advocateArrayList.size()];
+        }
+
     }
 }
