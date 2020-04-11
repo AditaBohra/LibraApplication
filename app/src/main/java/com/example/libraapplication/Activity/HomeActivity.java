@@ -1,7 +1,9 @@
 package com.example.libraapplication.Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,12 +12,24 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.libraapplication.Fragment.AlertFragment;
 import com.example.libraapplication.Fragment.CaseFragment;
 import com.example.libraapplication.Fragment.TabFragment;
+import com.example.libraapplication.Model.UsersModel;
+import com.example.libraapplication.ProgressDialogData;
 import com.example.libraapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView mBottomNavigationView;
+    private FirebaseDatabase mDatabase;
+    private ProgressDialogData progressDialogData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +37,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mBottomNavigationView = findViewById(R.id.bottom_navigation_view);
         mBottomNavigationView.setSelectedItemId(R.id.action_home);
-        loadFragment(new TabFragment());
 
+        progressDialogData = new ProgressDialogData(this);
+        progressDialogData.show();
+
+        getUserDetails();
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
 
             switch (menuItem.getItemId()) {
@@ -39,6 +56,33 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
             }
             return false;
+        });
+
+
+    }
+
+    private void getUserDetails() {
+
+        mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef = mDatabase.getReference()
+                .child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UsersModel user = dataSnapshot.getValue(UsersModel.class);
+                SharedPreferences sharedPreferences = getSharedPreferences("user_role",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("role",user.getSelectedRole());
+                editor.commit();
+                loadFragment(new TabFragment());
+                progressDialogData.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialogData.dismiss();
+            }
         });
 
 

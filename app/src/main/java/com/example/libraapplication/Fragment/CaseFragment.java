@@ -1,6 +1,8 @@
 package com.example.libraapplication.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,6 +73,14 @@ public class CaseFragment extends Fragment implements CaseAdapter.CaseClickListe
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbar.setNavigationOnClickListener(v -> ((HomeActivity) getActivity()).loadFragment(new TabFragment()));
+
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_role", Context.MODE_PRIVATE);
+        String userRole = sharedPreferences.getString("role",null);
+
+        if (userRole != null && !userRole.equals("advocate")){
+            btnAddCase.setVisibility(View.GONE);
+        }
 
         btnAddCase.setOnClickListener(view1 -> {
             Intent caseActivityIntent = new Intent(getActivity(), AddCaseActivity.class);

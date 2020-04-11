@@ -1,6 +1,8 @@
 package com.example.libraapplication.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +65,14 @@ public class HearingFragment extends Fragment implements HearingAdapter.OnItemCl
                 loadFragment(new AddHearingFragment());
             }
         });
+
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_role", Context.MODE_PRIVATE);
+        String userRole = sharedPreferences.getString("role",null);
+
+        if (userRole != null && !userRole.equals("advocate")){
+            addHearingButton.setVisibility(View.GONE);
+        }
 
         mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseRef = mDatabase.getReference()
