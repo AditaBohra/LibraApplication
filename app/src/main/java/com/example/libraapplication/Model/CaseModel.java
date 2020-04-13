@@ -18,6 +18,8 @@ public class CaseModel implements Serializable {
     private List<HearingModel> hearings;
     private String uuid;
     private ArrayList<String> allTeamEuidList;
+    private ArrayList<String> allCivilianEuidList;
+    private String civilian;
 
     public CaseModel() {
 
@@ -126,5 +128,21 @@ public class CaseModel implements Serializable {
 
     public void setAllTeamEuidList(ArrayList<String> allTeamEuidList) {
         this.allTeamEuidList = allTeamEuidList;
+    }
+
+    public String getCivilian() {
+        return civilian;
+    }
+
+    public void setCivilian(String civilian) {
+        this.civilian = civilian;
+    }
+
+    public ArrayList<String> getAllCivilianEuidList() {
+        return allCivilianEuidList;
+    }
+
+    public void setAllCivilianEuidList(ArrayList<String> allCivilianEuidList) {
+        this.allCivilianEuidList = allCivilianEuidList;
     }
 }

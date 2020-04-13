@@ -39,15 +39,18 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
     private DatabaseReference mDatabaseRef;
     private Calendar mCalender;
     private EditText case_no, case_court_name, case_edit_judge_name, case_party1, case_party2, case_lawyer;
-    private TextView mselectedTeamText, case_team;
+    private TextView mselectedTeamText, case_team, textSelectClient, mselectedCivilianText;
     private RadioGroup case_category;
     private TextView case_date;
     private boolean[] checkedItems;
+    private boolean[] civiliancCeckedItems;
     private ArrayList<Integer> mSelectedTeamList = new ArrayList<>();
+    private ArrayList<Integer> mSelectedCivilianList = new ArrayList<>();
     private String[] advocateStringList;
     private ArrayList<String> advocateArrayList = new ArrayList<>();
     private ArrayList<UsersModel> usersModelArrayList;
     private ArrayList<String> euidList = new ArrayList<>();
+    private ArrayList<String> euidCivilianList = new ArrayList<>();
     private ArrayList<String> civilianArrayList = new ArrayList<>();
     private String[] civilianStringList;
 
@@ -69,7 +72,8 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         case_date = view.findViewById(R.id.edit_case_date);
         mCalender = Calendar.getInstance();
         mselectedTeamText = view.findViewById(R.id.selectedTeamText);
-
+        mselectedCivilianText = view.findViewById(R.id.selectedCivilianText);
+        textSelectClient = view.findViewById(R.id.edit_select_client);
         DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
             mCalender.set(Calendar.YEAR, year);
             mCalender.set(Calendar.MONTH, month);
@@ -91,6 +95,13 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             }
         });
 
+        textSelectClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createMultiChoiceDialogForCivilianList();
+            }
+        });
+
         case_date.setOnClickListener(v -> new DatePickerDialog(Objects.requireNonNull(getActivity()),
                 date, mCalender.get(Calendar.YEAR), mCalender.get(Calendar.MONTH),
                 mCalender.get(Calendar.DAY_OF_MONTH)).show());
@@ -100,7 +111,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
 
             int id;
             String radioButtonText = null, case_number = null, court_name = null, case_judge_name = null,
-                    party1 = null, party2 = null, lawyer = null, team = null, case_date_text = null;
+                    party1 = null, party2 = null, lawyer = null, team = null, case_date_text = null, civilian;
             if (case_category.getCheckedRadioButtonId() != -1) {
                 id = case_category.getCheckedRadioButtonId();
                 if (((RadioButton) view.findViewById(id)).getText().toString().isEmpty()) {
@@ -126,7 +137,9 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                 party2 = case_party2.getText().toString();
                 lawyer = case_lawyer.getText().toString();
                 team = mselectedTeamText.getText().toString();
+                civilian = mselectedCivilianText.getText().toString();
                 case_date_text = case_date.getText().toString();
+
             } else {
                 Toast.makeText(getActivity(), "Please Enter Details..", Toast.LENGTH_SHORT).show();
                 return;
@@ -142,6 +155,7 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             caseModel.setParty2(party2);
             caseModel.setLawyer(lawyer);
             caseModel.setTeam(team);
+            caseModel.setCivilian(civilian);
             caseModel.setEuid(FirebaseAuth.getInstance().getUid());
             if (!radioButtonText.isEmpty()) {
                 caseModel.setStatus(radioButtonText);
@@ -150,6 +164,9 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
             if (euidList != null && euidList.size() > 0){
                 euidList.add(FirebaseAuth.getInstance().getUid());
                 caseModel.setAllTeamEuidList(euidList);
+            }
+            if (euidCivilianList != null && euidCivilianList.size() > 0){
+                caseModel.setAllCivilianEuidList(euidCivilianList);
             }
             caseModel.setUuid(uniqueID);
             mDatabase = FirebaseDatabase.getInstance();
@@ -166,6 +183,18 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
                 }
 
             }
+
+            // Code to set data to all civilian members..............
+            if (usersModelArrayList.size() > 0){
+                for (String euid : euidCivilianList){
+                        caseModel.setEuid(euid);
+                        mDatabaseRef.child(euid)
+                                .child("Cases").child(uniqueID).setValue(caseModel);
+                }
+
+            }
+
+
             mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                     .child("Cases").child(uniqueID).setValue(caseModel);
 
@@ -262,6 +291,89 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         dialog.show();
     }
 
+    private void createMultiChoiceDialogForCivilianList() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Please select your Client");
+        builder.setMultiChoiceItems(civilianStringList, civiliancCeckedItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+                if (isChecked){
+                    if (!mSelectedCivilianList.contains(position)){
+                        mSelectedCivilianList.add(position);
+                        euidCivilianList.add(usersModelArrayList.get(position).getEuid());
+                    }
+                    else {
+
+                        for (int i = 0; i < mSelectedCivilianList.size(); i++) {
+                            if (mSelectedCivilianList.get(i) == position) {
+                                mSelectedCivilianList.remove(i);
+                            }
+                        }
+                        euidCivilianList.remove(usersModelArrayList.get(position).getEuid());
+                    }
+                }
+                else{
+                    for (int i = 0; i < mSelectedCivilianList.size(); i++) {
+                        if (mSelectedCivilianList.get(i) == position) {
+                            mSelectedCivilianList.remove(i);
+                        }
+                    }
+                    euidCivilianList.remove(usersModelArrayList.get(position).getEuid());
+                }
+            }
+        });
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                String item = "";
+                for (int i = 0; i< mSelectedCivilianList.size(); i++){
+                    item = item + civilianStringList[mSelectedCivilianList.get(i)];
+                    if (i != mSelectedCivilianList.size() - 1){
+                        item = item + ", ";
+                    }
+                }
+                if (mSelectedCivilianList.size() > 0){
+                    mselectedCivilianText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mselectedCivilianText.setVisibility(View.GONE);
+                }
+                mselectedCivilianText.setText(item);
+            }
+        });
+
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (mSelectedCivilianList.size() > 0){
+                    mselectedCivilianText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mselectedCivilianText.setVisibility(View.GONE);
+                }
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                for (int i=0; i < checkedItems.length; i++){
+                    checkedItems[i] = false;
+                    mSelectedCivilianList.clear();
+                    euidCivilianList.clear();
+                    mselectedCivilianText.setText("");
+                    mselectedCivilianText.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
     public static String[] getStringArray(ArrayList<String> arr)
     {
 
@@ -311,6 +423,11 @@ public class AddCaseFragment1 extends Fragment implements Utility.GetUserModelLi
         if (!advocateArrayList.isEmpty()){
             advocateStringList = getStringArray(advocateArrayList);
             checkedItems = new boolean[advocateArrayList.size()];
+        }
+
+        if (!civilianArrayList.isEmpty()){
+            civilianStringList = getStringArray(civilianArrayList);
+            civiliancCeckedItems = new boolean[civilianArrayList.size()];
         }
 
     }

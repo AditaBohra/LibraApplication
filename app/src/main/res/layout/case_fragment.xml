@@ -28,7 +28,7 @@
         android:layout_height="0dp"
         android:padding="16dp"
         android:id="@+id/recycler_case_view"
-        app:layout_constraintTop_toBottomOf="@+id/add_case_button"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         />
