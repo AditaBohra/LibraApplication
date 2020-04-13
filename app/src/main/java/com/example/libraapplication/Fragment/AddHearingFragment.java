@@ -53,6 +53,8 @@ public class AddHearingFragment extends Fragment{
     private ProgressDialogData progressDialogData;
     private Spinner spinner;
     ArrayList<String> euids;
+    ArrayList<String> civilianeEuids;
+
     private ArrayList<CaseModel> caseModelArrayList;
     @Nullable
     @Override
@@ -132,7 +134,7 @@ public class AddHearingFragment extends Fragment{
                 mDatabaseRef = mDatabase.getReference();
 
                 euids = getEuids(hearingModel.getCase_no());
-
+                civilianeEuids = getCivilianEuids(hearingModel.getCase_no());
                 if (euids != null && euids.size() > 0){
                     for (String euid : euids){
                         if (!euid.equals(FirebaseAuth.getInstance().getUid())){
@@ -146,6 +148,20 @@ public class AddHearingFragment extends Fragment{
                     }
 
                 }
+                if (civilianeEuids != null && civilianeEuids.size() > 0){
+                    for (String euid : civilianeEuids){
+                        if (!euid.equals(FirebaseAuth.getInstance().getUid())){
+                            for (CaseModel caseModel: caseModelArrayList){
+                                if (caseModel.getCaseNo().equals(hearingModel.getCase_no())) {
+                                    mDatabaseRef.child(euid)
+                                            .child("Cases").child(caseModel.getUuid()).child("hearings").push().setValue(hearingModel);
+                                }
+                            }
+                        }
+                    }
+
+                }
+
                 for (CaseModel caseModel: caseModelArrayList){
                     if (caseModel.getCaseNo().equals(hearingModel.getCase_no())){
                         mDatabaseRef.child(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
@@ -169,6 +185,16 @@ public class AddHearingFragment extends Fragment{
         for (CaseModel caseModel: caseModelArrayList){
             if (caseModel.getCaseNo().equals(case_no)){
                 return caseModel.getAllTeamEuidList();
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<String> getCivilianEuids(String case_no)
+    {
+        for (CaseModel caseModel: caseModelArrayList){
+            if (caseModel.getCaseNo().equals(case_no)){
+                return caseModel.getAllCivilianEuidList();
             }
         }
         return null;
