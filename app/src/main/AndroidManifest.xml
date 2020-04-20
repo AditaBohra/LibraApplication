@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.libraapplication">
+    package="com.mobiledev183.lawapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,22 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.ProfileActivity"
+        <activity android:name="com.mobiledev183.lawapp.Activity.ProfileActivity"
             android:theme="@style/LoginTheme">
         </activity>
         <activity
-            android:name=".Activity.CaseDetailsActivity"
+            android:name="com.mobiledev183.lawapp.Activity.CaseDetailsActivity"
             android:theme="@style/LoginTheme" />
-        <activity android:name=".Activity.AddCaseActivity" />
+        <activity android:name="com.mobiledev183.lawapp.Activity.AddCaseActivity" />
         <activity
-            android:name=".Activity.HomeActivity"
+            android:name="com.mobiledev183.lawapp.Activity.HomeActivity"
             android:theme="@style/LoginTheme"></activity>
-        <activity android:name=".Activity.ForgotPasswordActivity" />
+        <activity android:name="com.mobiledev183.lawapp.Activity.ForgotPasswordActivity" />
         <activity
-            android:name=".Activity.RegistrationActivity"
+            android:name="com.mobiledev183.lawapp.Activity.RegistrationActivity"
             android:theme="@style/LoginTheme" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name="com.mobiledev183.lawapp.Activity.LoginActivity"
             android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
